@@ -104,42 +104,63 @@
     });
   }
 
+  // Tiles expand in place: click a topic -> grid is replaced by that topic's
+  // answers with an "All topics" button to go back. Deep-linkable via #cat=.
+  function renderTileGrid(holder, kb) {
+    holder.innerHTML = '<div class="tiles">' + kb.categories.map(function (c) {
+      return '<button type="button" class="tile" data-cat="' + c.id + '"><span class="icon">' + c.icon + "</span>" + c.label + "</button>";
+    }).join("") + "</div>";
+    Array.prototype.forEach.call(holder.querySelectorAll(".tile"), function (btn) {
+      btn.addEventListener("click", function () {
+        history.replaceState(null, "", "#cat=" + btn.getAttribute("data-cat"));
+        renderCategoryView(holder, kb, btn.getAttribute("data-cat"), true);
+      });
+    });
+  }
+
+  function renderCategoryView(holder, kb, catId, scroll) {
+    var c = kb.categories.filter(function (x) { return x.id === catId; })[0];
+    if (!c) return renderTileGrid(holder, kb);
+    var entries = kb.entries.filter(function (e) { return e.cat === catId; });
+    holder.innerHTML =
+      '<button type="button" class="back-link" id="backToTopics">← All topics</button>' +
+      '<h2 class="section" style="margin-top:0.6rem">' + c.icon + " " + c.label + "</h2>" +
+      (entries.map(renderEntry).join("") ||
+        '<div class="no-result">Nothing here yet — call the Township at 705-484-5374.</div>');
+    document.getElementById("backToTopics").addEventListener("click", function () {
+      history.replaceState(null, "", window.location.pathname);
+      renderTileGrid(holder, kb);
+    });
+    if (scroll) window.scrollTo({ top: Math.max(holder.getBoundingClientRect().top + window.scrollY - 70, 0), behavior: "smooth" });
+  }
+
   function initTiles() {
     var holder = document.getElementById("tiles");
     if (!holder) return;
     fetchKB(function (kb) {
-      holder.innerHTML = kb.categories.map(function (c) {
-        return '<a class="tile" href="' + BASE + 'browse.html?cat=' + c.id + '"><span class="icon">' + c.icon + "</span>" + c.label + "</a>";
-      }).join("");
+      var m = (window.location.hash || "").match(/cat=([a-z-]+)/) ||
+              (window.location.search || "").match(/cat=([a-z-]+)/);
+      if (m) renderCategoryView(holder, kb, m[1], false);
+      else renderTileGrid(holder, kb);
     });
   }
 
-  function initBrowse() {
-    var holder = document.getElementById("browse");
-    if (!holder) return;
-    var params = new URLSearchParams(window.location.search);
-    var cat = params.get("cat");
-    fetchKB(function (kb) {
-      var c = kb.categories.filter(function (x) { return x.id === cat; })[0];
-      var title = document.getElementById("browse-title");
-      if (!c) {
-        if (title) title.textContent = "Browse everything";
-        holder.innerHTML = kb.categories.map(function (cc) {
-          var inner = kb.entries.filter(function (e) { return e.cat === cc.id; }).map(renderEntry).join("");
-          return '<h2 class="section">' + cc.icon + " " + cc.label + "</h2>" + inner;
-        }).join("");
-        return;
-      }
-      if (title) title.textContent = c.icon + " " + c.label;
-      var entries = kb.entries.filter(function (e) { return e.cat === cat; });
-      holder.innerHTML = entries.map(renderEntry).join("") ||
-        '<div class="no-result">Nothing here yet — call the Township at 705-484-5374.</div>';
-    });
+  function initBackToTop() {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.id = "toTop";
+    b.textContent = "↑ Back to top";
+    b.setAttribute("aria-label", "Back to top");
+    document.body.appendChild(b);
+    b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    window.addEventListener("scroll", function () {
+      b.className = window.scrollY > 500 ? "show" : "";
+    }, { passive: true });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     initSearch();
     initTiles();
-    initBrowse();
+    initBackToTop();
   });
 })();
