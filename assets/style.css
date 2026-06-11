@@ -50,7 +50,7 @@ a:hover { color: var(--blue-dark); }
 .search-hint { color: var(--muted); font-size: 0.88rem; margin-top: 0.5rem; }
 
 /* Chat */
-#chat { max-width: 40rem; margin: 0 auto 0.8rem; text-align: left; }
+#chat { max-width: 40rem; margin: 0 auto 0.8rem; text-align: left; display: flow-root; }
 #chat:empty { margin-bottom: 0; }
 .msg { margin: 0.6rem 0; max-width: 92%; clear: both; }
 .msg.user {
@@ -61,6 +61,7 @@ a:hover { color: var(--blue-dark); }
   float: left; background: var(--card); border: 1px solid var(--line);
   border-radius: 16px 16px 16px 4px; padding: 0.9rem 1rem; width: 100%;
 }
+.msg.hub:last-child, .msg.user:last-child { margin-bottom: 0.2rem; }
 .msg.hub .result-card { border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 0.8rem 0 0.2rem; margin: 0.6rem 0 0; }
 .msg.hub .lead-line { margin: 0; font-weight: 700; color: var(--blue-dark); }
 .msg.hub .after-line { margin: 0.7rem 0 0; font-size: 0.92rem; color: var(--muted); }
