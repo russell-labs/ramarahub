@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ramara Hub — answers for Ramara Township residents</title>
 <meta name="description" content="One simple place for Ramara Township residents to find answers: wastewater, roads, garbage, taxes, permits, council, and the big local issues — every answer sourced.">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body data-base="">
 
@@ -30,12 +30,13 @@
 <section class="hero">
   <div class="wrap">
     <h1>What do you need to know?</h1>
-    <p class="lede">Type a question in your own words. Plain answers, official sources, real phone numbers.</p>
-    <div class="searchbox">
-      <input id="q" type="search" placeholder="Try: why did my wastewater bill go up?" autocomplete="off" aria-label="Search Ramara Hub">
-    </div>
-    <p class="search-hint">Or tap a topic below — no typing needed.</p>
-    <div id="results" aria-live="polite"></div>
+    <p class="lede">Ask in your own words. Plain answers, official sources, real phone numbers — and it never guesses.</p>
+    <div id="chat" aria-live="polite"></div>
+    <form id="askForm" class="askbar">
+      <input id="q" type="text" placeholder="Try: can my septic home be forced onto the sewer system?" autocomplete="off" aria-label="Ask Ramara Hub a question">
+      <button type="submit">Ask</button>
+    </form>
+    <p class="search-hint">Press Ask when you're ready — or tap a topic below, no typing needed.</p>
   </div>
 </section>
 
@@ -82,6 +83,6 @@
   </div>
 </footer>
 
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=3"></script>
 </body>
 </html>

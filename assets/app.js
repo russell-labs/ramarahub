@@ -1,4 +1,4 @@
-/* Ramara Hub — client-side search + category rendering. No build step, no tracking. */
+/* Ramara Hub — chat-style ask, category browsing, back-to-top. No build step, no tracking. */
 (function () {
   "use strict";
 
@@ -10,21 +10,22 @@
     fetch(BASE + "data/kb.json")
       .then(function (r) { return r.json(); })
       .then(function (data) { KB = data; cb(KB); })
-      .catch(function () {
-        var el = document.getElementById("results");
-        if (el) el.innerHTML = '<div class="no-result"><strong>Search is unavailable right now.</strong> Call the Township at 705-484-5374 (Mon–Fri 9–4:30).</div>';
-      });
+      .catch(function () { cb(null); });
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
   function norm(s) { return (s || "").toLowerCase().replace(/[^a-z0-9\s]/g, " "); }
 
   var STOP = {};
-  ("a an and are as at be but by can could did do does for from get has have how i if in is it me my of on or our should so that the their there they this to was we what when where which who why will with would you your").split(" ").forEach(function (w) { STOP[w] = true; });
+  ("a an and any about also are as at be been being but by can could did do does for from get got has have having how i if in into is it its just me my of on or our out really should so some that the their there they this to was we what when where which who why will with would you your").split(" ").forEach(function (w) { STOP[w] = true; });
 
   function words(s) { return norm(s).split(/\s+/).filter(Boolean); }
 
-  // A term hits a word if the word starts with it (so "run" matches "running",
-  // "goose" doesn't match "good"). No substring matches — "ran" must not hit "grant".
+  // A term hits a word if one starts with the other (so "run" matches "running",
+  // "converted" matches "convert"). No mid-word substrings — "ran" must not hit "grant".
   function hitCount(terms, wordList) {
     var n = 0;
     for (var i = 0; i < terms.length; i++) {
@@ -36,12 +37,17 @@
     return n;
   }
 
-  function score(entry, terms) {
-    var meaningful = terms.filter(function (t) { return t.length >= 2 && !STOP[t]; });
-    if (!meaningful.length) return 0;
+  function meaningfulTerms(q) {
+    return words(q).filter(function (t) { return t.length >= 2 && !STOP[t]; });
+  }
+
+  function scoreEntry(entry, terms) {
+    if (!terms.length) return { s: 0, cov: 0 };
     var qw = words(entry.q + " " + (entry.keywords || ""));
     var aw = words(entry.a + " " + entry.cat);
-    return hitCount(meaningful, qw) * 3 + hitCount(meaningful, aw);
+    var qHits = hitCount(terms, qw);
+    var aHits = hitCount(terms, aw);
+    return { s: qHits * 3 + aHits, cov: Math.max(qHits, aHits) / terms.length };
   }
 
   function linkHref(url) {
@@ -66,46 +72,88 @@
     return html;
   }
 
-  function noResult(q) {
-    return '<div class="no-result"><strong>No confident answer for that yet.</strong> ' +
-      'This site never guesses. Call the Township of Ramara at <strong>705-484-5374</strong> ' +
-      "(Mon–Fri 9 a.m.–4:30 p.m.) or use the official " +
-      '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>. ' +
-      "Your question helps us improve — more answers are added every week.</div>";
+  /* ---------------- Chat ---------------- */
+
+  function bubble(cls, html) {
+    var d = document.createElement("div");
+    d.className = "msg " + cls;
+    d.innerHTML = html;
+    return d;
   }
 
-  function doSearch(q) {
-    var out = document.getElementById("results");
-    if (!out) return;
-    if (!q || q.trim().length < 2) { out.innerHTML = ""; return; }
+  var FALLBACK_HTML =
+    "I don't have a solid, sourced answer for that yet — and this site never guesses. " +
+    "Call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30), use the " +
+    '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>, ' +
+    'or email <a href="mailto:russellcolevop@gmail.com">the Hub team</a> — your question helps us add what\'s missing.';
+
+  function composeAnswer(kb, q) {
+    if (!kb) {
+      return "<p>Search is unavailable right now. Call the Township at <strong>705-484-5374</strong> (Mon–Fri 9–4:30).</p>";
+    }
+    var terms = meaningfulTerms(q);
+    var ranked = kb.entries.map(function (e) {
+      var sc = scoreEntry(e, terms);
+      return { e: e, s: sc.s, cov: sc.cov };
+    }).sort(function (a, b) { return b.s - a.s; });
+
+    var top = ranked[0];
+    // Confident: top hit covers most of the meaningful words in the question.
+    var confident = top && top.cov >= 0.62 && top.s >= 6;
+    var related = top && !confident && top.cov >= 0.34 && top.s >= 5;
+
+    if (!confident && !related) return "<p>" + FALLBACK_HTML + "</p>";
+
+    // Keep only results in the same league as the top hit, max 3.
+    var picks = ranked.filter(function (x) {
+      return x.s >= Math.max(5, top.s * 0.6) && x.cov >= 0.34;
+    }).slice(0, 3);
+
+    var lead = confident
+      ? "<p class=\"lead-line\">Here's what the record says:</p>"
+      : "<p class=\"lead-line\">I don't have an exact answer to that, but this is the closest sourced information I have:</p>";
+
+    var html = lead + picks.map(function (x) { return renderEntry(x.e); }).join("");
+    if (!confident) {
+      html += '<p class="after-line">Not what you needed? Call the Township at <strong>705-484-5374</strong> or ' +
+              '<a href="mailto:russellcolevop@gmail.com">tell the Hub team</a> so we can add it.</p>';
+    }
+    return html;
+  }
+
+  function askQuestion(q, chat, input) {
+    chat.appendChild(bubble("user", escapeHtml(q)));
+    var think = bubble("hub thinking",
+      '<span class="community-pulse" aria-hidden="true">🤝</span> Checking the township record…');
+    chat.appendChild(think);
+    think.scrollIntoView({ behavior: "smooth", block: "nearest" });
     fetchKB(function (kb) {
-      var terms = norm(q).split(/\s+/).filter(Boolean);
-      var scored = kb.entries
-        .map(function (e) { return { e: e, s: score(e, terms) }; })
-        .filter(function (x) { return x.s > 0; })
-        .sort(function (a, b) { return b.s - a.s; })
-        .slice(0, 6);
-      if (!scored.length) { out.innerHTML = noResult(q); return; }
-      out.innerHTML = scored.map(function (x) { return renderEntry(x.e); }).join("");
+      setTimeout(function () {
+        think.remove();
+        var reply = bubble("hub", composeAnswer(kb, q));
+        chat.appendChild(reply);
+        reply.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        if (input) input.focus();
+      }, 800 + Math.random() * 400);
     });
   }
 
-  function initSearch() {
+  function initChat() {
+    var form = document.getElementById("askForm");
+    if (!form) return;
     var input = document.getElementById("q");
-    if (!input) return;
-    var timer = null;
-    input.addEventListener("input", function () {
-      clearTimeout(timer);
-      var v = input.value;
-      timer = setTimeout(function () { doSearch(v); }, 220);
-    });
-    input.addEventListener("keydown", function (ev) {
-      if (ev.key === "Enter") { ev.preventDefault(); doSearch(input.value); }
+    var chat = document.getElementById("chat");
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var q = (input.value || "").trim();
+      if (q.length < 2) return;
+      input.value = "";
+      askQuestion(q, chat, input);
     });
   }
 
-  // Tiles expand in place: click a topic -> grid is replaced by that topic's
-  // answers with an "All topics" button to go back. Deep-linkable via #cat=.
+  /* ---------------- Topic tiles (in-place expand) ---------------- */
+
   function renderTileGrid(holder, kb) {
     holder.innerHTML = '<div class="tiles">' + kb.categories.map(function (c) {
       return '<button type="button" class="tile" data-cat="' + c.id + '"><span class="icon">' + c.icon + "</span>" + c.label + "</button>";
@@ -138,12 +186,15 @@
     var holder = document.getElementById("tiles");
     if (!holder) return;
     fetchKB(function (kb) {
+      if (!kb) { holder.innerHTML = '<div class="no-result">Topics are unavailable right now — call 705-484-5374.</div>'; return; }
       var m = (window.location.hash || "").match(/cat=([a-z-]+)/) ||
               (window.location.search || "").match(/cat=([a-z-]+)/);
       if (m) renderCategoryView(holder, kb, m[1], false);
       else renderTileGrid(holder, kb);
     });
   }
+
+  /* ---------------- Back to top ---------------- */
 
   function initBackToTop() {
     var b = document.createElement("button");
@@ -153,13 +204,14 @@
     b.setAttribute("aria-label", "Back to top");
     document.body.appendChild(b);
     b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
-    window.addEventListener("scroll", function () {
-      b.className = window.scrollY > 500 ? "show" : "";
-    }, { passive: true });
+    function update() { b.className = window.scrollY > 400 ? "show" : ""; }
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("hashchange", function () { setTimeout(update, 50); });
+    update();
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    initSearch();
+    initChat();
     initTiles();
     initBackToTop();
   });
