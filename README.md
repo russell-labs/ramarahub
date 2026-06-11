@@ -18,8 +18,9 @@ HTML in `briefs/`. Every fact links to an official source.
 
 ## Deploy
 
-GitHub Pages from `main`, custom domain `ramarahub.ca` (CNAME file in repo;
-DNS A records → GitHub Pages, www CNAME → russellcolevop.github.io).
+GitHub Pages from `main` (repo: github.com/russell-labs/ramarahub), custom domain
+`ramarahub.ca` (CNAME file in repo; Namecheap DNS: 4× A records @ →
+185.199.108/109/110/111.153, CNAME www → russell-labs.github.io).
 
 ## Roadmap
 
