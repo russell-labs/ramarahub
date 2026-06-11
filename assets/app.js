@@ -18,17 +18,30 @@
 
   function norm(s) { return (s || "").toLowerCase().replace(/[^a-z0-9\s]/g, " "); }
 
-  function score(entry, terms) {
-    var hay = norm(entry.q) + " " + norm(entry.a) + " " + norm(entry.keywords || "") + " " + norm(entry.cat);
-    var qhay = norm(entry.q) + " " + norm(entry.keywords || "");
-    var s = 0;
+  var STOP = {};
+  ("a an and are as at be but by can could did do does for from get has have how i if in is it me my of on or our should so that the their there they this to was we what when where which who why will with would you your").split(" ").forEach(function (w) { STOP[w] = true; });
+
+  function words(s) { return norm(s).split(/\s+/).filter(Boolean); }
+
+  // A term hits a word if the word starts with it (so "run" matches "running",
+  // "goose" doesn't match "good"). No substring matches — "ran" must not hit "grant".
+  function hitCount(terms, wordList) {
+    var n = 0;
     for (var i = 0; i < terms.length; i++) {
       var t = terms[i];
-      if (!t || t.length < 2) continue;
-      if (qhay.indexOf(t) !== -1) s += 3;
-      else if (hay.indexOf(t) !== -1) s += 1;
+      for (var j = 0; j < wordList.length; j++) {
+        if (wordList[j].indexOf(t) === 0 || (t.length > 4 && t.indexOf(wordList[j]) === 0)) { n++; break; }
+      }
     }
-    return s;
+    return n;
+  }
+
+  function score(entry, terms) {
+    var meaningful = terms.filter(function (t) { return t.length >= 2 && !STOP[t]; });
+    if (!meaningful.length) return 0;
+    var qw = words(entry.q + " " + (entry.keywords || ""));
+    var aw = words(entry.a + " " + entry.cat);
+    return hitCount(meaningful, qw) * 3 + hitCount(meaningful, aw);
   }
 
   function linkHref(url) {
