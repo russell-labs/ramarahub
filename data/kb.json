@@ -429,6 +429,10 @@
         {
           "label": "Property taxes",
           "url": "https://www.ramara.ca/living-here/property-taxes/"
+        },
+        {
+          "label": "Where does my tax money go? See Ramara's Money",
+          "url": "money.html"
         }
       ],
       "keywords": "due date deadline installment when pay property tax"
@@ -893,6 +897,36 @@
         }
       ],
       "keywords": "emergency after hours night weekend urgent"
+    },
+    {
+      "id": "tx-budget",
+      "cat": "taxes",
+      "q": "Where can I see the township budget?",
+      "a": "Ramara's total 2026 budget is $42.9 million, including a 4.05% municipal tax-rate increase (about $25 more per $100,000 of assessed home value). About $17.3M is raised from property taxes — roughly 40% of revenue; the rest comes from water and wastewater user rates, grants, and reserves. Our Ramara's Money page breaks down where the money comes from and where it goes, with the major capital projects and the gaps the township doesn't publish yet. The full budget book and audited financial statements are on the township site.",
+      "links": [
+        {
+          "label": "Ramara's Money — the budget, plainly",
+          "url": "money.html"
+        },
+        {
+          "label": "Township budgets & financial services",
+          "url": "https://www.ramara.ca/municipal-office/budgets-and-financial-services/"
+        }
+      ],
+      "keywords": "budget spending finances money where does my tax go financial statements revenue capital projects"
+    },
+    {
+      "id": "gn-asked",
+      "cat": "general",
+      "q": "What has the Civic Forum asked the township?",
+      "a": "The Ramara Civic Forum keeps a public log of the questions it has formally put to the township — what was asked, when, and how long the answer takes. It's an accountability record, not an attack: most are simple requests for information that should be public anyway. See the running log, with the status of each question, on our Asked the Township page.",
+      "links": [
+        {
+          "label": "Asked the Township — the log",
+          "url": "asked.html"
+        }
+      ],
+      "keywords": "civic forum asked questions accountability township request clerk minutes log status"
     }
   ]
 }
