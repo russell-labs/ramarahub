@@ -47,7 +47,9 @@
     var aw = words(entry.a + " " + entry.cat);
     var qHits = hitCount(terms, qw);
     var aHits = hitCount(terms, aw);
-    return { s: qHits * 3 + aHits, cov: Math.max(qHits, aHits) / terms.length };
+    // cov counts ONLY question+keyword coverage: answer-body matches add score but
+    // never confidence (prevents long answers from "confidently" matching everything).
+    return { s: qHits * 3 + aHits, cov: qHits / terms.length };
   }
 
   function linkHref(url) {
