@@ -927,6 +927,42 @@
         }
       ],
       "keywords": "civic forum asked questions accountability township request clerk minutes log status"
+    },
+    {
+      "id": "shorewall-contempt",
+      "cat": "building",
+      "q": "Was the Township of Ramara found in contempt of court?",
+      "a": "Yes. On March 18, 2026 the Ontario Superior Court found the Township of Ramara in contempt for not carrying out an earlier court order in a long-running Lagoon City shore wall permit dispute. In December 2024 the court had ruled the township and the Lagoon City Parks and Waterways Commission acted in bad faith, quashed the bylaw amendment at issue, ordered the permit granted, and ordered about 144,000 dollars of the residents' legal costs covered. The township has since issued the permits and publicly acknowledged its past handling fell short, pledging more transparency. A penalty hearing was scheduled for spring 2026. Full timeline and sources are in our Shore walls brief.",
+      "phone": "705-484-5374",
+      "links": [
+        {
+          "label": "Read the full Shore walls brief",
+          "url": "briefs/shore-walls.html"
+        },
+        {
+          "label": "OrilliaMatters: found in contempt",
+          "url": "https://www.orilliamatters.com/local-news/its-not-over-ramara-township-found-in-contempt-of-court-orders-12033476"
+        }
+      ],
+      "keywords": "contempt court ruling lawsuit shore wall shorewall lagoon city bad faith permit judge sutherland healey held in contempt"
+    },
+    {
+      "id": "shorewall-permits",
+      "cat": "building",
+      "q": "What is the Lagoon City shore wall permit dispute?",
+      "a": "Lagoon City residents need building permits to repair the shore walls that hold their waterfront back from the canals. A bylaw amendment required walls to be rebuilt with a concrete cap and fascia, and a 2015 permit application was denied on that basis. In December 2024 the Ontario Superior Court found the township and the Lagoon City Parks and Waterways Commission acted in bad faith, quashed the amendment, and ordered the permit granted plus about 144,000 dollars in the applicants' legal costs. After the order was not carried out, the court found the township in contempt in March 2026. The township has since issued the permits and pledged more transparency. Full story and sources are in our Shore walls brief.",
+      "phone": "705-484-5374",
+      "links": [
+        {
+          "label": "Read the full Shore walls brief",
+          "url": "briefs/shore-walls.html"
+        },
+        {
+          "label": "Township: Building Permits",
+          "url": "https://www.ramara.ca/business-and-development/building-and-construction/building-permits/"
+        }
+      ],
+      "keywords": "shore wall shorewall retaining wall lagoon city permit building concrete cap fascia dispute bylaw waterfront canal"
     }
   ]
 }
