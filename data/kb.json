@@ -963,6 +963,24 @@
         }
       ],
       "keywords": "shore wall shorewall retaining wall lagoon city permit building concrete cap fascia dispute bylaw waterfront canal"
+    },
+    {
+      "id": "noise-bylaw",
+      "cat": "bylaw",
+      "q": "What are the rules about noise? Is there a noise bylaw?",
+      "a": "Ramara's noise rules are set by Bylaw 2018.44, which regulates the emission of sound in Lagoon City. Regardless of the hour, it prohibits noise clearly audible at a neighbouring property from things like racing or squealing-tire driving, engines or equipment run without a working muffler, idling a vehicle more than 15 minutes in a residential area (with weather and work exceptions), unnecessary use of horns, and unmuffled construction equipment. The same applies to motorized watercraft. On top of that, certain noises are restricted by time of day, with the bylaw's schedule setting out the prohibited hours by area. You can apply to the Township Clerk for a noise-exemption permit (for example, for an event), at least 30 business days ahead and with a fee. One important note: this bylaw covers Lagoon City specifically. If you live elsewhere in the township there is no separate published noise bylaw, so noise is handled as a complaint through Bylaw Enforcement, and any disturbance that feels unsafe or criminal should go to the OPP. Confirm what applies to your area with Bylaw Enforcement.",
+      "phone": "705-484-5374 ext. 292 (Bylaw Enforcement)",
+      "links": [
+        {
+          "label": "Lagoon City Noise Bylaw 2018.44 (PDF)",
+          "url": "https://www.ramara.ca/media/eo3buaxf/2018_44lagooncity_noisebylaw.pdf"
+        },
+        {
+          "label": "Bylaw Enforcement (how to file a complaint)",
+          "url": "https://www.ramara.ca/living-here/bylaw-enforcement/"
+        }
+      ],
+      "keywords": "noise bylaw loud music quiet hours sound amplified party neighbour disturbance idling muffler construction lagoon city horn racing"
     }
   ]
 }
