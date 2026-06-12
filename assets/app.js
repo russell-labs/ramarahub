@@ -448,19 +448,33 @@
 
   /* ---------------- Great things about Ramara ---------------- */
 
-  function greatCardHtml(it) {
-    var photo = "";
-    if (it.photo) {
-      var src = /^https?:\/\//.test(it.photo) ? it.photo : BASE + "assets/" + it.photo;
-      photo = '<img class="great-photo" src="' + escapeHtml(src) + '" alt="' + escapeHtml(it.title || "") + '" loading="lazy">';
+  function greatTileHtml(it) {
+    // Curator-supplied links/thumbs, but still allowlist http(s) and escape into the attribute.
+    var href = /^https?:\/\//i.test(it.link || "") ? it.link : "#";
+    var title = escapeHtml(it.title || "");
+    var badge = it.media === "video" ? '<span class="play-badge" aria-hidden="true">▶</span>' : "";
+
+    var thumb;
+    var hasThumb = it.thumb && String(it.thumb).trim();
+    if (hasThumb) {
+      var src = /^https?:\/\//i.test(it.thumb) ? it.thumb : BASE + it.thumb;
+      thumb = '<img src="' + escapeHtml(src) + '" alt="' + title + '" loading="lazy">' + badge;
+    } else {
+      // Missing image never breaks the grid: branded civic-green placeholder with the title.
+      thumb = '<div class="great-placeholder"><span class="ph-title">' + title + "</span></div>" + badge;
     }
-    return '<div class="great-card">' + photo +
-      '<div class="great-body">' +
-        "<h3>" + escapeHtml(it.title || "") + "</h3>" +
-        (it.date ? '<p class="great-date">' + escapeHtml(dateHuman(it.date)) + "</p>" : "") +
-        "<p>" + escapeHtml(it.body || "") + "</p>" +
-        (it.credit ? '<p class="great-credit">' + escapeHtml(it.credit) + "</p>" : "") +
-      "</div></div>";
+
+    var meta = "<h3>" + title + "</h3>";
+    if (it.description) meta += '<p class="great-desc">' + escapeHtml(it.description) + "</p>";
+    var sub = [];
+    if (it.credit) sub.push(escapeHtml(it.credit));
+    if (it.date) sub.push(escapeHtml(dateHuman(it.date)));
+    if (sub.length) meta += '<p class="great-sub">' + sub.join(" · ") + "</p>";
+
+    return '<a class="great-tile" href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' +
+      '<div class="great-thumb">' + thumb + "</div>" +
+      '<div class="great-meta">' + meta + "</div>" +
+    "</a>";
   }
 
   function initGreat() {
@@ -477,7 +491,7 @@
           return;
         }
         items = items.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
-        holder.innerHTML = items.map(greatCardHtml).join("");
+        holder.innerHTML = items.map(greatTileHtml).join("");
       })
       .catch(function () {
         holder.innerHTML = '<p class="muted">Couldn\'t load these right now — please try again later.</p>';

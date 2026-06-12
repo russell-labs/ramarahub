@@ -1,13 +1,15 @@
 {
-  "intro": "Good things happen in Ramara every week. This is where we collect them — a great catch on Lake Simcoe, a volunteer who showed up, a local business milestone, a kid's win. Send yours and we'll share it.",
+  "intro": "Good things happen in Ramara every week. Tap any tile to watch or read the original. Got one to share? Send it over and we'll add it.",
   "items": [
     {
-      "id": "great-001",
+      "id": "great-002",
       "date": "2026-06-12",
-      "title": "Example — replace or remove",
-      "body": "A one or two sentence description of the good news.",
-      "credit": "Submitted by a resident",
-      "photo": ""
+      "title": "Roost Market — the apple fritter people keep recommending",
+      "description": "Travel creator Jamie Harkin stopped at The Roost Market in Brechin (3310 Kirkfield Rd) and called the apple fritter fantastic. Tap to watch.",
+      "link": "https://www.facebook.com/reel/1450715660077725",
+      "media": "video",
+      "thumb": "assets/Great/roost-market.png",
+      "credit": "Spotted by Jamie Harkin"
     }
   ]
 }
