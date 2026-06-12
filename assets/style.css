@@ -35,8 +35,8 @@ a:hover { color: var(--blue-dark); }
   background: var(--blue); color: #fff; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px;
   padding: 0.45rem 0.9rem; cursor: pointer; }
 .site-nav { background: var(--blue); }
-.site-nav .wrap { display: flex; gap: 0.25rem; }
-.site-nav a { color: #fff; text-decoration: none; padding: 0.55rem 0.8rem; font-size: 0.95rem; white-space: nowrap; border-radius: 6px 6px 0 0; }
+.site-nav .wrap { display: flex; flex-wrap: wrap; gap: 0.15rem 0.2rem; }
+.site-nav a { color: #fff; text-decoration: none; padding: 0.5rem 0.6rem; font-size: 0.9rem; white-space: nowrap; border-radius: 6px 6px 0 0; }
 .site-nav a:hover, .site-nav a.active { background: var(--blue-dark); color: #fff; }
 
 /* Mobile: hamburger menu instead of a scrolling tab strip */
@@ -230,6 +230,32 @@ button.tile { font: inherit; font-weight: 600; cursor: pointer; width: 100%; }
 .status-answered { background: #E0F0E6; color: var(--good); border: 1px solid #BEDDC9; }
 .status-follow-up { background: var(--blue-pale); color: var(--blue-dark); border: 1px solid #BCD6E6; }
 .status-closed { background: #ECEFF1; color: var(--muted); border: 1px solid var(--line); }
+
+/* Great things about Ramara */
+.share-block { background: var(--blue-pale); border-radius: 12px; padding: 1rem 1.1rem; margin: 1.2rem 0; }
+.share-block p { margin: 0 0 0.7rem; }
+.share-great { display: inline-block; background: var(--accent); color: #fff !important; text-decoration: none; font-weight: 800; border-radius: 10px; padding: 0.7rem 1.2rem; }
+.share-great:hover { background: #A96E12; }
+.great-list { display: grid; gap: 0.9rem; margin: 1.2rem 0; }
+.great-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.great-photo { display: block; width: 100%; height: auto; max-height: 460px; object-fit: cover; }
+.great-body { padding: 0.9rem 1.1rem; }
+.great-body h3 { margin: 0 0 0.2rem; font-size: 1.1rem; color: var(--blue-dark); }
+.great-date { margin: 0 0 0.5rem; font-size: 0.82rem; color: var(--muted); }
+.great-credit { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--muted); font-style: italic; }
+
+/* The Record — document library */
+.doc-controls { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0 0.4rem; }
+.doc-controls input { flex: 1 1 14rem; min-width: 0; font: inherit; font-size: 1.05rem; padding: 0.7rem 0.9rem; border: 2px solid var(--blue); border-radius: 10px; outline: none; }
+.doc-controls input:focus { border-color: var(--blue-dark); box-shadow: 0 2px 12px rgba(20,85,123,0.18); }
+.doc-controls select { font: inherit; font-size: 1.05rem; padding: 0.7rem 0.9rem; border: 2px solid var(--blue); border-radius: 10px; background: #fff; color: var(--ink); }
+.doc-count { font-size: 0.9rem; color: var(--muted); margin: 0.4rem 0 0.8rem; }
+.doc-row { padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+.doc-row .doc-hit { margin: 0; }
+.doc-date { font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+.doc-snippet { margin: 0.3rem 0 0; font-size: 0.9rem; color: var(--muted); }
+.doc-snippet b { color: var(--ink); background: #FFF3CF; font-weight: 700; }
+.doc-more-row { text-align: center; margin-top: 1.1rem; }
 
 /* Utility */
 .center { text-align: center; }

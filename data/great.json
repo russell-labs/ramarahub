@@ -1,0 +1,13 @@
+{
+  "intro": "Good things happen in Ramara every week. This is where we collect them — a great catch on Lake Simcoe, a volunteer who showed up, a local business milestone, a kid's win. Send yours and we'll share it.",
+  "items": [
+    {
+      "id": "great-001",
+      "date": "2026-06-12",
+      "title": "Example — replace or remove",
+      "body": "A one or two sentence description of the good news.",
+      "credit": "Submitted by a resident",
+      "photo": ""
+    }
+  ]
+}

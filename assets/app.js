@@ -17,6 +17,19 @@
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
+  var MONTHS = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+  // "2026-06-12" (or an ISO timestamp) -> "June 12, 2026". Parsed by parts to dodge timezone drift.
+  function dateHuman(d) {
+    if (!d) return "";
+    var p = String(d).slice(0, 10).split("-");
+    if (p.length < 3) return String(d);
+    var mo = parseInt(p[1], 10), day = parseInt(p[2], 10);
+    if (!mo || !day || mo < 1 || mo > 12) return String(d);
+    return MONTHS[mo - 1] + " " + day + ", " + p[0];
+  }
+
   function norm(s) { return (s || "").toLowerCase().replace(/[^a-z0-9\s]/g, " "); }
 
   var STOP = {};
@@ -432,6 +445,150 @@
       });
   }
 
+  /* ---------------- Great things about Ramara ---------------- */
+
+  function greatCardHtml(it) {
+    var photo = "";
+    if (it.photo) {
+      var src = /^https?:\/\//.test(it.photo) ? it.photo : BASE + "assets/" + it.photo;
+      photo = '<img class="great-photo" src="' + escapeHtml(src) + '" alt="' + escapeHtml(it.title || "") + '" loading="lazy">';
+    }
+    return '<div class="great-card">' + photo +
+      '<div class="great-body">' +
+        "<h3>" + escapeHtml(it.title || "") + "</h3>" +
+        (it.date ? '<p class="great-date">' + escapeHtml(dateHuman(it.date)) + "</p>" : "") +
+        "<p>" + escapeHtml(it.body || "") + "</p>" +
+        (it.credit ? '<p class="great-credit">' + escapeHtml(it.credit) + "</p>" : "") +
+      "</div></div>";
+  }
+
+  function initGreat() {
+    var holder = document.getElementById("great");
+    if (!holder) return;
+    fetch(BASE + "data/great.json")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var intro = document.getElementById("greatIntro");
+        if (intro && data && data.intro) intro.textContent = data.intro;
+        var items = (data && data.items) || [];
+        if (!items.length) {
+          holder.innerHTML = '<p class="muted">Be the first — send us something good.</p>';
+          return;
+        }
+        items = items.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+        holder.innerHTML = items.map(greatCardHtml).join("");
+      })
+      .catch(function () {
+        holder.innerHTML = '<p class="muted">Couldn\'t load these right now — please try again later.</p>';
+      });
+  }
+
+  /* ---------------- The Record (public document library) ---------------- */
+
+  var DOC_LABELS = { bylaw: "Bylaw", news: "Township news", "staff-report": "Report/plan", other: "Township page", minutes: "Minutes", agenda: "Agenda" };
+
+  function initDocuments() {
+    var holder = document.getElementById("docs");
+    if (!holder) return;
+    var searchInput = document.getElementById("docSearch");
+    var filterSel = document.getElementById("docFilter");
+    var countEl = document.getElementById("docCount");
+    var moreBtn = document.getElementById("docMore");
+    var PAGE = 50;
+    var state = { mode: "browse", filter: "", offset: 0, total: null };
+
+    function setCount(t) { if (countEl) countEl.textContent = t || ""; }
+    function hideMore() { if (moreBtn) moreBtn.hidden = true; }
+    function showError() {
+      holder.innerHTML = '<p class="muted">The record is temporarily unavailable — try again shortly.</p>';
+      setCount(""); hideMore();
+    }
+
+    function docRow(d, withSnippet) {
+      var pill = '<span class="pill">' + (DOC_LABELS[d.doc_type] || "Document") + "</span>";
+      var date = '<span class="doc-date">' + (d.doc_date ? escapeHtml(dateHuman(d.doc_date)) : "date not recorded") + "</span>";
+      // Only allow http(s) sources; escape into the attribute (same allowlist pattern as great photos).
+      var href = /^https?:\/\//i.test(d.source_url || "") ? d.source_url : "#";
+      var html = '<div class="doc-row"><p class="doc-hit">' + pill +
+        '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(d.title || "Untitled") + " ↗</a> " + date + "</p>";
+      // snippet is ts_headline output: escape everything, then re-allow only the <b>/</b> highlight tags.
+      if (withSnippet && d.snippet) {
+        var snip = escapeHtml(d.snippet).replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>");
+        html += '<p class="doc-snippet">' + snip + "</p>";
+      }
+      return html + "</div>";
+    }
+
+    function renderBrowse(reset) {
+      if (reset) { holder.innerHTML = '<p class="muted">Loading the record…</p>'; hideMore(); }
+      var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type,doc_date" +
+        "&order=doc_date.desc.nullslast&limit=" + PAGE + "&offset=" + state.offset;
+      if (state.filter) url += "&doc_type=eq." + encodeURIComponent(state.filter);
+      fetch(url, { headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, Prefer: "count=exact" } })
+        .then(function (r) {
+          var cr = r.headers.get("Content-Range");
+          if (cr && cr.indexOf("/") >= 0) {
+            var tot = cr.split("/")[1];
+            if (tot && tot !== "*") state.total = parseInt(tot, 10);
+          }
+          if (!r.ok) return Promise.reject();
+          return r.json();
+        })
+        .then(function (docs) {
+          docs = docs || [];
+          if (reset) holder.innerHTML = "";
+          if (reset && !docs.length) { holder.innerHTML = '<p class="muted">No documents found for this filter.</p>'; setCount(""); hideMore(); return; }
+          holder.insertAdjacentHTML("beforeend", docs.map(function (d) { return docRow(d, false); }).join(""));
+          state.offset += docs.length;
+          setCount(state.total != null ? "Showing " + state.offset + " of " + state.total : "Showing " + state.offset);
+          if (moreBtn) moreBtn.hidden = !(state.total != null && state.offset < state.total);
+        })
+        .catch(showError);
+    }
+
+    function renderSearch(q) {
+      holder.innerHTML = '<p class="muted">Searching…</p>'; setCount(""); hideMore();
+      fetch(SB.url + "/rest/v1/rpc/search_docs", {
+        method: "POST",
+        headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json" },
+        body: JSON.stringify({ q: q, cnt: 25 })
+      })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (docs) {
+          docs = docs || [];
+          if (!docs.length) {
+            holder.innerHTML = '<p class="muted">No matches for “' + escapeHtml(q) + '”. Try fewer or different words.</p>';
+            setCount(""); return;
+          }
+          // Render in the order the RPC returns (recency-ranked) — do not re-sort.
+          holder.innerHTML = docs.map(function (d) { return docRow(d, true); }).join("");
+          setCount("Showing " + docs.length + " best matches for “" + escapeHtml(q) + "”");
+        })
+        .catch(showError);
+    }
+
+    function refresh() {
+      var q = searchInput ? searchInput.value.trim() : "";
+      if (q) { state.mode = "search"; renderSearch(q); }
+      else { state.mode = "browse"; state.offset = 0; renderBrowse(true); }
+    }
+
+    if (filterSel) filterSel.addEventListener("change", function () {
+      state.filter = filterSel.value;
+      if (searchInput) searchInput.value = "";
+      state.mode = "browse"; state.offset = 0;
+      renderBrowse(true);
+    });
+    if (searchInput) {
+      var deb;
+      searchInput.addEventListener("input", function () { clearTimeout(deb); deb = setTimeout(refresh, 300); });
+      searchInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); clearTimeout(deb); refresh(); } });
+    }
+    if (moreBtn) moreBtn.addEventListener("click", function () { renderBrowse(false); });
+
+    renderBrowse(true);
+  }
+
   /* ---------------- Back to top ---------------- */
 
   function initBackToTop() {
@@ -465,6 +622,8 @@
     initChat();
     initTiles();
     initAsks();
+    initGreat();
+    initDocuments();
     initBackToTop();
     initSubscribe();
     initMenu();

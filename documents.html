@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The township record — Ramara Hub</title>
+<meta name="description" content="A searchable public index of the township documents the Hub has ingested — bylaws, council news, reports and plans, and township pages. Every result links to the official source on ramara.ca.">
+<link rel="stylesheet" href="assets/style.css?v=19">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body data-base="">
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">Ramara Hub</a>
+    <span class="sub">A Ramara Civic Forum project</span>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰ Menu</button>
+  </div>
+</header>
+<nav class="site-nav" id="siteNav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="browse.html">Everyday answers</a>
+    <a href="briefs/index.html">Issue Briefs</a>
+    <a href="money.html">Ramara&#39;s Money</a>
+    <a href="council.html">Council &amp; Wards</a>
+    <a href="asked.html">Asked the Township</a>
+    <a href="great-things.html">Great things</a>
+    <a href="documents.html" class="active">The Record</a>
+  </div>
+</nav>
+
+<main class="wrap">
+<article class="brief">
+  <span class="pill">Open the books</span>
+  <h1>The township record</h1>
+  <p>This is the public record, indexed so you can search it and read the originals yourself. It holds the township documents the Hub has ingested — bylaws, council news, staff reports and plans, and township web pages. Every result links to the official source on ramara.ca.</p>
+
+  <div class="flag">What's not here yet: council minutes and agendas. Those live on the township's CivicWeb portal, which doesn't allow bulk indexing. In June 2026 we formally asked the Clerk's office to provide them in bulk so they can be added here — that request is open. See the <a href="asked.html">Asked the Township</a> log.</div>
+
+  <div class="doc-controls">
+    <input type="search" id="docSearch" placeholder="Search the record (e.g. bayshore, short-term rental, budget)" aria-label="Search township documents">
+    <select id="docFilter" aria-label="Filter by document type">
+      <option value="">All types</option>
+      <option value="bylaw">Bylaws</option>
+      <option value="news">Township news</option>
+      <option value="staff-report">Reports &amp; plans</option>
+      <option value="other">Township pages</option>
+    </select>
+  </div>
+  <p class="doc-count" id="docCount" aria-live="polite"></p>
+
+  <div id="docs">
+    <p class="muted">Loading the record…</p>
+  </div>
+  <div class="doc-more-row">
+    <button type="button" id="docMore" class="back-link" hidden>Show more</button>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="callout-phone">Township of Ramara: 705-484-5374 · Emergencies: 911</p>
+    <p class="disclaimer">Ramara Hub is an independent, free community resource — a Ramara Civic Forum project.
+    It is not the Township of Ramara's official website. Every result links to its official source on ramara.ca.</p>
+    <p><a href="about.html">About</a> · <a href="https://www.ramara.ca/" target="_blank" rel="noopener">Official township site: ramara.ca ↗</a></p>
+  </div>
+</footer>
+<script src="assets/app.js?v=19"></script>
+</body>
+</html>
