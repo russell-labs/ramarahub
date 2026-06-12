@@ -20,7 +20,12 @@
   function norm(s) { return (s || "").toLowerCase().replace(/[^a-z0-9\s]/g, " "); }
 
   var STOP = {};
-  ("a an and any about also are as at be been being but by can could did do does for from get got has have having how i if in into is it its just me my of on or our out really should so some that the their there they this to was we what when where which who why will with would you your").split(" ").forEach(function (w) { STOP[w] = true; });
+  ("a an and any about also are as at be been being but by can could did do does for from get got has have having how i if in into is it its just me my of on or our out really should so some that the their there they this to was we what when where which who why will with would you your wondering").split(" ").forEach(function (w) { STOP[w] = true; });
+
+  // Ramara place names: they help RANK results but don't count against confidence —
+  // "can I have an STR in Lagoon City" is an STR question, not a Lagoon City question.
+  var PLACES = {};
+  ("ramara lagoon city brechin atherley washago udney sebright uptergrove gamebridge bayshore village longford fawn floral talbot").split(" ").forEach(function (w) { PLACES[w] = true; });
 
   function words(s) { return norm(s).split(/\s+/).filter(Boolean); }
 
@@ -49,7 +54,11 @@
     var aHits = hitCount(terms, aw);
     // cov counts ONLY question+keyword coverage: answer-body matches add score but
     // never confidence (prevents long answers from "confidently" matching everything).
-    return { s: qHits * 3 + aHits, cov: qHits / terms.length };
+    // Place names are excluded from the denominator: they rank, they don't gate.
+    var core = terms.filter(function (t) { return !PLACES[t]; });
+    var coreHits = hitCount(core, qw);
+    var denom = core.length || terms.length;
+    return { s: qHits * 3 + aHits, cov: (core.length ? coreHits : qHits) / denom };
   }
 
   function linkHref(url) {
@@ -190,8 +199,10 @@
 
     var top = ranked[0];
     // Confident: top hit covers most of the meaningful words in the question.
-    var confident = top && top.cov >= 0.62 && top.s >= 6;
-    var related = top && !confident && top.cov >= 0.34 && top.s >= 5;
+    // Score floor scales down for short questions ("when is the election" = 1 term).
+    var floor = Math.min(6, Math.max(4, terms.length * 2));
+    var confident = top && top.cov >= 0.62 && top.s >= floor;
+    var related = top && !confident && top.cov >= 0.34 && top.s >= 4;
 
     if (!confident && !related) {
       var fb = "<p>I don't have a solid, sourced answer for that yet — and this site never guesses. " +
