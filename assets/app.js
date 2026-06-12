@@ -368,6 +368,66 @@
     });
   }
 
+  /* ---------------- Asked the Township (accordion log) ---------------- */
+
+  var ASK_STATUS = {
+    awaiting: "Awaiting reply",
+    answered: "Answered",
+    "follow-up": "Follow-up",
+    closed: "Closed"
+  };
+
+  function askItemHtml(a, idx) {
+    var status = ASK_STATUS[a.status] ? a.status : "awaiting";
+    var label = ASK_STATUS[status];
+    var updates = (a.updates && a.updates.length)
+      ? '<ul class="ask-timeline">' + a.updates.map(function (u) {
+          return '<li><span class="tl-date">' + escapeHtml(u.date) + "</span>" + escapeHtml(u.note) + "</li>";
+        }).join("") + "</ul>"
+      : '<p class="ask-empty">No reply logged yet — we update this the day the township responds.</p>';
+    return '<div class="ask" data-idx="' + idx + '">' +
+      '<button type="button" class="ask-head" aria-expanded="false">' +
+        '<span class="ask-date">' + escapeHtml(a.date_asked) + "</span>" +
+        '<span class="ask-subject">' + escapeHtml(a.subject) + "</span>" +
+        '<span class="status-pill status-' + status + '">' + label + "</span>" +
+        '<span class="ask-caret" aria-hidden="true">›</span>' +
+      "</button>" +
+      '<div class="ask-body" hidden>' +
+        '<p class="ask-meta">Asked ' + escapeHtml(a.date_asked) + " · by " + escapeHtml(a.channel) +
+          " · to " + escapeHtml(a.to) + "</p>" +
+        "<p>" + escapeHtml(a.summary) + "</p>" +
+        updates +
+      "</div>" +
+    "</div>";
+  }
+
+  function initAsks() {
+    var holder = document.getElementById("asks");
+    if (!holder) return;
+    fetch(BASE + "data/asks.json")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var asks = (data && data.asks) || [];
+        if (!asks.length) {
+          holder.innerHTML = '<p class="muted">No questions logged yet — check back soon.</p>';
+          return;
+        }
+        holder.innerHTML = asks.map(askItemHtml).join("");
+        holder.addEventListener("click", function (ev) {
+          var head = ev.target.closest(".ask-head");
+          if (!head) return;
+          var card = head.closest(".ask");
+          var body = card.querySelector(".ask-body");
+          var open = card.classList.toggle("open");
+          body.hidden = !open;
+          head.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      })
+      .catch(function () {
+        holder.innerHTML = '<p class="muted">Couldn\'t load the log right now — please try again later.</p>';
+      });
+  }
+
   /* ---------------- Back to top ---------------- */
 
   function initBackToTop() {
@@ -400,6 +460,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initChat();
     initTiles();
+    initAsks();
     initBackToTop();
     initSubscribe();
     initMenu();

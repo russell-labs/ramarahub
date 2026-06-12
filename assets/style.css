@@ -201,6 +201,36 @@ button.tile { font: inherit; font-weight: 600; cursor: pointer; width: 100%; }
 .founder img { border-radius: 12px; flex-shrink: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
 .founder div { flex: 1; min-width: 240px; }
 
+/* Asked the Township — accordion log */
+.asks { margin: 1.2rem 0 0.5rem; }
+.ask { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 0.7rem; overflow: hidden; }
+.ask-head {
+  display: flex; align-items: center; gap: 0.7rem; width: 100%;
+  font: inherit; text-align: left; cursor: pointer;
+  background: none; border: none; padding: 0.9rem 1rem; color: var(--ink);
+}
+.ask-head:hover { background: var(--blue-pale); }
+.ask-head .ask-date { font-size: 0.82rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+.ask-head .ask-subject { flex: 1; font-weight: 700; color: var(--blue-dark); font-size: 0.98rem; min-width: 0; }
+.ask-head .ask-caret { flex-shrink: 0; color: var(--muted); transition: transform 0.2s; }
+.ask[open] .ask-head .ask-caret, .ask.open .ask-head .ask-caret { transform: rotate(90deg); }
+.ask-body { padding: 0 1rem 1rem; border-top: 1px solid var(--line); }
+.ask-body p { margin: 0.8rem 0 0; }
+.ask-meta { font-size: 0.85rem; color: var(--muted); }
+.ask-timeline { list-style: none; padding: 0; margin: 0.9rem 0 0; }
+.ask-timeline li { border-left: 2px solid var(--line); padding: 0 0 0.7rem 0.9rem; position: relative; font-size: 0.92rem; }
+.ask-timeline li:last-child { padding-bottom: 0; }
+.ask-timeline li::before { content: ""; position: absolute; left: -5px; top: 0.35rem; width: 8px; height: 8px; border-radius: 999px; background: var(--blue); }
+.ask-timeline .tl-date { font-weight: 700; color: var(--blue-dark); display: block; }
+.ask-empty { font-size: 0.9rem; color: var(--muted); font-style: italic; }
+
+/* Status pills */
+.status-pill { display: inline-block; border-radius: 999px; padding: 0.12rem 0.7rem; font-size: 0.78rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.status-awaiting { background: #FFF1D6; color: #8A5800; border: 1px solid #EAD6A8; }
+.status-answered { background: #E0F0E6; color: var(--good); border: 1px solid #BEDDC9; }
+.status-follow-up { background: var(--blue-pale); color: var(--blue-dark); border: 1px solid #BCD6E6; }
+.status-closed { background: #ECEFF1; color: var(--muted); border: 1px solid var(--line); }
+
 /* Utility */
 .center { text-align: center; }
 .muted { color: var(--muted); }
