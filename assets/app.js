@@ -329,19 +329,22 @@
 
   /* ---------------- Mailing list signup ---------------- */
 
-  function initSubscribe() {
-    var form = document.getElementById("subscribeForm");
+  function bindSubscribe(form, source) {
     if (!form) return;
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var email = form.email.value.trim();
       if (!email) return;
-      sbInsert("subscribers", { email: email, source: "home" }).then(function (ok) {
+      sbInsert("subscribers", { email: email, source: source }).then(function (ok) {
         form.outerHTML = ok || SB.ok
           ? '<p class="fu-done">You\'re on the list. Expect plain, useful updates — no spam, unsubscribe anytime. 🤝</p>'
           : '<p class="fu-done">Couldn\'t sign you up right now — email <a href="mailto:russellcolevop@gmail.com?subject=Ramara%20Hub%20updates">russellcolevop@gmail.com</a> and we\'ll add you.</p>';
       });
     });
+  }
+  function initSubscribe() {
+    bindSubscribe(document.getElementById("subscribeForm"), "home");
+    bindSubscribe(document.getElementById("footerSubscribe"), "footer");
   }
 
   /* ---------------- Topic tiles (in-place expand) ---------------- */
