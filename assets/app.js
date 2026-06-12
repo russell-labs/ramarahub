@@ -87,9 +87,27 @@
 
   var SB = {
     url: "https://pchdckgdrigevxfjwgom.supabase.co",
-    key: "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD"
+    key: "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD",
+    jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjaGRja2dkcmlnZXZ4Zmp3Z29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzI5NzYsImV4cCI6MjA5NjgwODk3Nn0.l4NEaRtHzI9C8d2XZV7ZDDhxBN3CuX84K6Wj-gA4AZc"
   };
   SB.ok = SB.url.indexOf("http") === 0;
+
+  // Ask the LLM answer engine (activates once the Gemini key is configured server-side).
+  function askLLM(q, picks) {
+    if (!SB.ok) return Promise.resolve(null);
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, 9000);
+    return fetch(SB.url + "/functions/v1/hub-answer", {
+      method: "POST",
+      signal: ctrl.signal,
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + SB.jwt, "apikey": SB.jwt },
+      body: JSON.stringify({ q: q, picks: picks.map(function (p) { return { q: p.q, a: p.a, phone: p.phone || null }; }) })
+    }).then(function (r) {
+      clearTimeout(timer);
+      if (!r.ok) return null;
+      return r.json().then(function (d) { return d && d.answer ? d : null; });
+    }).catch(function () { clearTimeout(timer); return null; });
+  }
 
   function sbInsert(table, row) {
     if (!SB.ok) return Promise.resolve(false);
@@ -209,7 +227,7 @@
         "For something urgent, call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30) or use the " +
         '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>.</p>' +
         followupFormHtml(q, "Or leave your email — <strong>Russell Cole will get back to you</strong> with the answer, and it gets added to the Hub so the next neighbour finds it instantly.");
-      return { html: fb, verdict: "fallback", topId: null, showFeedback: false };
+      return { html: fb, verdict: "fallback", topId: null, showFeedback: false, picks: [] };
     }
 
     // Keep only results in the same league as the top hit, max 3.
@@ -222,7 +240,19 @@
       : "<p class=\"lead-line\">I don't have an exact answer to that, but this is the closest sourced information I have:</p>";
 
     var html = lead + picks.map(function (x) { return renderEntry(x.e); }).join("");
-    return { html: html, verdict: confident ? "confident" : "related", topId: top.e.id, showFeedback: true };
+    return { html: html, verdict: confident ? "confident" : "related", topId: top.e.id, showFeedback: true,
+             picks: picks.map(function (x) { return x.e; }) };
+  }
+
+  function llmHtml(d) {
+    var html = '<p class="lead-line">' + escapeHtml(d.answer).replace(/\n\n+/g, "</p><p>").replace(/\n/g, "<br>") + "</p>";
+    if (d.sources && d.sources.length) {
+      html += '<p class="after-line">Sources from the township record (verify with the document):</p>' +
+        d.sources.map(function (s) {
+          return '<p class="doc-hit"><a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.title) + " ↗</a></p>";
+        }).join("");
+    }
+    return html;
   }
 
   function askQuestion(q, chat, input) {
@@ -233,15 +263,22 @@
     think.scrollIntoView({ behavior: "smooth", block: "nearest" });
     fetchKB(function (kb) {
       var ans = composeAnswer(kb, q);
-      logQuestion(q, ans.verdict, ans.topId);
-      // For anything short of a confident answer, also search the full township record.
+      // Try the LLM engine first; it gracefully returns null until the key is configured.
+      var llmP = askLLM(q, ans.picks || []);
       var docsP = ans.verdict === "confident" ? Promise.resolve([]) : searchDocuments(q);
       var delay = new Promise(function (res) { setTimeout(res, 800 + Math.random() * 400); });
-      Promise.all([docsP, delay]).then(function (r) {
-        var docs = r[0] || [];
+      Promise.all([llmP, docsP, delay]).then(function (r) {
+        var llm = r[0], docs = r[1] || [];
         think.remove();
-        var html = ans.html + (docs.length ? docResultsHtml(docs) : "") +
-          (ans.showFeedback ? feedbackBarHtml(q) : "");
+        var html;
+        if (llm) {
+          logQuestion(q, "llm", ans.topId);
+          html = llmHtml(llm) + feedbackBarHtml(q);
+        } else {
+          logQuestion(q, ans.verdict, ans.topId);
+          html = ans.html + (docs.length ? docResultsHtml(docs) : "") +
+            (ans.showFeedback ? feedbackBarHtml(q) : "");
+        }
         var reply = bubble("hub", html);
         chat.appendChild(reply);
         reply.scrollIntoView({ behavior: "smooth", block: "nearest" });
