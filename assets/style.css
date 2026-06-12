@@ -157,6 +157,8 @@ th { background: var(--blue-pale); color: var(--blue-dark); }
 .fu-row button:hover { background: var(--blue-dark); }
 .followup input[name="note"] { width: 100%; font: inherit; font-size: 0.95rem; padding: 0.5rem 0.8rem; border: 1px solid var(--line); border-radius: 10px; }
 .fu-done { margin: 0.8rem 0 0; padding-top: 0.6rem; border-top: 1px solid var(--line); font-weight: 600; color: var(--good); }
+.doc-hit { margin: 0.35rem 0; font-size: 0.95rem; }
+.doc-hit .pill { margin-right: 0.3rem; }
 .cta-row { margin: 0.8rem 0; }
 .cta-btn { display: inline-block; background: var(--blue); color: #fff !important; text-decoration: none; font-weight: 800; border-radius: 10px; padding: 0.7rem 1.2rem; }
 .cta-btn:hover { background: var(--blue-dark); }

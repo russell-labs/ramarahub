@@ -98,6 +98,27 @@
     sbInsert("questions", { q: q.slice(0, 500), verdict: verdict, top_entry: topId || null });
   }
 
+  // Tier 2: full-text search across the township record (899 ramara.ca pages, bylaws, reports)
+  function searchDocuments(q) {
+    if (!SB.ok) return Promise.resolve([]);
+    var terms = meaningfulTerms(q).slice(0, 6).join(" ");
+    if (!terms) return Promise.resolve([]);
+    var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type" +
+      "&fts=wfts(english)." + encodeURIComponent(terms) + "&limit=3";
+    return fetch(url, { headers: { "apikey": SB.key, "Authorization": "Bearer " + SB.key } })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .catch(function () { return []; });
+  }
+
+  function docResultsHtml(docs) {
+    var labels = { bylaw: "Bylaw", news: "Township news", "staff-report": "Report/plan", other: "Township page", minutes: "Minutes", agenda: "Agenda" };
+    return '<p class="lead-line" style="margin-top:0.8rem">From the township record (verify with the source):</p>' +
+      docs.map(function (d) {
+        return '<p class="doc-hit"><span class="pill">' + (labels[d.doc_type] || "Document") + "</span> " +
+          '<a href="' + d.source_url + '" target="_blank" rel="noopener">' + escapeHtml(d.title) + " ↗</a></p>";
+      }).join("");
+  }
+
   /* ---------------- Chat ---------------- */
 
   function bubble(cls, html) {
@@ -198,15 +219,21 @@
     chat.appendChild(think);
     think.scrollIntoView({ behavior: "smooth", block: "nearest" });
     fetchKB(function (kb) {
-      setTimeout(function () {
+      var ans = composeAnswer(kb, q);
+      logQuestion(q, ans.verdict, ans.topId);
+      // For anything short of a confident answer, also search the full township record.
+      var docsP = ans.verdict === "confident" ? Promise.resolve([]) : searchDocuments(q);
+      var delay = new Promise(function (res) { setTimeout(res, 800 + Math.random() * 400); });
+      Promise.all([docsP, delay]).then(function (r) {
+        var docs = r[0] || [];
         think.remove();
-        var ans = composeAnswer(kb, q);
-        logQuestion(q, ans.verdict, ans.topId);
-        var reply = bubble("hub", ans.html + (ans.showFeedback ? feedbackBarHtml(q) : ""));
+        var html = ans.html + (docs.length ? docResultsHtml(docs) : "") +
+          (ans.showFeedback ? feedbackBarHtml(q) : "");
+        var reply = bubble("hub", html);
         chat.appendChild(reply);
         reply.scrollIntoView({ behavior: "smooth", block: "nearest" });
         if (input) input.focus();
-      }, 800 + Math.random() * 400);
+      });
     });
   }
 
