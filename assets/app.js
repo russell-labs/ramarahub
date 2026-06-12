@@ -244,6 +244,7 @@
 
     if (!confident && !related) {
       var fb = "<p>I don't have a solid, sourced answer for that yet — and this site never guesses. " +
+        "It only publishes what clears <a href=\"" + BASE + "about.html#standard\">our standard</a>: every claim tied to a credible source. When there isn't one, it says so rather than guess. " +
         "For something urgent, call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30) or use the " +
         '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>.</p>' +
         followupFormHtml(q, "Or leave your email — <strong>Russell Cole will get back to you</strong> with the answer, and it gets added to the Hub so the next neighbour finds it instantly.");
