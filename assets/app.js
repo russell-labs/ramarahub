@@ -72,6 +72,32 @@
     return html;
   }
 
+  /* ---------------- Backend (Supabase REST, insert-only) ---------------- */
+
+  var SB = {
+    url: "https://pchdckgdrigevxfjwgom.supabase.co",
+    key: "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD"
+  };
+  SB.ok = SB.url.indexOf("http") === 0;
+
+  function sbInsert(table, row) {
+    if (!SB.ok) return Promise.resolve(false);
+    return fetch(SB.url + "/rest/v1/" + table, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SB.key,
+        "Authorization": "Bearer " + SB.key,
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(row)
+    }).then(function (r) { return r.ok; }).catch(function () { return false; });
+  }
+
+  function logQuestion(q, verdict, topId) {
+    sbInsert("questions", { q: q.slice(0, 500), verdict: verdict, top_entry: topId || null });
+  }
+
   /* ---------------- Chat ---------------- */
 
   function bubble(cls, html) {
@@ -81,15 +107,57 @@
     return d;
   }
 
-  var FALLBACK_HTML =
-    "I don't have a solid, sourced answer for that yet — and this site never guesses. " +
-    "Call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30), use the " +
-    '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>, ' +
-    'or email <a href="mailto:russellcolevop@gmail.com">the Hub team</a> — your question helps us add what\'s missing.';
+  function followupFormHtml(q, context) {
+    return '<form class="followup" data-q="' + escapeHtml(q).replace(/"/g, "&quot;") + '">' +
+      '<p class="fu-line">' + context + "</p>" +
+      '<div class="fu-row"><input type="email" name="email" placeholder="Your email" required>' +
+      '<button type="submit">Get my answer</button></div>' +
+      '<input type="text" name="note" placeholder="Anything to add? (optional)">' +
+      "</form>";
+  }
+
+  function feedbackBarHtml(q) {
+    return '<div class="fb-bar" data-q="' + escapeHtml(q).replace(/"/g, "&quot;") + '">' +
+      '<span>Did this answer it?</span>' +
+      '<button type="button" class="fb-yes" aria-label="Yes, helpful">👍</button>' +
+      '<button type="button" class="fb-no" aria-label="No, could be better">👎</button>' +
+      "</div>";
+  }
+
+  function initChatDelegation(chat) {
+    chat.addEventListener("click", function (ev) {
+      var yes = ev.target.closest(".fb-yes");
+      var no = ev.target.closest(".fb-no");
+      if (!yes && !no) return;
+      var bar = ev.target.closest(".fb-bar");
+      var q = bar.getAttribute("data-q");
+      if (yes) {
+        sbInsert("feedback", { q: q, helpful: true });
+        bar.innerHTML = "<span>Glad it helped. 🤝</span>";
+      } else {
+        sbInsert("feedback", { q: q, helpful: false });
+        bar.outerHTML = followupFormHtml(q,
+          "Sorry it fell short. Leave your email — <strong>Russell Cole will get back to you</strong> with a better answer, and your question goes on the research list.");
+      }
+    });
+    chat.addEventListener("submit", function (ev) {
+      var form = ev.target.closest(".followup");
+      if (!form) return;
+      ev.preventDefault();
+      var email = form.email.value.trim();
+      var note = form.note ? form.note.value.trim() : "";
+      var q = form.getAttribute("data-q");
+      sbInsert("feedback", { q: q, helpful: false, email: email, comment: note || null }).then(function (ok) {
+        form.outerHTML = ok || SB.ok
+          ? '<p class="fu-done">Got it — you\'ll hear back soon. Your question just made the Hub better. 🤝</p>'
+          : '<p class="fu-done">Couldn\'t send right now — email <a href="mailto:russellcolevop@gmail.com?subject=' + encodeURIComponent("Ramara Hub question: " + q) + '">russellcolevop@gmail.com</a> instead.</p>';
+      });
+    });
+  }
 
   function composeAnswer(kb, q) {
     if (!kb) {
-      return "<p>Search is unavailable right now. Call the Township at <strong>705-484-5374</strong> (Mon–Fri 9–4:30).</p>";
+      return { html: "<p>Search is unavailable right now. Call the Township at <strong>705-484-5374</strong> (Mon–Fri 9–4:30).</p>", verdict: "error", topId: null, showFeedback: false };
     }
     var terms = meaningfulTerms(q);
     var ranked = kb.entries.map(function (e) {
@@ -102,7 +170,13 @@
     var confident = top && top.cov >= 0.62 && top.s >= 6;
     var related = top && !confident && top.cov >= 0.34 && top.s >= 5;
 
-    if (!confident && !related) return "<p>" + FALLBACK_HTML + "</p>";
+    if (!confident && !related) {
+      var fb = "<p>I don't have a solid, sourced answer for that yet — and this site never guesses. " +
+        "For something urgent, call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30) or use the " +
+        '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>.</p>' +
+        followupFormHtml(q, "Or leave your email — <strong>Russell Cole will get back to you</strong> with the answer, and it gets added to the Hub so the next neighbour finds it instantly.");
+      return { html: fb, verdict: "fallback", topId: null, showFeedback: false };
+    }
 
     // Keep only results in the same league as the top hit, max 3.
     var picks = ranked.filter(function (x) {
@@ -114,11 +188,7 @@
       : "<p class=\"lead-line\">I don't have an exact answer to that, but this is the closest sourced information I have:</p>";
 
     var html = lead + picks.map(function (x) { return renderEntry(x.e); }).join("");
-    if (!confident) {
-      html += '<p class="after-line">Not what you needed? Call the Township at <strong>705-484-5374</strong> or ' +
-              '<a href="mailto:russellcolevop@gmail.com">tell the Hub team</a> so we can add it.</p>';
-    }
-    return html;
+    return { html: html, verdict: confident ? "confident" : "related", topId: top.e.id, showFeedback: true };
   }
 
   function askQuestion(q, chat, input) {
@@ -130,7 +200,9 @@
     fetchKB(function (kb) {
       setTimeout(function () {
         think.remove();
-        var reply = bubble("hub", composeAnswer(kb, q));
+        var ans = composeAnswer(kb, q);
+        logQuestion(q, ans.verdict, ans.topId);
+        var reply = bubble("hub", ans.html + (ans.showFeedback ? feedbackBarHtml(q) : ""));
         chat.appendChild(reply);
         reply.scrollIntoView({ behavior: "smooth", block: "nearest" });
         if (input) input.focus();
@@ -143,12 +215,30 @@
     if (!form) return;
     var input = document.getElementById("q");
     var chat = document.getElementById("chat");
+    initChatDelegation(chat);
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var q = (input.value || "").trim();
       if (q.length < 2) return;
       input.value = "";
       askQuestion(q, chat, input);
+    });
+  }
+
+  /* ---------------- Mailing list signup ---------------- */
+
+  function initSubscribe() {
+    var form = document.getElementById("subscribeForm");
+    if (!form) return;
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var email = form.email.value.trim();
+      if (!email) return;
+      sbInsert("subscribers", { email: email, source: "home" }).then(function (ok) {
+        form.outerHTML = ok || SB.ok
+          ? '<p class="fu-done">You\'re on the list. Expect plain, useful updates — no spam, unsubscribe anytime. 🤝</p>'
+          : '<p class="fu-done">Couldn\'t sign you up right now — email <a href="mailto:russellcolevop@gmail.com?subject=Ramara%20Hub%20updates">russellcolevop@gmail.com</a> and we\'ll add you.</p>';
+      });
     });
   }
 
@@ -214,5 +304,6 @@
     initChat();
     initTiles();
     initBackToTop();
+    initSubscribe();
   });
 })();
