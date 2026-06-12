@@ -234,7 +234,11 @@
         "For something urgent, call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30) or use the " +
         '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>.</p>' +
         followupFormHtml(q, "Or leave your email — <strong>Russell Cole will get back to you</strong> with the answer, and it gets added to the Hub so the next neighbour finds it instantly.");
-      return { html: fb, verdict: "fallback", topId: null, showFeedback: false, picks: [] };
+      // Even on a fallback verdict, hand the answer engine the 3 best-scoring KB
+      // entries. The server prompt treats them as "may or may not be relevant," so
+      // a near-miss KB entry can still seed a useful answer instead of a dead end.
+      return { html: fb, verdict: "fallback", topId: null, showFeedback: false,
+               picks: ranked.slice(0, 3).map(function (x) { return x.e; }) };
     }
 
     // Keep only results in the same league as the top hit, max 3.
