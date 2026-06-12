@@ -329,15 +329,25 @@
 
   /* ---------------- Mailing list signup ---------------- */
 
+  // Newsletter list lives in Buttondown (double opt-in + unsubscribe handling);
+  // a backup copy is written to our own DB so a subscriber is never lost.
+  var BUTTONDOWN_SUBSCRIBE = "https://buttondown.com/api/emails/embed-subscribe/russellcole143";
   function bindSubscribe(form, source) {
     if (!form) return;
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var email = form.email.value.trim();
       if (!email) return;
+      // Add to Buttondown — fire-and-forget, opaque response (no-cors), urlencoded like the native embed form.
+      try {
+        var body = new URLSearchParams();
+        body.append("email", email);
+        fetch(BUTTONDOWN_SUBSCRIBE, { method: "POST", mode: "no-cors", body: body });
+      } catch (e) {}
+      // Backup to our DB; this confirmed write also drives the inline confirmation.
       sbInsert("subscribers", { email: email, source: source }).then(function (ok) {
         form.outerHTML = ok || SB.ok
-          ? '<p class="fu-done">You\'re on the list. Expect plain, useful updates — no spam, unsubscribe anytime. 🤝</p>'
+          ? '<p class="fu-done">You\'re on the list. If a confirmation email arrives, click it to finish. No spam, unsubscribe anytime. 🤝</p>'
           : '<p class="fu-done">Couldn\'t sign you up right now — email <a href="mailto:russellcolevop@gmail.com?subject=Ramara%20Hub%20updates">russellcolevop@gmail.com</a> and we\'ll add you.</p>';
       });
     });
