@@ -28,13 +28,27 @@ a:hover { color: var(--blue-dark); }
 
 /* Header */
 .site-header { background: var(--blue-dark); color: #fff; padding: 0.8rem 0; }
-.site-header .wrap { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.site-header .wrap { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .site-header a.brand { color: #fff; text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: 0.2px; }
 .site-header .sub { color: #BFD7E6; font-size: 0.85rem; }
+.menu-btn { display: none; margin-left: auto; font: inherit; font-weight: 700; font-size: 1rem;
+  background: var(--blue); color: #fff; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px;
+  padding: 0.45rem 0.9rem; cursor: pointer; }
 .site-nav { background: var(--blue); }
-.site-nav .wrap { display: flex; gap: 0.25rem; overflow-x: auto; }
+.site-nav .wrap { display: flex; gap: 0.25rem; }
 .site-nav a { color: #fff; text-decoration: none; padding: 0.55rem 0.8rem; font-size: 0.95rem; white-space: nowrap; border-radius: 6px 6px 0 0; }
 .site-nav a:hover, .site-nav a.active { background: var(--blue-dark); color: #fff; }
+
+/* Mobile: hamburger menu instead of a scrolling tab strip */
+@media (max-width: 719px) {
+  .menu-btn { display: block; }
+  .site-header .sub { display: none; }
+  .site-nav { display: none; }
+  .site-nav.open { display: block; }
+  .site-nav .wrap { flex-direction: column; gap: 0; padding: 0.3rem 0.6rem 0.6rem; }
+  .site-nav a { font-size: 1.05rem; padding: 0.8rem 0.8rem; border-radius: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.12); }
+}
 
 /* Hero + search */
 .hero { background: linear-gradient(180deg, var(--blue-pale), var(--bg)); padding: 2rem 0 1.5rem; text-align: center; }
@@ -71,7 +85,7 @@ a:hover { color: var(--blue-dark); }
   0%, 100% { transform: scale(1); opacity: 0.75; }
   50% { transform: scale(1.35); opacity: 1; }
 }
-.askbar { display: flex; gap: 0.5rem; max-width: 40rem; margin: 0 auto; }
+.askbar { display: flex; gap: 0.5rem; max-width: 40rem; margin: 0 auto; padding: 0 0.4rem; }
 .askbar input {
   flex: 1; font-size: 1.1rem; padding: 0.85rem 1rem;
   border: 2px solid var(--blue); border-radius: 12px; outline: none;

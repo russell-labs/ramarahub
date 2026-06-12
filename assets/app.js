@@ -377,10 +377,24 @@
     update();
   }
 
+  /* ---------------- Mobile menu ---------------- */
+
+  function initMenu() {
+    var btn = document.getElementById("menuBtn");
+    var nav = document.getElementById("siteNav");
+    if (!btn || !nav) return;
+    btn.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "✕ Close" : "☰ Menu";
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initChat();
     initTiles();
     initBackToTop();
     initSubscribe();
+    initMenu();
   });
 })();
