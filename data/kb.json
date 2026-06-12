@@ -517,8 +517,8 @@
     {
       "id": "bl-str-rules",
       "cat": "bylaw",
-      "q": "What are the short-term rental rules in Ramara?",
-      "a": "Rentals under 28 days need an annual licence ($3,000) under Bylaw 2020.11 as amended. Maximum occupancy is 8 people. Administrative fines run $1,000 to $2,500. A map of licensed STRs is on the township's GIS. Penalty notices can be appealed to the Appeal Tribunal within 15 days.",
+      "q": "What are the short-term rental rules in Ramara? Can I get a new licence?",
+      "a": "Rentals under 28 days need an annual licence ($3,000) under Bylaw 2020.11 as amended; maximum occupancy is 8 people, with fines of $1,000 to $2,500. Here's the catch for NEW operators: since Bylaw 2021.87 (October 2021), a new licence will NOT be granted if your property is within 300 metres of an already-licensed STR. Existing licence holders keep operating; new applicants inside that buffer go on a waiting list and only get a licence if one nearby becomes available. In denser shoreline areas like Lagoon City, the 300 m rule means most new applications end up on the waiting list rather than getting a licence. Check the licensed STR map to see what's near you, and confirm your specific property with Bylaw Enforcement before making any plans.",
       "links": [
         {
           "label": "STR page",
@@ -527,9 +527,13 @@
         {
           "label": "Licensed STR map (GIS)",
           "url": "https://opengis.simcoe.ca/?MAP_ID=ramara-public"
+        },
+        {
+          "label": "Waiting list application",
+          "url": "https://forms.ramara.ca/Bylaw/Short-Term-Rental-Waiting-List-Application"
         }
       ],
-      "keywords": "airbnb vrbo cottage rental licence rules occupancy"
+      "keywords": "airbnb vrbo cottage rental licence license rules occupancy new grandfathered setback 300 metres waiting list start operate"
     },
     {
       "id": "bl-str-complaint",
