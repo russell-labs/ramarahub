@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "site": "Ramara Hub",
+    "tagline": "A Ramara Civic Forum project",
+    "updated": "2026-06-12",
+    "note": "A public log of questions the Ramara Civic Forum has formally put to the Township of Ramara, with status and dated updates. Status values: awaiting | answered | follow-up | closed."
+  },
+  "asks": [
+    {
+      "id": "ask-001",
+      "date_asked": "2026-06-12",
+      "channel": "email",
+      "to": "Clerk's office (clerks@ramara.ca)",
+      "subject": "Request: council minutes and bylaws in bulk/machine-readable form",
+      "summary": "Asked the township to provide its public council records archive — minutes and bylaws — in a convenient bulk or machine-readable format, so the Hub's document search can include the full public record and residents can find what council has decided without paging through the portal one document at a time. The records are already public on CivicWeb; the request is about format and access, not about anything confidential.",
+      "status": "awaiting",
+      "updates": []
+    }
+  ]
+}
