@@ -567,6 +567,24 @@
       "keywords": "dog tag license renew pet registration"
     },
     {
+      "id": "an-limit",
+      "cat": "animals",
+      "q": "How many pets or dogs can a resident have?",
+      "a": "Dogs: a maximum of 3 per household, each needing an annual licence under the township's dog licensing rules. For cats and other pets, the township does not publish a numerical limit on its animal services pages — kennel and animal-control rules may apply in specific cases, so if you're planning more animals (or a kennel), confirm with Bylaw Enforcement before you commit.",
+      "phone": "705-484-5374 ext. 292 (Bylaw Enforcement & animal services)",
+      "links": [
+        {
+          "label": "Animal services",
+          "url": "https://www.ramara.ca/living-here/animal-services/"
+        },
+        {
+          "label": "Dog licences",
+          "url": "https://www.ramara.ca/living-here/animal-services/dog-licences/"
+        }
+      ],
+      "keywords": "how many pets dogs cats animals limit maximum number household allowed per resident kennel"
+    },
+    {
       "id": "an-lost",
       "cat": "animals",
       "q": "I lost my dog / found a stray — who do I call?",

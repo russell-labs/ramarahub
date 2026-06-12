@@ -127,16 +127,23 @@
     sbInsert("questions", { q: q.slice(0, 500), verdict: verdict, top_entry: topId || null });
   }
 
-  // Tier 2: full-text search across the township record (899 ramara.ca pages, bylaws, reports)
+  // Tier 2: full-text search across the township record (899 ramara.ca pages, bylaws, reports).
+  // Tries all-words first; falls back to any-word so "how many pets can a resident have" still hits.
   function searchDocuments(q) {
     if (!SB.ok) return Promise.resolve([]);
-    var terms = meaningfulTerms(q).slice(0, 6).join(" ");
-    if (!terms) return Promise.resolve([]);
-    var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type" +
-      "&fts=wfts(english)." + encodeURIComponent(terms) + "&limit=3";
-    return fetch(url, { headers: { "apikey": SB.key, "Authorization": "Bearer " + SB.key } })
-      .then(function (r) { return r.ok ? r.json() : []; })
-      .catch(function () { return []; });
+    var terms = meaningfulTerms(q).slice(0, 6);
+    if (!terms.length) return Promise.resolve([]);
+    function query(t) {
+      var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type" +
+        "&fts=wfts(english)." + encodeURIComponent(t) + "&limit=3";
+      return fetch(url, { headers: { "apikey": SB.key, "Authorization": "Bearer " + SB.key } })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .catch(function () { return []; });
+    }
+    return query(terms.join(" ")).then(function (docs) {
+      if (docs.length || terms.length < 2) return docs;
+      return query(terms.join(" OR "));
+    });
   }
 
   function docResultsHtml(docs) {
