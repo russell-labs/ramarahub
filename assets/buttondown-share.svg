@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14557B"/>
+      <stop offset="1" stop-color="#0E3D59"/>
+    </linearGradient>
+    <radialGradient id="hl" cx="22%" cy="18%" r="60%">
+      <stop offset="0" stop-color="#236E96" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#236E96" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#hl)"/>
+  <text x="82" y="186" fill="#FFFFFF" font-size="118" font-weight="700" letter-spacing="-2">Ramara Hub</text>
+  <rect x="85" y="214" width="155" height="14" rx="6" fill="#C8861A"/>
+  <text x="85" y="328" fill="#FFFFFF" font-size="60" font-weight="700" letter-spacing="-1">The free weekly email</text>
+  <text x="85" y="392" fill="#D6E4EE" font-size="37">What neighbours asked most, what's new on the Hub,</text>
+  <text x="85" y="442" fill="#D6E4EE" font-size="37">and what's moving at the township. One email a week.</text>
+  <text x="85" y="572" fill="#96B2C6" font-size="31">A Ramara Civic Forum project</text>
+  <text x="1115" y="572" fill="#FFFFFF" font-size="33" font-weight="700" text-anchor="end">ramarahub.ca</text>
+</svg>
