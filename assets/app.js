@@ -332,7 +332,7 @@
   // Newsletter list lives in Buttondown (double opt-in + unsubscribe handling);
   // a backup copy is written to our own DB so a subscriber is never lost.
   var BUTTONDOWN_SUBSCRIBE = "https://buttondown.com/api/emails/embed-subscribe/russellcole143";
-  function bindSubscribe(form, source) {
+  function bindSubscribe(form, source, withTopics) {
     if (!form) return;
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
@@ -344,17 +344,27 @@
         body.append("email", email);
         fetch(BUTTONDOWN_SUBSCRIBE, { method: "POST", mode: "no-cors", body: body });
       } catch (e) {}
-      // Backup to our DB; this confirmed write also drives the inline confirmation.
-      sbInsert("subscribers", { email: email, source: source }).then(function (ok) {
+      var topics = withTopics && form.topics ? form.topics.value.trim() : "";
+      function done(ok) {
         form.outerHTML = ok || SB.ok
           ? '<p class="fu-done">You\'re on the list. If a confirmation email arrives, click it to finish. No spam, unsubscribe anytime. 🤝</p>'
           : '<p class="fu-done">Couldn\'t sign you up right now — email <a href="mailto:russellcolevop@gmail.com?subject=Ramara%20Hub%20updates">russellcolevop@gmail.com</a> and we\'ll add you.</p>';
+      }
+      // Backup to our DB; this confirmed write also drives the inline confirmation.
+      var row = { email: email, source: source };
+      if (topics) row.topics = topics;
+      sbInsert("subscribers", row).then(function (ok) {
+        // If the insert failed and we sent a topics field the DB may not have yet,
+        // retry without it so the email is never lost.
+        if (!ok && topics) sbInsert("subscribers", { email: email, source: source }).then(done);
+        else done(ok);
       });
     });
   }
   function initSubscribe() {
     bindSubscribe(document.getElementById("subscribeForm"), "home");
     bindSubscribe(document.getElementById("footerSubscribe"), "footer");
+    bindSubscribe(document.getElementById("newsSubscribeForm"), "news", true);
   }
 
   /* ---------------- Topic tiles (in-place expand) ---------------- */
@@ -617,6 +627,49 @@
     renderBrowse(true);
   }
 
+  /* ---------------- Latest from the Township (news feed) ---------------- */
+
+  // RPC latest_news(cnt) returns { title, source_url, doc_date, teaser }, newest first.
+  function fetchLatestNews(cnt) {
+    if (!SB.ok) return Promise.reject();
+    return fetch(SB.url + "/rest/v1/rpc/latest_news", {
+      method: "POST",
+      headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json" },
+      body: JSON.stringify({ cnt: cnt })
+    }).then(function (r) { return r.ok ? r.json() : Promise.reject(); });
+  }
+
+  function newsRowHtml(item, withTeaser) {
+    var date = '<span class="doc-date">' + (item.doc_date ? escapeHtml(dateHuman(item.doc_date)) : "date not recorded") + "</span>";
+    // Only allow http(s) sources; escape the url into the attribute (same allowlist as the record).
+    var href = /^https?:\/\//i.test(item.source_url || "") ? item.source_url : "#";
+    var html = '<div class="doc-row"><p class="doc-hit">' +
+      '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(item.title || "Untitled") + " ↗</a> " + date + "</p>";
+    if (withTeaser && item.teaser) html += '<p class="doc-snippet">' + escapeHtml(item.teaser) + "</p>";
+    return html + "</div>";
+  }
+
+  function renderNewsInto(holder, cnt, withTeaser, errLink) {
+    fetchLatestNews(cnt)
+      .then(function (items) {
+        items = items || [];
+        if (!items.length) { holder.innerHTML = '<p class="muted">No township posts yet — check back soon.</p>'; return; }
+        holder.innerHTML = items.map(function (it) { return newsRowHtml(it, withTeaser); }).join("");
+      })
+      .catch(function () {
+        holder.innerHTML = '<p class="muted">Couldn\'t load township news right now — ' + errLink + "</p>";
+      });
+  }
+
+  function initNews() {
+    var full = document.getElementById("news");
+    if (full) renderNewsInto(full, 30, true,
+      'read it directly at <a href="https://www.ramara.ca/news/" target="_blank" rel="noopener">ramara.ca/news ↗</a>.');
+    var teaser = document.getElementById("newsTeaser");
+    if (teaser) renderNewsInto(teaser, 3, false,
+      'see <a href="news.html">all township news</a>.');
+  }
+
   /* ---------------- Back to top ---------------- */
 
   function initBackToTop() {
@@ -652,6 +705,7 @@
     initAsks();
     initGreat();
     initDocuments();
+    initNews();
     initBackToTop();
     initSubscribe();
     initMenu();

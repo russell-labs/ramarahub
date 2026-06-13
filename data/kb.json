@@ -981,6 +981,20 @@
         }
       ],
       "keywords": "noise bylaw loud music quiet hours sound amplified party neighbour disturbance idling muffler construction lagoon city horn racing"
+    },
+    {
+      "id": "election-2026-candidates",
+      "cat": "council",
+      "q": "Who is running in the 2026 Ramara municipal election?",
+      "a": "The next municipal and school board election is Monday, October 26, 2026. As of June 12, 2026 the Township's list of candidates (not yet certified - it updates as nominations are received, and the certified list is posted after the August 24, 2026 deadline) is: Mayor - Keith Bell and Jim Cronk; Deputy Mayor - Joe Gough; Councillor Ward 1 - David Snutch; Councillor Ward 2 - Jennifer Fisher; Councillor Ward 3 - Dana Tuju; Councillor Ward 4 - Michael O'Brien; Councillor Ward 5 - no candidate has filed yet. Candidates are listed alphabetically by office, not by any ranking. For the current list, see the Township's Elections page.",
+      "phone": "705-484-5374 ext. 256 (Election Coordinator), election@ramara.ca",
+      "links": [
+        {
+          "label": "Township Elections page (live candidate list)",
+          "url": "https://www.ramara.ca/municipal-office/elections/"
+        }
+      ],
+      "keywords": "election 2026 candidates running for mayor deputy mayor councillor ward michael obrien obrian keith bell jim cronk joe gough david snutch jennifer fisher dana tuju who is running what position nomination certified october 26 ramara"
     }
   ]
 }
