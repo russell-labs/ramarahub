@@ -315,14 +315,42 @@ button.tile { font: inherit; font-weight: 600; cursor: pointer; width: 100%; }
 .faq-item.faq-key { border-color: var(--blue); border-left: 5px solid var(--blue); }
 .faq-item.faq-key summary { color: var(--blue-dark); }
 
-/* What's new — changelog */
-.log-entry { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
-  border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 0.8rem; }
-.log-date { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); }
-.log-entry h3 { margin: 0.25rem 0 0.5rem; color: var(--blue-dark); font-size: 1.12rem; }
-.log-entry ul { margin: 0.4rem 0 0; padding-left: 1.15rem; }
-.log-entry li { margin: 0.35rem 0; font-size: 0.95rem; }
-.log-entry li::marker { color: var(--blue); }
+/* What's new — changelog (tight email-list accordion) */
+.cl-intro { color: var(--muted); margin: 0 0 0.8rem; }
+.cl-how { margin: 0 0 1rem; font-size: 0.92rem; }
+.cl-how summary { cursor: pointer; color: var(--blue); font-weight: 600; list-style: none; }
+.cl-how summary::-webkit-details-marker { display: none; }
+.cl-how summary::before { content: "▸ "; color: var(--muted); }
+.cl-how[open] summary::before { content: "▾ "; }
+.cl-how .cl-how-body { color: var(--muted); margin: 0.5rem 0 0; padding-left: 0.9rem; }
+
+.cl-list { border-top: 1px solid var(--line); }
+.cl-row { border-bottom: 1px solid var(--line); }
+.cl-row > summary {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  padding: 9px 2px; cursor: pointer; list-style: none;
+}
+.cl-row > summary::-webkit-details-marker { display: none; }
+.cl-row > summary:hover { background: var(--blue-pale); }
+.cl-date { flex: 0 0 6.6rem; font-size: 0.76rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.4px; color: var(--muted); white-space: nowrap; }
+.cl-title { flex: 1 1 auto; font-weight: 700; color: var(--blue-dark); font-size: 0.97rem; }
+.cl-tag { flex: 0 0 auto; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+  background: var(--blue-pale); color: var(--blue-dark); }
+.cl-tag.tag-new { background: #E8F1F7; color: var(--blue-dark); }
+.cl-tag.tag-update { background: #F3ECDB; color: #7A5310; }
+.cl-tag.tag-fix { background: #E9EEF1; color: var(--muted); }
+.cl-tag.tag-correction { background: #C8861A; color: #fff; }
+.cl-detail { margin: 0 0 0.7rem; padding: 0 0.4rem 0 7.3rem; color: var(--ink); font-size: 0.93rem; }
+.cl-detail a { white-space: nowrap; }
+@media (max-width: 540px) {
+  .cl-row > summary { flex-wrap: wrap; gap: 0.4rem 0.6rem; }
+  .cl-date { flex-basis: auto; order: 1; }
+  .cl-tag { order: 2; margin-left: auto; }
+  .cl-title { order: 3; flex-basis: 100%; }
+  .cl-detail { padding-left: 0.4rem; }
+}
 
 /* LiveAvatar (experimental AI avatar) — only renders when AVATAR.enabled in app.js */
 .avatar-section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.3rem; margin: 1.4rem 0; }

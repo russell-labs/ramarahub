@@ -1108,6 +1108,59 @@
         }
       ],
       "keywords": "sewer amalgamation amalgamated combine combined merge merged brechin lagoon city bayshore wastewater environmental assessment ea effluent hauling history bylaw one system master servicing plan"
+    },
+    {
+      "id": "animals-dog-limit",
+      "cat": "animals",
+      "q": "How many dogs am I allowed to have in Ramara?",
+      "a": "The maximum is three dogs per dwelling unit or property under Ramara's Canine Control Bylaw 2005.76 (Section 6.1). A \"dog\" here means one over three months of age, so younger puppies are not counted, and certified guide or service dogs are excluded from the definition. Two exceptions apply: properties holding a Township kennel licence (Section 6.2), and bonafide farmers using registered dogs for livestock predator protection (Section 6.3). Dogs also need a current Township licence.",
+      "phone": "705-484-5374 ext. 292 (Bylaw Enforcement)",
+      "links": [
+        {
+          "label": "Canine Control Bylaw 2005.76",
+          "url": "https://www.ramara.ca/media/emlaswh0/2005_76caninecontrolbylaw.pdf"
+        },
+        {
+          "label": "Dog licences",
+          "url": "https://www.ramara.ca/living-here/animal-services/dog-licences/"
+        },
+        {
+          "label": "Animal services",
+          "url": "https://www.ramara.ca/living-here/animal-services/"
+        }
+      ],
+      "keywords": "how many dogs allowed limit maximum three pets canine control bylaw kennel licence"
+    },
+    {
+      "id": "bylaw-str-licence",
+      "cat": "bylaw",
+      "q": "Can I run a short-term rental in Lagoon City, and what does it take?",
+      "a": "Yes, short-term rentals are allowed across Ramara, including Lagoon City, but they require an annual licence. A short-term rental accommodation (STRA) is any property rented for less than 28 consecutive days, governed by Bylaw 2020.11 and its amendments. The annual licence fee is $3,000. Key requirements: the property must comply with the Township Zoning Bylaw, Ontario Building Code and Fire Code; septic systems must pass inspection for the number of legal bedrooms; the property cannot be within 300 metres of another STRA-licensed location; maximum occupancy is capped at 8 overnight guests; and property taxes and Township accounts must be in good standing. Because of the 300-metre separation rule, there is a waiting list in dense areas. To check eligibility or get application forms, email bylaw@ramara.ca.",
+      "phone": "705-484-5374 ext. 292 (Bylaw Enforcement)",
+      "links": [
+        {
+          "label": "Short-Term Rental Accommodations",
+          "url": "https://www.ramara.ca/business-and-development/short-term-rental-accommodations/"
+        }
+      ],
+      "keywords": "short term rental str stra airbnb vrbo licence licensing lagoon city bayshore cottage rent 28 days fee occupancy"
+    },
+    {
+      "id": "bylaw-tree-removal",
+      "cat": "bylaw",
+      "q": "Do I need a permit to remove trees on my property in Ramara?",
+      "a": "Ramara does not have a general tree by-law: there is no Township permit required just to cut down trees on your own residential lot. The Township does regulate some related things — grading and fill under its Site Alteration (Fill) By-law, and dead or hazardous trees under its Property Standards By-law — but routine tree removal on a typical property is not licensed by the Township. Two outside rules can still apply. First, woodlands: on properties of at least one hectare (about 2.47 acres), the clearing and harvesting of woodlands is governed by the County of Simcoe's Forest Conservation By-law (No. 6894), which can require a permit or an exemption before you cut; it does not restrict cutting to put up a building where the necessary approvals are already in place. Second, shoreline and water features: near the Lake Simcoe shoreline, a watercourse, a wetland or a steep slope, site alteration — grading, or placing and removing material — may need approval from the Lake Simcoe Region Conservation Authority (LSRCA) under Ontario Regulation 41/24. Cutting a single tree is generally not what LSRCA regulates, but the site work around it can be. If you are unsure, confirm with the Township's Planning and Building Division, the County's Conservation Forester, and LSRCA before clearing.",
+      "links": [
+        {
+          "label": "County of Simcoe Forest Conservation By-law (No. 6894)",
+          "url": "https://simcoe.ca/explore/forests/forest-conservation-by-law/"
+        },
+        {
+          "label": "LSRCA — Do I need a permit?",
+          "url": "https://lsrca.on.ca/index.php/planning-permits/do-i-need-a-permit/"
+        }
+      ],
+      "keywords": "tree trees removal remove cut cutting down chop fell felling clear clearing woodland woodlot forest brush vegetation hedge permit licence bylaw by-law property lot backyard shoreline lsrca conservation authority simcoe county forest conservation site alteration fill grading"
     }
   ]
 }
