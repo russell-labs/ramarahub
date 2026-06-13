@@ -274,6 +274,70 @@ button.tile { font: inherit; font-weight: 600; cursor: pointer; width: 100%; }
 .muted { color: var(--muted); }
 .pill { display: inline-block; background: var(--blue-pale); color: var(--blue-dark); border-radius: 999px; padding: 0.1rem 0.7rem; font-size: 0.8rem; font-weight: 700; }
 
+/* Latest from the Township — news feed (own classes; never reuses .doc-row) */
+.news-feed { display: grid; gap: 0.7rem; margin: 1.2rem 0; }
+.news-feed.teaser { margin: 0.6rem 0 0; }
+.news-item {
+  display: block; background: var(--card); border: 1px solid var(--line);
+  border-left: 4px solid var(--blue); border-radius: 12px; padding: 0.9rem 1.05rem;
+  text-decoration: none; color: var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.news-item:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20,85,123,0.14);
+  border-left-color: var(--accent); color: var(--ink); }
+.news-item:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.news-date {
+  display: inline-block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.4px; color: var(--blue); background: var(--blue-pale);
+  border-radius: 999px; padding: 0.12rem 0.65rem; margin-bottom: 0.45rem;
+}
+.news-item h3 { margin: 0; font-size: 1.06rem; color: var(--blue-dark); line-height: 1.3; }
+.news-teaser { margin: 0.45rem 0 0; font-size: 0.92rem; color: var(--muted); }
+.news-src { margin: 0.55rem 0 0; font-size: 0.78rem; font-weight: 600; color: var(--blue); }
+.news-empty, .news-error { color: var(--muted); }
+
+/* FAQ — native <details> accordion */
+.faq-list { margin: 1.3rem 0 0.5rem; }
+.faq-item { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  margin-bottom: 0.6rem; overflow: hidden; }
+.faq-item summary { cursor: pointer; list-style: none; padding: 0.95rem 1.1rem;
+  font-weight: 700; color: var(--blue-dark); font-size: 1.02rem; line-height: 1.35;
+  display: flex; align-items: flex-start; gap: 0.7rem; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; margin-left: auto; flex-shrink: 0; color: var(--blue);
+  font-weight: 700; font-size: 1.3rem; line-height: 1; }
+.faq-item[open] summary::after { content: "\2013"; }
+.faq-item summary:hover { background: var(--blue-pale); }
+.faq-item summary:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.faq-body { padding: 0 1.1rem 1.05rem; border-top: 1px solid var(--line); }
+.faq-body p:first-child { margin-top: 0.8rem; }
+.faq-body p:last-child { margin-bottom: 0; }
+.faq-item.faq-key { border-color: var(--blue); border-left: 5px solid var(--blue); }
+.faq-item.faq-key summary { color: var(--blue-dark); }
+
+/* What's new — changelog */
+.log-entry { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 0.8rem; }
+.log-date { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); }
+.log-entry h3 { margin: 0.25rem 0 0.5rem; color: var(--blue-dark); font-size: 1.12rem; }
+.log-entry ul { margin: 0.4rem 0 0; padding-left: 1.15rem; }
+.log-entry li { margin: 0.35rem 0; font-size: 0.95rem; }
+.log-entry li::marker { color: var(--blue); }
+
+/* LiveAvatar (experimental AI avatar) — only renders when AVATAR.enabled in app.js */
+.avatar-section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.3rem; margin: 1.4rem 0; }
+.avatar-section .pill { margin-bottom: 0.5rem; }
+.avatar-section h2 { margin: 0.4rem 0 0.3rem; color: var(--blue-dark); font-size: 1.25rem; }
+.avatar-intro { margin: 0 0 0.8rem; color: var(--muted); }
+.avatar-disclaimer { background: #FFF8EC; border-left: 4px solid var(--accent); padding: 0.55rem 0.9rem;
+  border-radius: 0 8px 8px 0; font-size: 0.88rem; color: var(--ink); margin: 0 0 1rem; }
+.avatar-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--blue-pale);
+  border-radius: 10px; overflow: hidden; }
+.avatar-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.avatar-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.95rem; }
+.avatar-placeholder code { background: #fff; border: 1px solid var(--line); border-radius: 5px; padding: 0.05rem 0.35rem; font-size: 0.9em; }
+
 /* Footer newsletter signup (site-wide) */
 .footer-sub { max-width: 32rem; margin: 0 auto 1.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.18); text-align: center; }
 .footer-sub label { display: block; color: #DCEBF4; margin-bottom: 0.5rem; line-height: 1.4; }

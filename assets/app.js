@@ -105,6 +105,22 @@
   };
   SB.ok = SB.url.indexOf("http") === 0;
 
+  /* ---------------- LiveAvatar config (experimental HeyGen AI avatar) ----------------
+     Single switch for the whole feature. Runs only through election day; pull anytime.
+       • enabled:false  -> the section is removed cleanly from every page (no empty box).
+       • To turn ON:     set enabled:true AND paste the HeyGen embed URL into embedUrl.
+       • To edit copy:    change heading / intro / disclaimer below (plain strings).
+       • To remove for good: set enabled:false (done), or delete this block + initAvatar()
+                            + the <section id="liveAvatar"> mount in index.html.
+     ------------------------------------------------------------------------------------ */
+  var AVATAR = {
+    enabled: false,                 // <-- master toggle. OFF by default.
+    embedUrl: "",                   // <-- PASTE HEYGEN EMBED URL HERE (the iframe src, https://...). Leave "" until ready.
+    heading: "Ask Russell — AI avatar (experimental)",
+    intro: "An experimental AI avatar of Russell that answers common questions about Ramara. It's a beta — always verify anything important against the sourced answers and official township channels.",
+    disclaimer: "This is an experimental AI avatar and may be removed at any time."
+  };
+
   // Ask the LLM answer engine (activates once the Gemini key is configured server-side).
   function askLLM(q, picks) {
     if (!SB.ok) return Promise.resolve(null);
@@ -639,25 +655,30 @@
     }).then(function (r) { return r.ok ? r.json() : Promise.reject(); });
   }
 
+  // News uses its own .news-item card markup (NOT the shared .doc-row, which The Record
+  // and chat answers also render). The whole card links to the official ramara.ca source.
   function newsRowHtml(item, withTeaser) {
-    var date = '<span class="doc-date">' + (item.doc_date ? escapeHtml(dateHuman(item.doc_date)) : "date not recorded") + "</span>";
+    var dateLabel = item.doc_date ? dateHuman(item.doc_date) : "Date not recorded";
     // Only allow http(s) sources; escape the url into the attribute (same allowlist as the record).
     var href = /^https?:\/\//i.test(item.source_url || "") ? item.source_url : "#";
-    var html = '<div class="doc-row"><p class="doc-hit">' +
-      '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(item.title || "Untitled") + " ↗</a> " + date + "</p>";
-    if (withTeaser && item.teaser) html += '<p class="doc-snippet">' + escapeHtml(item.teaser) + "</p>";
-    return html + "</div>";
+    var html = '<a class="news-item" href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' +
+      '<span class="news-date">' + escapeHtml(dateLabel) + "</span>" +
+      "<h3>" + escapeHtml(item.title || "Untitled") + "</h3>";
+    if (withTeaser && item.teaser) html += '<p class="news-teaser">' + escapeHtml(item.teaser) + "</p>";
+    if (withTeaser) html += '<p class="news-src">Read it on ramara.ca ↗</p>';
+    return html + "</a>";
   }
 
   function renderNewsInto(holder, cnt, withTeaser, errLink) {
     fetchLatestNews(cnt)
       .then(function (items) {
         items = items || [];
-        if (!items.length) { holder.innerHTML = '<p class="muted">No township posts yet — check back soon.</p>'; return; }
-        holder.innerHTML = items.map(function (it) { return newsRowHtml(it, withTeaser); }).join("");
+        if (!items.length) { holder.innerHTML = '<p class="news-empty">No township posts yet — check back soon.</p>'; return; }
+        holder.innerHTML = '<div class="news-feed' + (withTeaser ? "" : " teaser") + '">' +
+          items.map(function (it) { return newsRowHtml(it, withTeaser); }).join("") + "</div>";
       })
       .catch(function () {
-        holder.innerHTML = '<p class="muted">Couldn\'t load township news right now — ' + errLink + "</p>";
+        holder.innerHTML = '<p class="news-error">Couldn\'t load township news right now — ' + errLink + "</p>";
       });
   }
 
@@ -668,6 +689,31 @@
     var teaser = document.getElementById("newsTeaser");
     if (teaser) renderNewsInto(teaser, 3, false,
       'see <a href="news.html">all township news</a>.');
+  }
+
+  /* ---------------- LiveAvatar (experimental AI avatar) ---------------- */
+
+  function initAvatar() {
+    var mount = document.getElementById("liveAvatar");
+    if (!mount) return;
+    // OFF (or accidentally left on a page without the flag): remove the mount entirely
+    // so there's no empty container, no broken spacing, and no dead links.
+    if (!AVATAR.enabled) { mount.parentNode && mount.parentNode.removeChild(mount); return; }
+    // Owner-configured URL: only allow https(s); anything else is treated as "not set yet".
+    var src = /^https?:\/\//i.test(AVATAR.embedUrl || "") ? AVATAR.embedUrl : "";
+    var inner = src
+      ? '<div class="avatar-frame"><iframe src="' + escapeHtml(src) +
+          '" allow="microphone; camera; autoplay; fullscreen" title="Experimental AI avatar of Russell" loading="lazy"></iframe></div>'
+      : '<div class="avatar-frame"><div class="avatar-placeholder">Avatar is switched on but no HeyGen embed URL is set yet — paste it into <code>AVATAR.embedUrl</code> in app.js.</div></div>';
+    mount.innerHTML =
+      '<section class="avatar-section">' +
+        '<span class="pill">Experimental</span>' +
+        "<h2>" + escapeHtml(AVATAR.heading) + "</h2>" +
+        '<p class="avatar-intro">' + escapeHtml(AVATAR.intro) + "</p>" +
+        '<p class="avatar-disclaimer">' + escapeHtml(AVATAR.disclaimer) + "</p>" +
+        inner +
+      "</section>";
+    mount.hidden = false;
   }
 
   /* ---------------- Back to top ---------------- */
@@ -706,6 +752,7 @@
     initGreat();
     initDocuments();
     initNews();
+    initAvatar();
     initBackToTop();
     initSubscribe();
     initMenu();
