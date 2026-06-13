@@ -995,6 +995,24 @@
         }
       ],
       "keywords": "election 2026 candidates running for mayor deputy mayor councillor ward michael obrien obrian keith bell jim cronk joe gough david snutch jennifer fisher dana tuju who is running what position nomination certified october 26 ramara"
+    },
+    {
+      "id": "report-dumping",
+      "cat": "bylaw",
+      "q": "How do I report illegal dumping (garbage in a ditch, canal, or on a road)?",
+      "a": "Report it to the township's Bylaw Enforcement, which handles illegal dumping and is complaint-driven. Quickest ways: the online Report a Concern portal, call 705-484-5374 ext. 292, or email bylaw@ramara.ca. Give the location, the date, and any details you can. If the dumping is in a Lagoon City canal or waterway, Bylaw 2020.63 specifically prohibits dumping anything that could foul a canal, and you can also flag it under 'Lagoon City Canal Maintenance' on the Report a Concern form. After you report, there is usually no automatic status update, so if you don't hear back, follow up with Bylaw Enforcement and reference your original report date. For dumping that looks hazardous or large-scale, the township can point you to the right agency.",
+      "phone": "705-484-5374 ext. 292 (Bylaw Enforcement), bylaw@ramara.ca",
+      "links": [
+        {
+          "label": "Report a Concern portal",
+          "url": "https://v4.citywidesolutions.com/csr/ramara/"
+        },
+        {
+          "label": "Bylaw Enforcement",
+          "url": "https://www.ramara.ca/living-here/bylaw-enforcement/"
+        }
+      ],
+      "keywords": "report illegal dumping garbage ditch canal waterway trash debris neighbour neighbor complaint bylaw enforcement 2020.63 lagoon city report a concern fouling waste no reply follow up"
     }
   ]
 }
