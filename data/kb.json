@@ -2,7 +2,7 @@
   "_meta": {
     "site": "Ramara Hub",
     "tagline": "A Ramara Civic Forum project",
-    "verified": "2026-06-11",
+    "verified": "2026-06-13",
     "township_phone": "705-484-5374",
     "township_tollfree": "1-800-663-4054",
     "disclaimer": "Ramara Hub is an independent community resource. It is not the Township of Ramara's official website. Every answer links to its official source. Always confirm time-sensitive details with the Township at 705-484-5374."
@@ -1092,7 +1092,7 @@
       "id": "ww-sewer-amalgamation",
       "cat": "wastewater",
       "q": "Were Ramara's Brechin/Lagoon City and Bayshore sewer systems combined, and is that why there is an EA and effluent hauling?",
-      "a": "Not as a single treatment system. Ramara runs two separate wastewater treatment facilities — one serving Brechin/Lagoon City and one serving Bayshore Village — and the public record does not show a bylaw that merged them. For rate-setting the township does bill \"one water system and one wastewater system,\" but that is a billing/rate structure, not a combined plant. The Environmental Assessment work and the effluent hauling trace to Bayshore's own sprayfields reaching end of life — which forced effluent to be trucked away and led to a $24.1M tile-bed replacement project — not to an amalgamation with Lagoon City. The Hub could not source a specific \"amalgamation\" date or bylaw; if you have a council report or bylaw number, the township can confirm it. See the Bayshore entry and the wastewater brief for the sourced detail.",
+      "a": "Ramara's sewer systems were once billed separately and were later brought onto a common rate, which is the substance of what some residents call a 'merger.' Township Bylaw 2015.19 (2015–2016 rates) set three separate sewer areas — Bayshore Village, Lagoon City, and Brechin — each with its own base-rate schedule, while the per-cubic-metre volume rate was the same across all three (for example, the 2015 quarterly base rate for a standard connection was $99.72 in Bayshore, $123.97 in Lagoon City, and $112.97 in Brechin). Rate schedules from 2017 onward reportedly move to a common base rate across the systems, and the Township now bills 'one water system and one wastewater system.' Two clarifications: there is no single bylaw that physically merged the treatment plants — they remain separate facilities — and the Township states there is 'no bylaw currently in place for how to fund sewer facilities.' The effect of the harmonized rate is that shared costs, such as the Bayshore loan and effluent hauling, are included in the fees paid by all wastewater users through the common rate (Bylaw 2025.76). Residents on private well and septic are not wastewater ratepayers and pay none of it. Being confirmed: the exact bylaw and year the base rates were harmonized.",
       "links": [
         {
           "label": "Utility billing & rates (one water/one wastewater system)",
@@ -1107,7 +1107,7 @@
           "url": "briefs/wastewater.html"
         }
       ],
-      "keywords": "sewer amalgamation amalgamated combine combined merge merged brechin lagoon city bayshore wastewater environmental assessment ea effluent hauling history bylaw one system master servicing plan"
+      "keywords": "sewer amalgamation amalgamated combine combined merge merged brechin lagoon city bayshore wastewater environmental assessment ea effluent hauling history bylaw one system master servicing plan 2015.19 segregated separate base rate harmonized harmonization 2015 2016 2017 brechin"
     },
     {
       "id": "animals-dog-limit",
@@ -1161,6 +1161,68 @@
         }
       ],
       "keywords": "tree trees removal remove cut cutting down chop fell felling clear clearing woodland woodlot forest brush vegetation hedge permit licence bylaw by-law property lot backyard shoreline lsrca conservation authority simcoe county forest conservation site alteration fill grading"
+    },
+    {
+      "id": "tx-assessment",
+      "cat": "taxes",
+      "q": "Where do I see the assessment on my property tax, and who sets it?",
+      "a": "Your property's assessed value is set by the Municipal Property Assessment Corporation (MPAC), not by the Township of Ramara. The Township only uses that assessed value, multiplied by the combined tax rate (municipal, County of Simcoe, and school board), to calculate your bill. You can see your assessment in two places: on your annual Property Assessment Notice from MPAC, and online by logging in to MPAC's 'About My Property' tool, where you can view your property's details and how it was assessed. Your assessed value also appears on the property tax bill the Township sends. If you think your assessment is wrong, you raise that with MPAC (not the Township) through a Request for Reconsideration. For questions about your tax bill itself, contact Township Financial Services; for questions about the assessed value, contact MPAC.",
+      "phone": "705-484-5374 ext. 240 (Township Financial Services — tax bills); MPAC 1-866-296-6722 (assessment questions)",
+      "links": [
+        {
+          "label": "Township of Ramara — Municipal Property Assessment",
+          "url": "https://www.ramara.ca/living-here/property-taxes/municipal-property-assessment/"
+        },
+        {
+          "label": "Township of Ramara — Property Taxes",
+          "url": "https://www.ramara.ca/living-here/property-taxes/"
+        },
+        {
+          "label": "MPAC — About My Property",
+          "url": "https://www.mpac.ca/en/MakingChangesUpdates/AboutMyProperty"
+        }
+      ],
+      "keywords": "assessment assessed value mpac about my property tax bill property tax notice where do i see appeal request for reconsideration rcn roll number value how is my property assessed who sets"
+    },
+    {
+      "id": "ww-rates-history",
+      "cat": "wastewater",
+      "q": "What were the water and wastewater rates in 2015 (or other past years)?",
+      "a": "The Township reviews its water and wastewater rates on roughly a five-year cycle. A 2015 Water and Wastewater Rate Study was completed (the study work was done in 2014), followed by a 2021 study and a 2024 staff-led study. The Township's background on this rate-review history is on its Bayshore Village Sewage Works FAQ page. Ramara Hub publishes the current rates. For 2015 specifically, a resident provided Township Bylaw 2015.19 (2015–2016 rates), so the Hub now cites that year's sewer base rates and the common volume rate — see the sewer 'merger' entry and the wastewater brief. For most other years, the full historic rate schedule — the exact fixed quarterly charge and per-cubic-metre rate that applied that year — is not posted on the Hub and is not readily available on the Township site either. To get figures for a year we have not yet sourced, the reliable route is the source: Township Financial Services can provide the historic rate schedule, or you can file a records request with the Township Clerk for the relevant rate study and the bylaw that adopted those rates.",
+      "phone": "705-484-5374 ext. 240 (Township Financial Services — utility billing & rate history)",
+      "links": [
+        {
+          "label": "Township of Ramara — Bayshore Village Sewage Works FAQ (rate-study history)",
+          "url": "https://www.ramara.ca/living-here/sewer-systems/wastewater-treatment-facility-202-project/bayshore-village-sewage-works-frequently-asked-questions/"
+        },
+        {
+          "label": "Township of Ramara — Property Taxes / Utility Billing",
+          "url": "https://www.ramara.ca/living-here/property-taxes/"
+        }
+      ],
+      "keywords": "2015 2014 2021 2024 historic past previous old water wastewater sewer rate rates rate study schedule fixed charge per cubic metre how much used to be five year review records request clerk financial services"
+    },
+    {
+      "id": "ww-bayshore-cost-share",
+      "cat": "wastewater",
+      "q": "Did Ramara offer to pay 30% of the Bayshore sewage project and then not do it?",
+      "a": "This is a contested point, so here is what the record does and does not confirm. Local reporting (OrilliaMatters) covering a residents' rally states that benefiting residents say they were originally told the Township would cover about 30% of the wastewater project cost while it pursued senior-government grants, and that they feel that commitment was not kept. The current, documented funding split for the 2026 Bayshore Village wastewater project is different: of the roughly $24.1 million project, about 73% (approximately $17.6 million) comes from a provincial grant under the Municipal Housing Infrastructure Program — Health and Safety Water Stream, and about 27% (approximately $6.5 million) is the Township's share, recovered through the wastewater system from benefiting properties. After resident pushback, the Township reduced the local payment options (the 10-year financing figure was lowered from about $55,000 to $35,000, and the lump-sum option from about $30,000 to $20,000). Ramara Hub cannot confirm from the official record the exact terms of any earlier 30% commitment or when it was made. If you want to verify what Council actually directed and when, request the relevant Council minutes and reports from the Township Clerk; those records are the authoritative source. This summary is provided neutrally and takes no side on the dispute.",
+      "phone": "705-484-5374 (Township office — Clerk / records requests)",
+      "links": [
+        {
+          "label": "OrilliaMatters — Ramara residents rally against 'crushing cost' of wastewater project",
+          "url": "https://www.orilliamatters.com/local-news/ramara-residents-rally-against-crushing-cost-of-wastewater-project-10850065"
+        },
+        {
+          "label": "Township of Ramara — Council approves major wastewater infrastructure upgrade",
+          "url": "https://www.ramara.ca/news/posts/ramara-council-approves-major-wastewater-infrastructure-upgrade/"
+        },
+        {
+          "label": "Township of Ramara — Bayshore Village Sewage Works FAQ",
+          "url": "https://www.ramara.ca/living-here/sewer-systems/wastewater-treatment-facility-202-project/bayshore-village-sewage-works-frequently-asked-questions/"
+        }
+      ],
+      "keywords": "30 percent 30% thirty percent township pay share cost contribution promised commitment bayshore sewage wastewater project grant provincial federal funding 73 27 financing lump sum residents rally crushing cost broke promise reneged who pays"
     }
   ]
 }
