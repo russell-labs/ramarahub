@@ -537,7 +537,7 @@
           "url": "https://forms.ramara.ca/Bylaw/Short-Term-Rental-Waiting-List-Application"
         }
       ],
-      "keywords": "airbnb vrbo cottage rental licence license rules occupancy new grandfathered setback 300 metres waiting list start operate"
+      "keywords": "airbnb vrbo cottage rental licence license rules occupancy new grandfathered setback 300 metres waiting list start operate home house rent out my home"
     },
     {
       "id": "bl-str-complaint",
@@ -586,7 +586,7 @@
           "url": "https://www.ramara.ca/living-here/animal-services/dog-licences/"
         }
       ],
-      "keywords": "how many pets dogs cats animals limit maximum number household allowed per resident kennel"
+      "keywords": "how many pets dogs cats animals limit maximum number household allowed per resident kennel own owning how many dogs allowed to have number of dogs"
     },
     {
       "id": "an-lost",
@@ -1031,6 +1031,83 @@
         }
       ],
       "keywords": "sunset drive assumption status unassumed road public private records meeting portal civicweb plowing lakeshore legal opinion clerk records request bruce"
+    },
+    {
+      "id": "pk-lagoon-beach",
+      "cat": "parks",
+      "q": "Is there a public beach in Lagoon City, and where is it?",
+      "a": "Yes. Lagoon City Park Beach is one of the township's five public Lake Simcoe beaches; the township lists its amenities as garbage cans, a playground, port-a-potties, and permit/paid parking. It is separate from Lagoon City's two private beaches (North and South), which are for Lagoon City residents and their guests only and are run by the Lagoon City Parks and Waterways Commission, with a wristband program to confirm users are residents. The township publishes a map pin for the public beach but not a street address — open the township beaches page for the map, and check the parking rules before you go.",
+      "links": [
+        {
+          "label": "Township beaches page (public beaches)",
+          "url": "https://www.ramara.ca/en/recreation-and-community/beaches.aspx"
+        },
+        {
+          "label": "Lagoon City private beaches (residents only)",
+          "url": "https://www.ramara.ca/en/municipal-office/lagoon-city-beaches-and-footbridges.aspx"
+        }
+      ],
+      "keywords": "public beach lagoon city park beach address location swim swimming sand private resident wristband north south where waterfront"
+    },
+    {
+      "id": "bl-str-occupancy",
+      "cat": "bylaw",
+      "q": "How many people can stay in a short-term rental — do children count toward the limit?",
+      "a": "The cap counts everyone, children included. Under Bylaw 2020.11 (as amended), a licensed STR's maximum overnight occupancy is set by the number of legal bedrooms, up to a maximum of 8 persons — the bylaw wording is \"the sleeping of the maximum of 8 persons\" and it does not distinguish adults from children, so children count toward the limit. Bylaw 2021.87 adds a daytime cap: no more than a combined \"ten (10) occupants and/or guests\" on the property between 9 a.m. and 9 p.m. Confirm your property's licensed limit with Bylaw Enforcement.",
+      "phone": "705-484-5374 ext. 292 (Bylaw Enforcement)",
+      "links": [
+        {
+          "label": "Township STR page",
+          "url": "https://www.ramara.ca/business-and-development/short-term-rental-accommodations/"
+        },
+        {
+          "label": "Bylaw 2020.11 (STR licensing)",
+          "url": "https://ramara.civicweb.net/document/46119"
+        },
+        {
+          "label": "Bylaw 2021.87 (occupancy + 300 m amendment)",
+          "url": "https://ramara.civicweb.net/document/54764"
+        }
+      ],
+      "keywords": "occupancy limit how many people guests adults children kids count toward maximum 8 persons eight daytime overnight sleep stay capacity"
+    },
+    {
+      "id": "gn-op-heritage",
+      "cat": "general",
+      "q": "What does the new Official Plan say about heritage properties?",
+      "a": "Ramara adopted a new Official Plan on June 2, 2025 (Bylaw 2025.36, under Section 17 of the Planning Act), replacing the 2003 plan and guiding land use to 2051. Its Cultural Heritage Resources policies (Section 6.8) say the township \"will ensure that proposals for development and/or site alteration shall have regard for the conservation of significant archaeological resources, built heritage resources and cultural heritage landscapes.\" The township may require a cultural heritage impact statement where development is on or next to significant built heritage or a cultural heritage landscape, may require archaeological assessments in areas of archaeological potential, and \"will encourage the appropriate designation of heritage properties in all land use designations according to Provincial statutes.\" It also commits to consult Indigenous communities and share archaeological study results.",
+      "links": [
+        {
+          "label": "Notice of adoption (Bylaw 2025.36)",
+          "url": "https://www.ramara.ca/news/posts/notice-of-the-adoption-of-an-official-plan-for-the-township-of-ramara/"
+        },
+        {
+          "label": "Official Plan (Section 6.8, Cultural Heritage Resources)",
+          "url": "https://www.ramara.ca/media/eqapffnc/ramara-draft-official-plan-final-2025-06-02.pdf"
+        }
+      ],
+      "keywords": "official plan heritage properties cultural heritage built landscape archaeological designation development site alteration designated 2025.36 planning act conservation"
+    },
+    {
+      "id": "ww-sewer-amalgamation",
+      "cat": "wastewater",
+      "q": "Were Ramara's Brechin/Lagoon City and Bayshore sewer systems combined, and is that why there is an EA and effluent hauling?",
+      "a": "Not as a single treatment system. Ramara runs two separate wastewater treatment facilities — one serving Brechin/Lagoon City and one serving Bayshore Village — and the public record does not show a bylaw that merged them. For rate-setting the township does bill \"one water system and one wastewater system,\" but that is a billing/rate structure, not a combined plant. The Environmental Assessment work and the effluent hauling trace to Bayshore's own sprayfields reaching end of life — which forced effluent to be trucked away and led to a $24.1M tile-bed replacement project — not to an amalgamation with Lagoon City. The Hub could not source a specific \"amalgamation\" date or bylaw; if you have a council report or bylaw number, the township can confirm it. See the Bayshore entry and the wastewater brief for the sourced detail.",
+      "links": [
+        {
+          "label": "Utility billing & rates (one water/one wastewater system)",
+          "url": "https://www.ramara.ca/en/living-here/utility-billing-and-rates.aspx"
+        },
+        {
+          "label": "Sewer systems",
+          "url": "https://www.ramara.ca/living-here/sewer-systems/"
+        },
+        {
+          "label": "Wastewater brief",
+          "url": "briefs/wastewater.html"
+        }
+      ],
+      "keywords": "sewer amalgamation amalgamated combine combined merge merged brechin lagoon city bayshore wastewater environmental assessment ea effluent hauling history bylaw one system master servicing plan"
     }
   ]
 }

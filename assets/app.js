@@ -152,8 +152,8 @@
     }).then(function (r) { return r.ok; }).catch(function () { return false; });
   }
 
-  function logQuestion(q, verdict, topId) {
-    sbInsert("questions", { q: q.slice(0, 500), verdict: verdict, top_entry: topId || null });
+  function logQuestion(q, verdict, topId, answer) {
+    sbInsert("questions", { q: q.slice(0, 500), verdict: verdict, top_entry: topId || null, answer: (answer || "").slice(0, 4000) });
   }
 
   // Tier 2: full-text search across the township record (899 ramara.ca pages, bylaws, reports).
@@ -313,10 +313,10 @@
         think.remove();
         var html;
         if (llm) {
-          logQuestion(q, "llm", ans.topId);
+          logQuestion(q, "llm", ans.topId, llm.answer);
           html = llmHtml(llm) + feedbackBarHtml(q);
         } else {
-          logQuestion(q, ans.verdict, ans.topId);
+          logQuestion(q, ans.verdict, ans.topId, ans.verdict === "fallback" ? "" : (ans.picks && ans.picks[0] ? ans.picks[0].a : ""));
           html = ans.html + (docs.length ? docResultsHtml(docs) : "") +
             (ans.showFeedback ? feedbackBarHtml(q) : "");
         }
