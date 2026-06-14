@@ -20,6 +20,17 @@
 <link rel="stylesheet" href="../assets/style.css?v=28">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<style>
+  .pullquote{border-left:4px solid #BA7517;padding:6px 0 6px 18px;margin:26px 0;}
+  .pullquote .q{font-family:Georgia,'Times New Roman',serif;font-size:1.28rem;line-height:1.5;color:#16242c;}
+  .pullquote .qs{font-size:.8rem;color:#5F5E5A;margin-top:8px;}
+  .chartcard{margin:22px 0 8px;}
+  .chartcard .ctitle{font-weight:600;font-size:1rem;margin:0 0 6px;color:#0E3D59;}
+  .chartwrap{position:relative;width:100%;height:300px;}
+  .ccap{font-size:.8rem;color:#5F5E5A;margin:8px 0 0;}
+  .clegend{display:flex;flex-wrap:wrap;gap:14px;margin:2px 0 8px;font-size:.8rem;color:#5F5E5A;}
+  .clegend span{display:flex;align-items:center;gap:6px;}
+</style>
 </head>
 <body data-base="../">
 
@@ -37,6 +48,7 @@
     <a href="../faq.html">FAQ</a>
     <a href="../browse.html">Everyday answers</a>
     <a href="index.html" class="active">Issue Briefs</a>
+    <a href="../take-action.html">Take Action</a>
     <a href="../news.html">News</a>
     <a href="../volunteer.html">Volunteer</a>
     <a href="../changelog.html">What&#39;s new</a>
@@ -52,11 +64,16 @@
 <article class="brief">
   <span class="pill">Issue brief</span>
   <h1>Wastewater in Ramara: the whole story</h1>
-  <p class="updated">Last verified June 11, 2026 · Every claim links to its source · <a href="#sources">Jump to sources</a></p>
+  <p class="updated">Last verified June 14, 2026 · Every claim links to its source · <a href="#sources">Jump to sources</a></p>
 
   <div class="keybox">
     <h2>The short version</h2>
     <p>Wastewater rates went up <strong>15% in 2026</strong> (about $217 more for a typical household) because the township says the systems must be fully paid for by the people connected to them — and the Bayshore Village system failed, forcing millions in emergency trucking and a $24.1M rebuild. A <strong>$30M provincial grant</strong> (the largest in township history) is paying most of the rebuild, but the township says it does not directly lower rates. A full rate review comes to council in <strong>fall 2026</strong>.</p>
+  </div>
+
+  <div class="pullquote">
+    <div class="q">On its current schedule, Ramara's wastewater rate keeps rising about 13% a year — reaching $11.77/m³ and $565.31 per quarter by 2033, unless council changes course.</div>
+    <div class="qs">Source: Township Bylaws 2024.79 / 2025.76.</div>
   </div>
 
   <h2>Who this affects</h2>
@@ -72,7 +89,31 @@
     <tr><td>Water — per cubic metre</td><td>$3.21</td><td><strong>$3.47</strong></td><td>+8%</td></tr>
   </table>
   </div>
+
+  <div class="chartcard">
+    <div class="ctitle">2025 → 2026 usage rate (per m³)</div>
+    <div id="changeLegend" class="clegend"></div>
+    <div class="chartwrap">
+      <canvas id="changeBar" role="img" aria-label="Usage rate change 2025 to 2026. Wastewater rose from $4.35 to $5.00 per cubic metre, up 15 percent. Water rose from $3.21 to $3.47 per cubic metre, up 8 percent.">Usage rate 2025→2026: wastewater $4.35→$5.00 (+15%); water $3.21→$3.47 (+8%). Fixed quarterly charges rose by the same percentages.</canvas>
+    </div>
+    <p class="ccap">Per-cubic-metre usage rates; the fixed quarterly charges rose by the same percentages (+15% wastewater, +8% water). Source: Bylaws 2024.79 / 2025.76.</p>
+  </div>
+
   <p>The original 2024 plan (Bylaw 2024.79) set wastewater increases at 13% per year through 2033; in December 2025, council amended 2026 to 15% (Bylaw 2025.76). The current schedule continues roughly 13% yearly wastewater increases after 2026 — reaching $565.31 fixed/quarter and $11.77/m³ by 2033 — unless council changes course. OrilliaMatters calculated a typical user (140 m³/yr) pays about $217 more for wastewater in 2026. <span class="src">[<a href="https://ramara.civicweb.net/document/102023" target="_blank" rel="noopener">Bylaw 2024.79</a>] [<a href="https://ramara.civicweb.net/document/120608" target="_blank" rel="noopener">Bylaw 2025.76</a>] [<a href="https://www.orilliamatters.com/local-news/ramaras-15-wastewater-rate-increase-jarring-for-residents-11616347" target="_blank" rel="noopener">OrilliaMatters, Dec 13, 2025</a>]</span></p>
+
+  <div class="chartcard">
+    <div class="ctitle">Wastewater rate per m³, projected to 2033 — Ramara vs neighbours</div>
+    <div class="clegend">
+      <span><span style="width:22px;height:3px;background:#BA7517;display:inline-block;"></span>Ramara — ~13%/yr (Bylaw 2024.79)</span>
+      <span><span style="width:22px;height:0;border-top:3px dashed #185FA5;display:inline-block;"></span>Severn — ~4.5%/yr (rate study)</span>
+      <span><span style="width:22px;height:0;border-top:3px dotted #5F5E5A;display:inline-block;"></span>Kawartha Lakes — ~4%/yr</span>
+      <span><span style="width:22px;height:0;border-top:2px solid #C9C9C9;display:inline-block;"></span>Other neighbours — no published schedule (illustrative, assumed ~4%/yr)</span>
+    </div>
+    <div class="chartwrap">
+      <canvas id="projLine" role="img" aria-label="Projected wastewater rate per cubic metre, 2026 to 2033. Ramara rises from $5.00 to about $11.77; Severn from $3.63 to about $4.94; Kawartha Lakes from $1.89 to about $2.49. Other neighbours with no published schedule are shown illustratively at an assumed 4 percent a year.">Projected wastewater rate per m³ to 2033: Ramara $5.00 to about $11.77; Severn $3.63 to about $4.94; Kawartha Lakes $1.89 to about $2.49; other neighbours (illustrative) lower.</canvas>
+    </div>
+    <p class="ccap">Ramara, Severn and Kawartha Lakes are projected at their own published annual increases. Tay, Georgina, Springwater and Innisfil publish no forward schedule, so they are shown only illustratively at an assumed ~4%/yr — not a forecast. Actual rates depend on future council decisions. See the <a href="rates-affordability.html">rates &amp; affordability brief</a> for the full comparison. Sources: municipal rate studies and by-laws.</p>
+  </div>
 
   <h2>Why rates keep rising</h2>
   <p>Four reasons appear consistently in township statements and council records:</p>
@@ -123,6 +164,8 @@
   <h2>What's next</h2>
   <p>Construction on the new Bayshore facility runs through mid-2027 (first tile beds due around November 2026; trucking and sprayfields continue meanwhile). The big decision point is the <strong>fall 2026 rate review</strong> — arriving right around the October 26 municipal election, when a new council (Mayor Clarke is not seeking re-election) will set the direction for 2027 rates and beyond. <span class="src">[<a href="https://www.ramara.ca/news/posts/ramara-council-approves-major-wastewater-infrastructure-upgrade/" target="_blank" rel="noopener">Township, Mar 10, 2026</a>] [<a href="https://www.orilliamatters.com/local-news/im-going-to-step-back-ramara-mayor-wont-seek-re-election-in-2026-11489861" target="_blank" rel="noopener">OrilliaMatters</a>]</span></p>
 
+  <p>For where Ramara's rates sit against comparable townships, where they're headed, and the affordability tools other communities use, see the <a href="rates-affordability.html">rates &amp; affordability brief</a>.</p>
+
   <div class="flag"><strong>Still unclear / contested:</strong> the township has not published an itemized breakdown of why 2026 needed 15% rather than 13%; the Lone Birch resident survey was never publicly released; the exact amount of the separate Lagoon City levy is not published online. We'll update this brief as facts emerge.</div>
 
   <h2 id="sources">Sources</h2>
@@ -163,10 +206,45 @@
     </form>
     <p class="callout-phone">Township of Ramara: 705-484-5374 · Emergencies: 911</p>
     <p class="disclaimer">Ramara Hub is an independent, free community resource — a Ramara Civic Forum project.
-    It is not the Township of Ramara's official website. Information verified June 11, 2026.</p>
+    It is not the Township of Ramara's official website. Information verified June 14, 2026.</p>
     <p><a href="../about.html">About</a> · <a href="../faq.html">FAQ</a> · <a href="../volunteer.html">Volunteer</a> · <a href="../news.html">Township news</a> · <a href="../changelog.html">What&#39;s new</a> · <a href="https://www.ramara.ca/" target="_blank" rel="noopener">Official township site: ramara.ca ↗</a></p>
   </div>
 </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  if(!window.Chart) return;
+  var blue='#185FA5', amber='#BA7517', gray='#5F5E5A', faint='#C9C9C9';
+  new Chart(document.getElementById('changeBar'),{type:'bar',
+    data:{labels:['Wastewater $/m³','Water $/m³'],
+      datasets:[
+        {label:'2025',data:[4.35,3.21],backgroundColor:gray,borderRadius:4},
+        {label:'2026',data:[5.00,3.47],backgroundColor:amber,borderRadius:4}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+c.parsed.y.toFixed(2)+' / m³';}}}},
+      scales:{y:{ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}}}}});
+  var cl=document.getElementById('changeLegend');
+  cl.innerHTML=[['2025',gray],['2026',amber]].map(function(p){return '<span><span style="width:13px;height:13px;border-radius:3px;background:'+p[1]+';display:inline-block;"></span>'+p[0]+'</span>';}).join('');
+
+  var yrs=['2026','2027','2028','2029','2030','2031','2032','2033'];
+  function assumed(label,base){var d=[],v=base;for(var i=0;i<8;i++){d.push(Number(v.toFixed(2)));v=v*1.04;}return {label:label,data:d,borderColor:faint,backgroundColor:faint,borderWidth:1.5,pointRadius:0,tension:0.2};}
+  new Chart(document.getElementById('projLine'),{type:'line',
+    data:{labels:yrs,datasets:[
+      assumed('Tay (illustrative ~4%/yr)',4.35),
+      assumed('Georgina (illustrative ~4%/yr)',3.70),
+      assumed('Springwater (illustrative ~4%/yr)',3.60),
+      assumed('Innisfil (illustrative ~4%/yr)',1.85),
+      {label:'Kawartha Lakes',data:[1.89,1.97,2.04,2.13,2.21,2.30,2.39,2.49],borderColor:gray,backgroundColor:gray,borderDash:[2,3],borderWidth:2,pointRadius:2,tension:0.2},
+      {label:'Severn',data:[3.63,3.79,3.96,4.14,4.33,4.52,4.73,4.94],borderColor:blue,backgroundColor:blue,borderDash:[6,4],borderWidth:2,pointRadius:2,tension:0.2},
+      {label:'Ramara',data:[5.00,5.65,6.38,7.21,8.15,9.21,10.41,11.77],borderColor:amber,backgroundColor:amber,borderWidth:3,pointRadius:2,tension:0.2}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+c.parsed.y.toFixed(2)+' / m³';}}}},
+      scales:{y:{ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}}}}});
+})();
+</script>
 <script src="../assets/app.js?v=28"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
