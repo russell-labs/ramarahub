@@ -1205,14 +1205,10 @@
     {
       "id": "ww-bayshore-cost-share",
       "cat": "wastewater",
-      "q": "Did Ramara offer to pay 30% of the Bayshore sewage project and then not do it?",
-      "a": "This is a contested point, so here is what the record does and does not confirm. Local reporting (OrilliaMatters) covering a residents' rally states that benefiting residents say they were originally told the Township would cover about 30% of the wastewater project cost while it pursued senior-government grants, and that they feel that commitment was not kept. The current, documented funding split for the 2026 Bayshore Village wastewater project is different: of the roughly $24.1 million project, about 73% (approximately $17.6 million) comes from a provincial grant under the Municipal Housing Infrastructure Program — Health and Safety Water Stream, and about 27% (approximately $6.5 million) is the Township's share, recovered through the wastewater system from benefiting properties. After resident pushback, the Township reduced the local payment options (the 10-year financing figure was lowered from about $55,000 to $35,000, and the lump-sum option from about $30,000 to $20,000). Ramara Hub cannot confirm from the official record the exact terms of any earlier 30% commitment or when it was made. If you want to verify what Council actually directed and when, request the relevant Council minutes and reports from the Township Clerk; those records are the authoritative source. This summary is provided neutrally and takes no side on the dispute.",
+      "q": "How is the Bayshore Village wastewater rebuild (WWTF 202) being paid for?",
+      "a": "The 2026 Bayshore Village wastewater treatment rebuild (WWTF 202) is a roughly $24.1 million project funded about 73% (approximately $17.6 million) by a provincial grant under the Municipal Housing Infrastructure Program — Health and Safety Water Stream, and about 27% (approximately $6.5 million) by the Township, recovered through wastewater rates from benefiting users. This is a treatment-plant rebuild, not a per-home connection charge. Note: the separate concern about residents being told the Township would cover roughly 30% of a sewer project relates to the Lone Birch / Maple Trail / Ridge Avenue low-pressure sewer connection, not the Bayshore rebuild — see that question for the sourced detail. To verify what Council directed on either, request the relevant minutes and reports from the Township Clerk.",
       "phone": "705-484-5374 (Township office — Clerk / records requests)",
       "links": [
-        {
-          "label": "OrilliaMatters — Ramara residents rally against 'crushing cost' of wastewater project",
-          "url": "https://www.orilliamatters.com/local-news/ramara-residents-rally-against-crushing-cost-of-wastewater-project-10850065"
-        },
         {
           "label": "Township of Ramara — Council approves major wastewater infrastructure upgrade",
           "url": "https://www.ramara.ca/news/posts/ramara-council-approves-major-wastewater-infrastructure-upgrade/"
@@ -1222,7 +1218,29 @@
           "url": "https://www.ramara.ca/living-here/sewer-systems/wastewater-treatment-facility-202-project/bayshore-village-sewage-works-frequently-asked-questions/"
         }
       ],
-      "keywords": "30 percent 30% thirty percent township pay share cost contribution promised commitment bayshore sewage wastewater project grant provincial federal funding 73 27 financing lump sum residents rally crushing cost broke promise reneged who pays"
+      "keywords": "bayshore wwtf 202 wastewater treatment rebuild funding paid for grant provincial 73 27 funding split municipal housing infrastructure program township share cost"
+    },
+    {
+      "id": "ww-lone-birch-cost-share",
+      "cat": "wastewater",
+      "q": "Did the Township promise to cover about 30% of the Lone Birch sewer cost, and why are residents paying the full charge?",
+      "a": "Residents in the Lone Birch Trail / Maple Trail / Ridge Avenue / Simcoe Road low-pressure sewer area have said they were originally told the Township would cover a share of the project cost (reported as around 30%), and that the final charges did not reflect it. Here is what the public record confirms and what it doesn't. The documented final capital charge to affected homeowners is about $17,097 as a lump sum (due April 15, 2026), or a financed option on the tax bill over 20 years, per the Township's February 2026 staff reports, down sharply from earlier estimates that ran as high as $60,000 to $80,000. Local reporting has recorded residents' frustration that an earlier expectation of a roughly 30% Township contribution was not reflected in the final charge. What is NOT clearly in the public record is the original terms of any 30% commitment, or an official explanation of how the final cost was allocated. For that, the route is the Township's staff reports and Council Highlights on the sewer servicing project, or a formal records request to the Clerk. This answer will be updated if those documents confirm the figure. This concerns the Lone Birch low-pressure sewer connection, which is separate from the Bayshore Village treatment-plant rebuild and its 73/27 grant funding.",
+      "phone": "705-484-5374 (Township); clerks@ramara.ca for records requests",
+      "links": [
+        {
+          "label": "Ramara Sewer Servicing Project",
+          "url": "https://www.ramara.ca/living-here/sewer-systems/ramara-sewer-servicing-project/"
+        },
+        {
+          "label": "OrilliaMatters: residents frustrated despite cost cut (Feb 2026)",
+          "url": "https://www.orilliamatters.com/local-news/ramara-residents-flush-with-frustration-despite-cut-in-sewer-system-costs-11836599"
+        },
+        {
+          "label": "Council Highlights, February 23, 2026",
+          "url": "https://www.ramara.ca/news/posts/council-highlights-february-23-2026/"
+        }
+      ],
+      "keywords": "lone birch maple trail ridge avenue simcoe road 30 percent 30% thirty percent township cover share subsidy discount promised promise cost charge capital low pressure sewer residents full 100% not honored followed through"
     }
   ]
 }
