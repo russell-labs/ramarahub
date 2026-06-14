@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Rates &amp; affordability: how Ramara compares — Ramara Hub">
 <meta name="twitter:description" content="Where Ramara's rates sit among comparable Ontario townships, where they're headed, and the tools other communities use.">
 <meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
-<link rel="stylesheet" href="../assets/style.css?v=28">
+<link rel="stylesheet" href="../assets/style.css?v=29">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <style>
@@ -29,7 +29,7 @@
   .chartcard .ctitle{font-weight:600;font-size:1rem;margin:0 0 6px;color:#0E3D59;}
   .chartwrap{position:relative;width:100%;height:300px;}
   .chartwrap.tall{height:340px;}
-  .chartwrap.dough{height:240px;max-width:430px;}
+  .chartwrap.dough{height:240px;max-width:430px;margin:0 auto;}
   .ccap{font-size:.8rem;color:#5F5E5A;margin:8px 0 0;}
   .clegend{display:flex;flex-wrap:wrap;gap:14px;margin:2px 0 8px;font-size:.8rem;color:#5F5E5A;}
   .clegend span{display:flex;align-items:center;gap:6px;}
@@ -157,18 +157,18 @@
   <div class="chart2">
     <div class="chartcard">
       <div class="ctitle">Who pays for the Bayshore rebuild</div>
-      <div id="bayLegend" class="clegend"></div>
       <div class="chartwrap dough">
         <canvas id="bayDough" role="img" aria-label="Funding split for the Bayshore wastewater rebuild, a $24.1 million tender. Province about $17.6 million, 73 percent; Township about $6.5 million, 27 percent.">Bayshore rebuild ($24.1M): Province ~$17.6M (73%); Township ~$6.5M (27%).</canvas>
       </div>
+      <div id="bayLegend" class="clegend" style="justify-content:center"></div>
       <p class="ccap">2026 tender award (WWTF 202). Distinct from the $30M program grant; both confirmed. Source: Township, Mar 10 2026.</p>
     </div>
     <div class="chartcard">
       <div class="ctitle">Who's on municipal water/sewer</div>
-      <div id="sewerLegend" class="clegend"></div>
       <div class="chartwrap dough">
         <canvas id="sewerDough" role="img" aria-label="Roughly half the township's population is on municipal water and sewer; the other half is on private well and septic and pays none of these rates.">About half of Ramara is on municipal water/sewer; the other half is on private well and septic.</canvas>
       </div>
+      <div id="sewerLegend" class="clegend" style="justify-content:center"></div>
       <p class="ccap">Approximate; the rest are on private well and septic. Source: Township.</p>
     </div>
   </div>
@@ -290,7 +290,7 @@
   doughnut('sewerDough','sewerLegend',['On municipal water/sewer (~half)','Private well and septic (~half)'],[50,50],[amber,blue],function(v){return '~'+v+'%';});
 })();
 </script>
-<script src="../assets/app.js?v=28"></script>
+<script src="../assets/app.js?v=29"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

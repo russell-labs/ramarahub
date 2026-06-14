@@ -196,8 +196,8 @@
   function followupFormHtml(q, context) {
     return '<form class="followup" data-q="' + escapeHtml(q).replace(/"/g, "&quot;") + '">' +
       '<p class="fu-line">' + context + "</p>" +
-      '<div class="fu-row"><input type="email" name="email" placeholder="Your email" required>' +
-      '<button type="submit">Get my answer</button></div>' +
+      '<div class="fu-row"><input type="email" name="email" placeholder="Your email (optional)">' +
+      '<button type="submit">Send</button></div>' +
       '<input type="text" name="note" placeholder="Anything to add? (optional)">' +
       "</form>";
   }
@@ -223,7 +223,7 @@
       } else {
         sbInsert("feedback", { q: q, helpful: false });
         bar.outerHTML = followupFormHtml(q,
-          "Sorry it fell short. Leave your email — <strong>Russell Cole will get back to you</strong> with a better answer, and your question goes on the research list.");
+          "Thanks — your flag is already logged and goes on the research list. Leave your email if you'd like <strong>Russell Cole to reply directly</strong>, or skip it and just check <a href=\"changelog.html\">What's new</a> later, where fixes get posted.");
       }
     });
     chat.addEventListener("submit", function (ev) {
@@ -235,7 +235,7 @@
       var q = form.getAttribute("data-q");
       sbInsert("feedback", { q: q, helpful: false, email: email, comment: note || null }).then(function (ok) {
         form.outerHTML = ok || SB.ok
-          ? '<p class="fu-done">Got it — you\'ll hear back soon. Your question just made the Hub better. 🤝</p>'
+          ? '<p class="fu-done">Got it — it\'s logged and on the research list. If you left your email, Russell will get back to you. Either way, watch <a href="changelog.html">What\'s new</a> to see the fix. 🤝</p>'
           : '<p class="fu-done">Couldn\'t send right now — email <a href="mailto:russellcolevop@gmail.com?subject=' + encodeURIComponent("Ramara Hub question: " + q) + '">russellcolevop@gmail.com</a> instead.</p>';
       });
     });
@@ -691,6 +691,43 @@
       'see <a href="news.html">all township news</a>.');
   }
 
+  /* ---------------- What's new (changelog, DB-driven) ---------------- */
+
+  // New entries live in the `changelog` table (newest first); the static rows below the
+  // #clLive mount in changelog.html are the historical archive. Going forward, the CS
+  // self-heal agent and manual updates insert rows here so fixes surface automatically.
+  function clRowHtml(e) {
+    var tagMap = { "New": "tag-new", "Update": "tag-update", "Correction": "tag-correction" };
+    var tagClass = tagMap[e.tag] || "tag-new";
+    var dateLabel = e.entry_date ? dateHuman(e.entry_date) : "";
+    var detail = escapeHtml(e.detail || "");
+    var url = e.link_url || "";
+    var okUrl = /^https?:\/\//i.test(url) || /^[A-Za-z0-9._\/-]+\.html(#[\w-]+)?$/.test(url);
+    if (okUrl && e.link_label) {
+      var ext = /^https?:\/\//i.test(url);
+      detail += ' <a href="' + escapeHtml(url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") +
+        ">" + escapeHtml(e.link_label) + " &rarr;</a>";
+    }
+    return '<details class="cl-row"><summary>' +
+      '<span class="cl-date">' + escapeHtml(dateLabel) + "</span>" +
+      '<span class="cl-title">' + escapeHtml(e.title || "") + "</span>" +
+      '<span class="cl-tag ' + tagClass + '">' + escapeHtml(e.tag || "New") + "</span>" +
+      '</summary><p class="cl-detail">' + detail + "</p></details>";
+  }
+
+  function initChangelog() {
+    var mount = document.getElementById("clLive");
+    if (!mount || !SB.ok) return;
+    fetch(SB.url + "/rest/v1/changelog?select=entry_date,title,detail,tag,link_url,link_label&published=eq.true&order=entry_date.desc,id.desc&limit=60", {
+      headers: { apikey: SB.key, Authorization: "Bearer " + SB.key }
+    }).then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (rows) {
+        if (!rows || !rows.length) return;
+        mount.innerHTML = rows.map(clRowHtml).join("");
+      })
+      .catch(function () { /* leave the static archive as-is */ });
+  }
+
   /* ---------------- LiveAvatar (experimental AI avatar) ---------------- */
 
   function initAvatar() {
@@ -714,6 +751,66 @@
         inner +
       "</section>";
     mount.hidden = false;
+  }
+
+  /* ---------------- Issue brief: back link + "on this page" TOC ---------------- */
+
+  function initBriefToc() {
+    var p = location.pathname;
+    if (!/\/briefs\/[^\/]+\.html$/.test(p) || /\/briefs\/index\.html$/.test(p)) return;
+    var art = document.querySelector("article.brief");
+    if (!art) return;
+
+    if (!document.getElementById("briefNavCss")) {
+      var st = document.createElement("style");
+      st.id = "briefNavCss";
+      st.textContent =
+        ".brief-back{display:inline-block;margin:0 0 12px;font-size:.9rem;color:#185FA5;text-decoration:none;font-weight:600}" +
+        ".brief-back:hover{text-decoration:underline}" +
+        ".brief-toc{margin:14px 0 24px;padding:12px 16px;background:#f6f9fb;border:1px solid #e3eaf0;border-radius:10px;font-size:.9rem;line-height:1.9}" +
+        ".brief-toc b{color:#0E3D59;margin-right:4px}" +
+        ".brief-toc a{color:#185FA5;text-decoration:none}" +
+        ".brief-toc a:hover{text-decoration:underline}";
+      document.head.appendChild(st);
+    }
+
+    if (!art.querySelector(".brief-back")) {
+      var back = document.createElement("a");
+      back.className = "brief-back";
+      back.href = "index.html";
+      back.textContent = "← All issue briefs";
+      art.insertBefore(back, art.firstChild);
+    }
+
+    var heads = art.querySelectorAll(":scope > h2");
+    if (heads.length < 3) return;
+    var used = {}, links = [];
+    Array.prototype.forEach.call(heads, function (h) {
+      var id = h.id;
+      if (!id) {
+        id = (h.textContent || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "section";
+        while (used[id]) id = id + "-x";
+        h.id = id;
+      }
+      used[id] = true;
+      var a = document.createElement("a");
+      a.href = "#" + id;
+      a.textContent = (h.textContent || "").trim();
+      links.push(a);
+    });
+    var toc = document.createElement("nav");
+    toc.className = "brief-toc";
+    toc.setAttribute("aria-label", "On this page");
+    var label = document.createElement("b");
+    label.textContent = "On this page:";
+    toc.appendChild(label);
+    links.forEach(function (a, i) {
+      toc.appendChild(document.createTextNode(" "));
+      toc.appendChild(a);
+      if (i < links.length - 1) toc.appendChild(document.createTextNode(" ·"));
+    });
+    var updated = art.querySelector(".updated");
+    if (updated && updated.parentNode) updated.parentNode.insertBefore(toc, updated.nextSibling);
   }
 
   /* ---------------- Back to top ---------------- */
@@ -752,6 +849,8 @@
     initGreat();
     initDocuments();
     initNews();
+    initChangelog();
+    initBriefToc();
     initAvatar();
     initBackToTop();
     initSubscribe();
