@@ -1092,7 +1092,7 @@
       "id": "ww-sewer-amalgamation",
       "cat": "wastewater",
       "q": "Were Ramara's Brechin/Lagoon City and Bayshore sewer systems combined, and is that why there is an EA and effluent hauling?",
-      "a": "Ramara's sewer systems were once billed separately and were later brought onto a common rate, which is the substance of what some residents call a 'merger.' Township Bylaw 2015.19 (2015–2016 rates) set three separate sewer areas — Bayshore Village, Lagoon City, and Brechin — each with its own base-rate schedule, while the per-cubic-metre volume rate was the same across all three (for example, the 2015 quarterly base rate for a standard connection was $99.72 in Bayshore, $123.97 in Lagoon City, and $112.97 in Brechin). Rate schedules from 2017 onward reportedly move to a common base rate across the systems, and the Township now bills 'one water system and one wastewater system.' Two clarifications: there is no single bylaw that physically merged the treatment plants — they remain separate facilities — and the Township states there is 'no bylaw currently in place for how to fund sewer facilities.' The effect of the harmonized rate is that shared costs, such as the Bayshore loan and effluent hauling, are included in the fees paid by all wastewater users through the common rate (Bylaw 2025.76). Residents on private well and septic are not wastewater ratepayers and pay none of it. Being confirmed: the exact bylaw and year the base rates were harmonized.",
+      "a": "Ramara's sewer systems were once billed separately and were later brought onto a common rate, which is the substance of what some residents call a 'merger.' Township Bylaw 2015.19 (2015–2016 rates) set three separate sewer areas — Bayshore Village, Lagoon City, and Brechin — each with its own base-rate schedule, while the per-cubic-metre volume rate was the same across all three (for example, the 2015 quarterly base rate for a standard connection was $99.72 in Bayshore, $123.97 in Lagoon City, and $112.97 in Brechin). Effective January 1, 2017, Bylaw 2017.10 (based on a 2016 Hemson Consulting rate study) replaced the per-area rates with a single township-wide schedule for all water areas and all sewer areas, so from 2017 every sewer area pays the same base rate, and the Township now bills 'one water system and one wastewater system.' Two clarifications: there is no single bylaw that physically merged the treatment plants — they remain separate facilities — and the Township states there is 'no bylaw currently in place for how to fund sewer facilities.' The effect of the harmonized rate is that shared costs, such as the Bayshore loan and effluent hauling, are included in the fees paid by all wastewater users through the common rate (Bylaw 2025.76). Residents on private well and septic are not wastewater ratepayers and pay none of it.",
       "links": [
         {
           "label": "Utility billing & rates (one water/one wastewater system)",
@@ -1107,7 +1107,7 @@
           "url": "briefs/wastewater.html"
         }
       ],
-      "keywords": "sewer amalgamation amalgamated combine combined merge merged brechin lagoon city bayshore wastewater environmental assessment ea effluent hauling history bylaw one system master servicing plan 2015.19 segregated separate base rate harmonized harmonization 2015 2016 2017 brechin"
+      "keywords": "sewer amalgamation amalgamated combine combined merge merged brechin lagoon city bayshore wastewater environmental assessment ea effluent hauling history bylaw one system master servicing plan 2015.19 segregated separate base rate harmonized harmonization 2015 2016 2017 brechin 2017.10 hemson township-wide TR 23-19"
     },
     {
       "id": "animals-dog-limit",
@@ -1238,6 +1238,10 @@
         {
           "label": "Council Highlights, February 23, 2026",
           "url": "https://www.ramara.ca/news/posts/council-highlights-february-23-2026/"
+        },
+        {
+          "label": "OrilliaMatters — residents rally against 'crushing cost' of wastewater project",
+          "url": "https://www.orilliamatters.com/local-news/ramara-residents-rally-against-crushing-cost-of-wastewater-project-10850065"
         }
       ],
       "keywords": "lone birch maple trail ridge avenue simcoe road 30 percent 30% thirty percent township cover share subsidy discount promised promise cost charge capital low pressure sewer residents full 100% not honored followed through"
