@@ -7,7 +7,7 @@
 
   function fetchKB(cb) {
     if (KB) return cb(KB);
-    fetch(BASE + "data/kb.json")
+    fetch(BASE + "data/kb.json?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) { return r.json(); })
       .then(function (data) { KB = data; cb(KB); })
       .catch(function () { cb(null); });
@@ -461,7 +461,7 @@
   function initAsks() {
     var holder = document.getElementById("asks");
     if (!holder) return;
-    fetch(BASE + "data/asks.json")
+    fetch(BASE + "data/asks.json?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         var asks = (data && data.asks) || [];
@@ -519,7 +519,7 @@
   function initGreat() {
     var holder = document.getElementById("great");
     if (!holder) return;
-    fetch(BASE + "data/great.json")
+    fetch(BASE + "data/great.json?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         var intro = document.getElementById("greatIntro");
