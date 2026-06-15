@@ -163,7 +163,7 @@
     var terms = meaningfulTerms(q).slice(0, 6);
     if (!terms.length) return Promise.resolve([]);
     function query(t) {
-      var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type" +
+      var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type,source_class" +
         "&fts=wfts(english)." + encodeURIComponent(t) + "&limit=3";
       return fetch(url, { headers: { "apikey": SB.key, "Authorization": "Bearer " + SB.key } })
         .then(function (r) { return r.ok ? r.json() : []; })
@@ -176,10 +176,14 @@
   }
 
   function docResultsHtml(docs) {
-    var labels = { bylaw: "Bylaw", news: "Township news", "staff-report": "Report/plan", other: "Township page", minutes: "Minutes", agenda: "Agenda" };
-    return '<p class="lead-line" style="margin-top:0.8rem">From the township record (verify with the source):</p>' +
+    var labels = { bylaw: "Bylaw", news: "Township news", "staff-report": "Report/plan", other: "Township page", minutes: "Minutes", agenda: "Agenda", brief: "Hub brief" };
+    return '<p class="lead-line" style="margin-top:0.8rem">From the record (verify with the source):</p>' +
       docs.map(function (d) {
-        return '<p class="doc-hit"><span class="pill">' + (labels[d.doc_type] || "Document") + "</span> " +
+        // Independent records (court, journalism, resident, Hub brief) get a whose-voice pill;
+        // Township pages keep their document-type label.
+        var pill = (d.source_class && d.source_class !== "township")
+          ? voiceLabel(d.source_class) : (labels[d.doc_type] || "Document");
+        return '<p class="doc-hit"><span class="pill">' + escapeHtml(pill) + "</span> " +
           '<a href="' + d.source_url + '" target="_blank" rel="noopener">' + escapeHtml(d.title) + " ↗</a></p>";
       }).join("");
   }
@@ -285,12 +289,20 @@
              picks: picks.map(function (x) { return x.e; }) };
   }
 
+  // Short label for whose record a source is, so an answer's basis is visible at a glance.
+  function voiceLabel(cls) {
+    return { township: "Township", "hub-brief": "Hub brief", court: "Court record",
+      journalism: "Independent news", resident: "Resident", applicant: "Applicant",
+      provincial: "Provincial" }[cls] || "Source";
+  }
+
   function llmHtml(d) {
     var html = '<p class="lead-line">' + escapeHtml(d.answer).replace(/\n\n+/g, "</p><p>").replace(/\n/g, "<br>") + "</p>";
     if (d.sources && d.sources.length) {
-      html += '<p class="after-line">Sources from the township record (verify with the document):</p>' +
+      html += '<p class="after-line">Sources (and whose record each is) — verify with the document:</p>' +
         d.sources.map(function (s) {
-          return '<p class="doc-hit"><a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.title) + " ↗</a></p>";
+          return '<p class="doc-hit"><span class="pill">' + escapeHtml(voiceLabel(s.source_class)) + "</span> " +
+            '<a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.title) + " ↗</a></p>";
         }).join("");
     }
     return html;

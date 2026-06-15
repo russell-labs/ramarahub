@@ -55,7 +55,8 @@ def main():
             body = strip_html(page)
             if len(body) > 120:
                 out.append({"doc_type": "news", "title": title_of(page),
-                            "source_url": u, "doc_date": date_of(page), "body": body[:200000]})
+                            "source_url": u, "doc_date": date_of(page), "body": body[:200000],
+                            "source_class": "township"})
         except Exception as e:
             print(f"# fail {u}: {e}", file=sys.stderr)
         time.sleep(0.4)

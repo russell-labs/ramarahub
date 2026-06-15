@@ -90,7 +90,8 @@ def main():
             body = strip_html(page)
             if len(body) > 250:
                 batch.append({"doc_type": classify(u, title_of(page)), "title": title_of(page),
-                              "source_url": u, "doc_date": date_of(page), "body": body[:200000]})
+                              "source_url": u, "doc_date": date_of(page), "body": body[:200000],
+                              "source_class": "township"})
             for link in re.findall(r'href="([^"]+\.pdf)"', page, re.I):
                 full = urllib.parse.urljoin(u, link)
                 if "ramara.ca" in urllib.parse.urlparse(full).netloc:
@@ -125,7 +126,8 @@ def run_pdfs(start, count):
             if len(text.strip()) > 200:
                 name = urllib.parse.unquote(u.split("/")[-1]).replace("-", " ").replace(".pdf", "")
                 batch.append({"doc_type": classify(u, name), "title": name[:300],
-                              "source_url": u, "doc_date": None, "body": text[:200000]})
+                              "source_url": u, "doc_date": None, "body": text[:200000],
+                              "source_class": "township"})
             pdone += 1
         except Exception as e:
             pfails += 1; print(f"pdf fail {u}: {e}", flush=True)
