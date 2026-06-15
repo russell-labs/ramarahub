@@ -63,6 +63,16 @@ These were asked and hit the honest "I don't have that" fallback. Add only when 
 
 ---
 
+## Product / UX (not sourcing)
+
+- **Standalone newsletter signup link/page.** Signup currently lives only in a section near
+  the bottom of the homepage ("Get the free weekly update by email" / "Sign me up"). A
+  resident asked where to sign up and couldn't find it. Add a dedicated link (e.g. /newsletter)
+  or a nav/footer entry so it's shareable and easy to point people to. (Raised 2026-06-14 from
+  a Facebook comment.)
+
+---
+
 ## Known quality note
 
 The keyword fallback matcher (used when the AI engine is offline) was hardened on
