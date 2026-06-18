@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comment Box — Ramara Hub</title>
+<meta name="description" content="Leave a comment for your ward. A simple, neutral way for Ramara residents to share what's on their mind, sorted by ward, so it reaches the right councillor.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ramara Hub">
+<meta property="og:title" content="Comment Box — Ramara Hub">
+<meta property="og:description" content="Leave a comment for your ward. A simple, neutral way for Ramara residents to share what's on their mind, sorted by ward.">
+<meta property="og:url" content="https://ramarahub.ca/comment-box.html">
+<meta property="og:image" content="https://ramarahub.ca/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Comment Box — Ramara Hub">
+<meta name="twitter:description" content="Leave a comment for your ward, sorted so it reaches the right councillor.">
+<meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
+<link rel="stylesheet" href="assets/style.css?v=32">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+  :root{ --blue:#14557B; --blue-dark:#0E3D59; --gold:#C8861A; --ink:#16242c; --muted:#5b7184; --line:#e3eaf0; --bg:#f6f9fb; --card:#fff; }
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+  .hero{background:linear-gradient(160deg,var(--blue) 0%,var(--blue-dark) 100%);color:#fff;padding:46px 0 38px}
+  .hero h1{margin:0 0 12px;font-size:2rem;line-height:1.15;letter-spacing:-.5px;color:#fff}
+  .hero .bar{width:120px;height:6px;background:var(--gold);border-radius:4px;margin:14px 0 18px}
+  .hero p{margin:0;font-size:1.1rem;max-width:620px;color:#e9f0f5}
+  main{padding:30px 0 20px} section{margin:0 0 26px}
+  .box-illustration{display:flex;justify-content:center;margin:6px 0 24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:0 1px 3px rgba(20,85,123,.05)}
+  label{display:block;font-weight:600;margin:16px 0 5px;font-size:.95rem} .req{color:#b4341a}
+  input,select,textarea{width:100%;padding:11px 13px;border:1px solid #cdd9e2;border-radius:9px;font-size:1rem;font-family:inherit;background:#fff;box-sizing:border-box}
+  textarea{min-height:120px;resize:vertical} .hint{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+  button{margin-top:22px;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px 26px;font-size:1.02rem;font-weight:700;cursor:pointer} button:hover{background:var(--blue-dark)}
+  .note{background:#eef5f9;border:1px solid #cfe0ea;border-left:4px solid var(--blue);border-radius:10px;padding:14px 18px;font-size:.95rem}
+  .cllr-note{font-size:.9rem;color:var(--muted);font-style:italic;margin-top:22px}
+  .page-foot{border-top:1px solid var(--line);margin-top:28px;padding:22px 0 48px;color:var(--muted);font-size:.9rem}
+  details{margin-top:14px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff}
+  summary{cursor:pointer;font-weight:600;color:var(--blue-dark)}
+</style>
+</head>
+<body data-base="">
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">Ramara Hub</a>
+    <span class="sub">A Ramara Civic Forum project</span>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰ Menu</button>
+  </div>
+</header>
+<nav class="site-nav" id="siteNav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="browse.html">Everyday answers</a>
+    <a href="briefs/index.html">Issue Briefs</a>
+    <a href="take-action.html">Take Action</a>
+    <a href="news.html">News</a>
+    <a href="/volunteer.html">Volunteer</a>
+    <a href="changelog.html">What&#39;s new</a>
+    <a href="money.html">Ramara&#39;s Money</a>
+    <a href="council.html">Council &amp; Wards</a>
+    <a href="comment-box.html" class="active">Comment box</a>
+    <a href="asked.html">Asked the Township</a>
+    <a href="great-things.html">Great things</a>
+    <a href="documents.html">The Record</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>The Comment Box</h1>
+    <div class="bar"></div>
+    <p>A simple, neutral place to say what's on your mind about your corner of Ramara. Pick your ward, drop in a comment, and it reaches the right people. Like dropping a note in a box at the front of the hall.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="box-illustration">
+    <svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="A drawing of a comment drop box with a note going in the slot">
+      <rect x="25" y="55" width="100" height="78" rx="6" fill="#14557B"/>
+      <rect x="25" y="55" width="100" height="20" rx="6" fill="#0E3D59"/>
+      <rect x="55" y="64" width="40" height="5" rx="2.5" fill="#C8861A"/>
+      <rect x="60" y="22" width="30" height="40" rx="3" fill="#fff" stroke="#cdd9e2" stroke-width="2" transform="rotate(8 75 42)"/>
+      <line x1="66" y1="34" x2="86" y2="37" stroke="#9fb3c2" stroke-width="2" transform="rotate(8 75 42)"/>
+      <line x1="65" y1="42" x2="85" y2="45" stroke="#9fb3c2" stroke-width="2" transform="rotate(8 75 42)"/>
+      <line x1="64" y1="50" x2="80" y2="52" stroke="#9fb3c2" stroke-width="2" transform="rotate(8 75 42)"/>
+      <circle cx="75" cy="118" r="9" fill="#0E3D59"/>
+    </svg>
+  </section>
+
+  <section class="card">
+    <form id="cbForm">
+      <label for="ward">Your ward <span class="req">*</span></label>
+      <select id="ward" required>
+        <option value="">Select your ward…</option>
+        <option>Ward 1</option>
+        <option>Ward 2</option>
+        <option>Ward 3</option>
+        <option>Ward 4</option>
+        <option>Ward 5</option>
+        <option>Not sure / outside these</option>
+      </select>
+      <p class="hint">Not sure which ward you're in? Check the <a href="https://www.ramara.ca/municipal-office/wards/" target="_blank" rel="noopener">Township's ward map</a>.</p>
+
+      <label for="comment">Your comment <span class="req">*</span></label>
+      <textarea id="comment" required placeholder="What's on your mind? A concern, an idea, a question about your ward…"></textarea>
+
+      <label for="name">Your name (optional)</label>
+      <input type="text" id="name">
+
+      <label for="email">Email (optional, but add it if you'd like a reply)</label>
+      <input type="email" id="email">
+      <p class="hint">Leaving your email lets us or your councillor follow up. Skip it if you'd rather not.</p>
+
+      <button type="submit">Drop it in the box</button>
+    </form>
+  </section>
+
+  <section class="note">
+    Comments are sorted by ward and shared with the councillor who represents it. This is a neutral community resource, not the Township's official site, and it doesn't support or oppose anyone. We read everything; we reply when you've left a way to reach you.
+  </section>
+
+  <p class="cllr-note">A councillor reading this: we built the Comment Box to make hearing from your ward easier, not harder. If you'd like the comments from your ward, or want to help shape how this works, reach out at russellcolevop@gmail.com. The goal is to make your job a little easier.</p>
+
+  <div class="page-foot">
+    Ramara Hub is an independent, free community resource — a Ramara Civic Forum project. It is not the Township of Ramara's official website.
+  </div>
+</main>
+
+<script src="assets/app.js?v=31"></script>
+<script>
+  // LIVE: posts the comment to Supabase (anon insert; not publicly readable).
+  var SB_URL = "https://pchdckgdrigevxfjwgom.supabase.co";
+  var SB_KEY = "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD";
+  document.getElementById('cbForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var g = function (id) { return (document.getElementById(id).value || '').trim(); };
+    var btn = this.querySelector('button');
+    btn.disabled = true; btn.textContent = 'Sending…';
+    var row = { ward: g('ward'), comment: g('comment'), name: g('name'), email: g('email') };
+    fetch(SB_URL + "/rest/v1/ward_comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Prefer": "return=minimal" },
+      body: JSON.stringify(row)
+    }).then(function (r) {
+      if (r.ok) {
+        document.getElementById('cbForm').outerHTML =
+          '<div class="note"><strong>Thank you — your comment is in the box.</strong> It\'s sorted to your ward. If you left an email, you may hear back. Want to leave another? Just reload the page.</div>';
+      } else {
+        btn.disabled = false; btn.textContent = 'Drop it in the box';
+        alert("Something went wrong sending your comment. Please email russellcolevop@gmail.com and we'll sort it out.");
+      }
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Drop it in the box';
+      alert("Something went wrong sending your comment. Please email russellcolevop@gmail.com and we'll sort it out.");
+    });
+  });
+</script>
+</body>
+</html>

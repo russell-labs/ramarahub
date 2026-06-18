@@ -1267,6 +1267,28 @@
         }
       ],
       "keywords": "development concession road 11 con rd 11 con 11 subdivision rezoning zoning application proposal building new houses homes planned what is being built happening atherley uptergrove planning application notice severance consent site plan variance"
+    },
+    {
+      "id": "gb-yard-waste-schedule",
+      "cat": "garbage",
+      "q": "Is there leaf and yard waste pickup in June, and when does it resume?",
+      "a": "Leaf and yard waste in Ramara is collected by the County of Simcoe, bi-weekly on designated weeks, always on your garbage collection week. The County's 2026 Waste Management Calendar shows no leaf and yard waste collection weeks in June anywhere in the County. June is weekly organics and bi-weekly garbage only. Yard waste collection resumes in July on the scheduled garbage weeks. Put material at the curb by 7 a.m. on the Monday of your collection week, using kraft paper yard waste bags, cardboard boxes, or open-top rigid containers (max 20 kg per bag/box). Bundle brush with natural twine, max 2 m long and 30 cm in diameter. Collection can happen any day during your week, so leave it out if it is not taken on your usual day. Exact weeks differ by zone and address, so confirm yours or sign up for reminders at simcoe.ca/wastereminder or on the Simcoe County Collects app. Missed pickup or a collection concern: County of Simcoe at 1-800-263-3199.",
+      "phone": "1-800-263-3199 (Service Simcoe, waste collection)",
+      "links": [
+        {
+          "label": "Simcoe County — Yard Waste (how and when)",
+          "url": "https://simcoe.ca/residents/organics-recycling-and-garbage/special-collections/yard-waste/"
+        },
+        {
+          "label": "Simcoe County — Collection Schedule and zone lookup",
+          "url": "https://simcoe.ca/residents/organics-recycling-and-garbage/collections-schedule/"
+        },
+        {
+          "label": "Simcoe County — 2026 Waste Management Calendar (PDF)",
+          "url": "https://simcoe.ca/wp-content/uploads/2026/02/SWM-2026-Calendar-22x17DIGITAL-1.pdf"
+        }
+      ],
+      "keywords": "leaf yard waste yardwaste leaf bags paper bags june july no pickup collection resume schedule grass clippings garden brush zone 2 lagoon city when curbside biweekly simcoe county"
     }
   ]
 }

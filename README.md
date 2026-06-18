@@ -24,5 +24,6 @@ GitHub Pages from `main` (repo: github.com/russell-labs/ramarahub), custom domai
 
 ## Roadmap
 
-Phase 2: AI plain-language answers (Supabase edge function + retrieval over this knowledge base).
-Phase 3: "Didn't find it? Ask" intake. Phase 4: budget/project/decision transparency tools.
+The plain-language answer engine is live. Current priorities: expanding the public record,
+adding missing CivicWeb material when available, improving guardrails/caveats, and publishing
+more issue briefs, charts, and resident-facing explainers.
