@@ -372,6 +372,12 @@ article.brief strong { font-weight: 700; color: var(--ink); }
   content: ""; width: 0.55rem; height: 1.3rem; background: var(--gold); border-radius: 2px; flex-shrink: 0;
 }
 .keybox p { margin-bottom: 0; font-size: 1.1rem; line-height: 1.65; color: var(--ink); }
+/* Phones: trim the page + keybox padding and the keybox text size so the column isn't cramped. */
+@media (max-width: 600px) {
+  .wrap { padding: 0 0.85rem; }
+  .keybox { padding: 1.1rem 1.1rem; }
+  .keybox p { font-size: 1.02rem; }
+}
 
 /* =====================  Tables (editorial) ===================== */
 .table-scroll { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: var(--r); }
@@ -760,5 +766,7 @@ article.brief .brief-toc a:hover { text-decoration: underline; }
   .status-closed { background: #222B30; border-color: var(--rule); color: var(--muted); }
   .cl-tag.tag-fix { background: #222B30; color: var(--muted); }
   .no-result, .flag, .callout-gold, .avatar-disclaimer { border-color: #5A4A20; }
+  /* Zebra-stripe rows: the light #FCFBF7 fill is unreadable under light dark-mode text, so flip it. */
+  table tr:nth-child(even) td { background: rgba(255,255,255,0.045); }
   /* Footer input stays light on the deep-teal footer (unchanged in both modes). */
 }

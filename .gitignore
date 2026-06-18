@@ -4,3 +4,5 @@ assets/*.HEIC
 assets/Russ headshot nuetral background.jpg.JPG
 .gstack/
 outputs/
+.thumbnail
+.fuse_hidden*
