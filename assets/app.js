@@ -346,13 +346,66 @@
     var input = document.getElementById("q");
     var chat = document.getElementById("chat");
     initChatDelegation(chat);
+
+    // "Clear answers" appears only once there's a conversation; empties the thread.
+    var clearBtn = document.getElementById("clearChat");
+    function syncClear() { if (clearBtn) clearBtn.hidden = !chat.children.length; }
+    if (clearBtn) clearBtn.addEventListener("click", function () {
+      chat.innerHTML = "";
+      syncClear();
+      if (input) input.focus();
+    });
+
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var q = (input.value || "").trim();
       if (q.length < 2) return;
       input.value = "";
       askQuestion(q, chat, input);
+      syncClear();
     });
+
+    // Tap-to-ask suggested questions: route straight through the engine.
+    var suggest = document.getElementById("askSuggest");
+    if (suggest) suggest.addEventListener("click", function (ev) {
+      var chip = ev.target.closest("[data-ask]");
+      if (!chip) return;
+      input.value = "";
+      askQuestion(chip.getAttribute("data-ask"), chat, input);
+      syncClear();
+    });
+  }
+
+  /* ---------------- Popular questions (progressive enhancement) ----------------
+     Real, curated questions ship in the HTML so the chips always work. If the
+     backend exposes a `popular_questions(cnt)` RPC — top asked questions returned
+     display-ready (clean canonical text, NOT raw user input) — we swap in the live
+     most-asked list. If the RPC is absent or empty, the curated chips stay. */
+  function initPopularQuestions() {
+    var holder = document.getElementById("askSuggest");
+    if (!holder || !SB.ok) return;
+    fetch(SB.url + "/rest/v1/rpc/popular_questions", {
+      method: "POST",
+      headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json" },
+      body: JSON.stringify({ cnt: 4 })
+    }).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (rows) {
+        if (!rows || !rows.length) return;
+        var qs = rows.map(function (x) { return typeof x === "string" ? x : (x.q || x.question || ""); })
+                     .filter(Boolean).slice(0, 5);
+        if (!qs.length) return;
+        var clear = document.getElementById("clearChat");
+        Array.prototype.forEach.call(holder.querySelectorAll(".ask-chip"), function (c) { c.remove(); });
+        qs.forEach(function (q) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "ask-chip";
+          b.setAttribute("data-ask", q);
+          b.textContent = q;
+          if (clear) holder.insertBefore(b, clear); else holder.appendChild(b);
+        });
+      })
+      .catch(function () { /* keep the curated chips */ });
   }
 
   /* ---------------- Mailing list signup ---------------- */
@@ -856,6 +909,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initChat();
+    initPopularQuestions();
     initTiles();
     initAsks();
     initGreat();

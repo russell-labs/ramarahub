@@ -17,7 +17,10 @@
 <meta name="twitter:title" content="Ramara Hub — answers for Ramara Township residents">
 <meta name="twitter:description" content="One simple place for Ramara Township residents to find answers: wastewater, roads, garbage, taxes, permits, council, and the big local issues — every answer sourced.">
 <meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
-<link rel="stylesheet" href="assets/style.css?v=32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=34">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
@@ -52,6 +55,7 @@
 
 <section class="hero">
   <div class="wrap">
+    <p class="eyebrow">Sourced answers · never guesses</p>
     <h1>What do you need to know?</h1>
     <p class="lede">Ask in your own words. Plain answers, official sources, real phone numbers — and it never guesses.</p>
     <div id="chat" aria-live="polite"></div>
@@ -59,6 +63,14 @@
       <input id="q" type="text" placeholder="Try: can my septic home be forced onto the sewer system?" autocomplete="off" aria-label="Ask Ramara Hub a question">
       <button type="submit">Ask</button>
     </form>
+    <div class="ask-suggest" id="askSuggest">
+      <span class="ask-suggest-label">Popular questions:</span>
+      <button type="button" class="ask-chip" data-ask="Can my septic home be forced onto the sewer system?">Can my septic home be forced onto the sewer system?</button>
+      <button type="button" class="ask-chip" data-ask="Why did wastewater rates go up 15%?">Why did wastewater rates go up 15%?</button>
+      <button type="button" class="ask-chip" data-ask="When is my garbage and recycling collected?">When is my garbage and recycling collected?</button>
+      <button type="button" class="ask-chip" data-ask="When are my property taxes due?">When are my property taxes due?</button>
+      <button type="button" id="clearChat" hidden>✕ Clear answers</button>
+    </div>
     <p class="search-hint">Press Ask when you're ready — or tap a topic below, no typing needed.<br>
     Answers are backed by a searchable archive of <strong>900+ public township documents</strong> — bylaws, council highlights, reports, and plans — each linked to its official source.</p>
   </div>
@@ -68,8 +80,8 @@
   <!-- LiveAvatar mount — experimental AI avatar. Hidden until AVATAR.enabled is set in assets/app.js. Safe to delete this one line to remove the feature entirely. -->
   <section id="liveAvatar" hidden></section>
 
-  <a class="card" href="volunteer.html" style="display:block;margin:0 0 1.4rem;text-decoration:none;color:inherit">
-    <strong>Summer 2026:</strong> we're looking for up to two local students to learn AI and build something for the community — <span style="white-space:nowrap">learn more and apply →</span>
+  <a class="card" href="volunteer.html" style="margin:1.4rem 0;padding:1.1rem 1.25rem">
+    <strong>Summer 2026:</strong> we're looking for up to two local students to learn AI and build something for the community — <span style="white-space:nowrap;color:var(--teal-700);font-weight:700">learn more and apply →</span>
   </a>
 
   <section class="trust-panel" aria-labelledby="trustTitle">
@@ -113,7 +125,7 @@
   <div id="newsTeaser">
     <p class="muted">Loading the latest township news…</p>
   </div>
-  <p style="margin-top:0.6rem"><a href="news.html">See all township news →</a></p>
+  <p style="margin-top:0.8rem"><a href="news.html">See all township news →</a></p>
 
   <h2 class="section">Your questions don't just get answered — they get heard</h2>
   <div class="card">
@@ -150,7 +162,7 @@
   </div>
 </footer>
 
-<script src="assets/app.js?v=31"></script>
+<script src="assets/app.js?v=33"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

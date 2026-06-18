@@ -17,22 +17,12 @@
 <meta name="twitter:title" content="Roads in Ramara: how priorities get set — Ramara Hub">
 <meta name="twitter:description" content="The 2025 Road Needs Study, the $4.4M-a-year question, and what's being fixed in 2026. Every claim sourced.">
 <meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
-<link rel="stylesheet" href="../assets/style.css?v=32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=34">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<style>
-  .pullquote{border-left:4px solid #BA7517;padding:6px 0 6px 18px;margin:26px 0;}
-  .pullquote .q{font-family:Georgia,'Times New Roman',serif;font-size:1.28rem;line-height:1.5;color:#16242c;}
-  .pullquote .qs{font-size:.8rem;color:#5F5E5A;margin-top:8px;}
-  .chartcard{margin:22px 0 8px;}
-  .chartcard .ctitle{font-weight:600;font-size:1rem;margin:0 0 6px;color:#0E3D59;}
-  .chartwrap{position:relative;width:100%;height:280px;}
-  .chartwrap.dough{height:240px;max-width:430px;}
-  .ccap{font-size:.8rem;color:#5F5E5A;margin:8px 0 0;}
-  .clegend{display:flex;flex-wrap:wrap;gap:14px;margin:2px 0 8px;font-size:.8rem;color:#5F5E5A;}
-  .clegend span{display:flex;align-items:center;gap:6px;}
-  .chart2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;}
-</style>
 </head>
 <body data-base="../">
 
@@ -174,7 +164,8 @@
 <script>
 (function(){
   if(!window.Chart) return;
-  var blue='#185FA5', amber='#BA7517', gray='#5F5E5A';
+  var __cs=getComputedStyle(document.documentElement),__axis=(__cs.getPropertyValue('--muted')||'#586872').trim(),__grid=(__cs.getPropertyValue('--rule')||'#ECE6DA').trim();Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif";Chart.defaults.font.size=13;Chart.defaults.color=__axis;Chart.defaults.scale.grid.color=__grid;Chart.defaults.scale.ticks.color=__axis;Chart.defaults.scale.border.color=__grid;
+  var blue='#14557B', amber='#C8861A', gray='#586872';
   var money1=function(v){return '$'+Number(v).toFixed(1)+'M';};
   new Chart(document.getElementById('gapBar'),{type:'bar',
     data:{labels:['Recommended (study)','2026 budget'],
@@ -203,7 +194,7 @@
   el.innerHTML=[['Gravel 183 km',amber],['Hard surface 178 km',blue]].map(function(p){return '<span><span style="width:13px;height:13px;border-radius:3px;background:'+p[1]+';display:inline-block;"></span>'+p[0]+'</span>';}).join('');
 })();
 </script>
-<script src="../assets/app.js?v=31"></script>
+<script src="../assets/app.js?v=33"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -17,33 +17,12 @@
 <meta name="twitter:title" content="Rates &amp; affordability: how Ramara compares — Ramara Hub">
 <meta name="twitter:description" content="Where Ramara's rates sit among comparable Ontario townships, where they're headed, and the tools other communities use.">
 <meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
-<link rel="stylesheet" href="../assets/style.css?v=32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=34">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<style>
-  /* Self-contained brief extras (no global CSS change, so no cache bump needed) */
-  .pullquote{border-left:4px solid #BA7517;padding:6px 0 6px 18px;margin:26px 0;}
-  .pullquote .q{font-family:Georgia,'Times New Roman',serif;font-size:1.28rem;line-height:1.5;color:#16242c;}
-  .pullquote .qs{font-size:.8rem;color:#5F5E5A;margin-top:8px;}
-  .chartcard{margin:22px 0 8px;}
-  .chartcard .ctitle{font-weight:600;font-size:1rem;margin:0 0 6px;color:#0E3D59;}
-  .chartwrap{position:relative;width:100%;height:300px;}
-  .chartwrap.tall{height:340px;}
-  .chartwrap.dough{height:240px;max-width:430px;margin:0 auto;}
-  .ccap{font-size:.8rem;color:#5F5E5A;margin:8px 0 0;}
-  .clegend{display:flex;flex-wrap:wrap;gap:14px;margin:2px 0 8px;font-size:.8rem;color:#5F5E5A;}
-  .clegend span{display:flex;align-items:center;gap:6px;}
-  .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
-  .stat{background:#f6f9fb;border:1px solid #e3eaf0;border-radius:10px;padding:14px 16px;}
-  .stat .n{font-size:1.5rem;font-weight:700;color:#0E3D59;line-height:1.1;}
-  .stat .l{font-size:.82rem;color:#5F5E5A;margin-top:5px;}
-  .chart2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;}
-  .toolcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:16px 0;}
-  .toolcard{background:#fff;border:1px solid #e3eaf0;border-radius:10px;padding:13px 15px;}
-  .toolcard h3{margin:0 0 5px;font-size:.96rem;color:#0E3D59;}
-  .toolcard p{margin:0 0 6px;font-size:.9rem;line-height:1.5;}
-  .toolcard .src{font-size:.78rem;color:#5F5E5A;}
-</style>
 </head>
 <body data-base="../">
 
@@ -143,10 +122,10 @@
   <div class="chartcard">
     <div class="ctitle">Wastewater rate per m³, projected to 2033</div>
     <div class="clegend">
-      <span><span style="width:22px;height:3px;background:#BA7517;display:inline-block;"></span>Ramara — ~13%/yr (Bylaw 2024.79)</span>
-      <span><span style="width:22px;height:0;border-top:3px dashed #185FA5;display:inline-block;"></span>Severn — ~4.5%/yr (rate study)</span>
-      <span><span style="width:22px;height:0;border-top:3px dotted #5F5E5A;display:inline-block;"></span>Kawartha Lakes — ~4%/yr</span>
-      <span><span style="width:22px;height:0;border-top:2px solid #C9C9C9;display:inline-block;"></span>Other neighbours — no published schedule (illustrative, assumed ~4%/yr)</span>
+      <span><span style="width:22px;height:3px;background:#C8861A;display:inline-block;"></span>Ramara — ~13%/yr (Bylaw 2024.79)</span>
+      <span><span style="width:22px;height:0;border-top:3px dashed #14557B;display:inline-block;"></span>Severn — ~4.5%/yr (rate study)</span>
+      <span><span style="width:22px;height:0;border-top:3px dotted #586872;display:inline-block;"></span>Kawartha Lakes — ~4%/yr</span>
+      <span><span style="width:22px;height:0;border-top:2px solid #CFC8BA;display:inline-block;"></span>Other neighbours — no published schedule (illustrative, assumed ~4%/yr)</span>
     </div>
     <div class="chartwrap tall">
       <canvas id="projLine" role="img" aria-label="Projected wastewater rate per cubic metre, 2026 to 2033. Ramara rises from $5.00 to about $11.77; Severn from $3.63 to about $4.94; Kawartha Lakes from $1.89 to about $2.49. Other neighbours (Tay, Georgina, Springwater, Innisfil), which have no published forward schedule, are shown illustratively at an assumed 4 percent a year and stay between about $2.40 and $5.70 by 2033.">Projected wastewater rate per m³ to 2033: Ramara $5.00 to about $11.77; Severn $3.63 to about $4.94; Kawartha Lakes $1.89 to about $2.49. Other neighbours with no published schedule (Tay, Georgina, Springwater, Innisfil) shown illustratively at an assumed 4%/yr.</canvas>
@@ -247,7 +226,8 @@
 <script>
 (function(){
   if(!window.Chart) return;
-  var blue='#185FA5', amber='#BA7517', gray='#5F5E5A', faint='#C9C9C9';
+  var __cs=getComputedStyle(document.documentElement),__axis=(__cs.getPropertyValue('--muted')||'#586872').trim(),__grid=(__cs.getPropertyValue('--rule')||'#ECE6DA').trim();Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif";Chart.defaults.font.size=13;Chart.defaults.color=__axis;Chart.defaults.scale.grid.color=__grid;Chart.defaults.scale.ticks.color=__axis;Chart.defaults.scale.border.color=__grid;
+  var blue='#14557B', amber='#C8861A', gray='#586872', faint='#CFC8BA';
   var moneyX={ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}};
   new Chart(document.getElementById('wwBar'),{type:'bar',
     data:{labels:['Ramara','Tay','Georgina','Severn','Springwater','Kawartha Lakes','Innisfil'],
@@ -291,7 +271,7 @@
   doughnut('sewerDough','sewerLegend',['On municipal water/sewer (~half)','Private well and septic (~half)'],[50,50],[amber,blue],function(v){return '~'+v+'%';});
 })();
 </script>
-<script src="../assets/app.js?v=31"></script>
+<script src="../assets/app.js?v=33"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

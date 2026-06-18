@@ -17,20 +17,12 @@
 <meta name="twitter:title" content="Wastewater in Ramara: the whole story — Ramara Hub">
 <meta name="twitter:description" content="Why Ramara wastewater rates rose 15% in 2026, what the $30M grant does and doesn't do, who pays, and what happens next. Every claim sourced.">
 <meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
-<link rel="stylesheet" href="../assets/style.css?v=32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=34">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<style>
-  .pullquote{border-left:4px solid #BA7517;padding:6px 0 6px 18px;margin:26px 0;}
-  .pullquote .q{font-family:Georgia,'Times New Roman',serif;font-size:1.28rem;line-height:1.5;color:#16242c;}
-  .pullquote .qs{font-size:.8rem;color:#5F5E5A;margin-top:8px;}
-  .chartcard{margin:22px 0 8px;}
-  .chartcard .ctitle{font-weight:600;font-size:1rem;margin:0 0 6px;color:#0E3D59;}
-  .chartwrap{position:relative;width:100%;height:300px;}
-  .ccap{font-size:.8rem;color:#5F5E5A;margin:8px 0 0;}
-  .clegend{display:flex;flex-wrap:wrap;gap:14px;margin:2px 0 8px;font-size:.8rem;color:#5F5E5A;}
-  .clegend span{display:flex;align-items:center;gap:6px;}
-</style>
 </head>
 <body data-base="../">
 
@@ -107,10 +99,10 @@
   <div class="chartcard">
     <div class="ctitle">Wastewater rate per m³, projected to 2033 — Ramara vs neighbours</div>
     <div class="clegend">
-      <span><span style="width:22px;height:3px;background:#BA7517;display:inline-block;"></span>Ramara — ~13%/yr (Bylaw 2024.79)</span>
-      <span><span style="width:22px;height:0;border-top:3px dashed #185FA5;display:inline-block;"></span>Severn — ~4.5%/yr (rate study)</span>
-      <span><span style="width:22px;height:0;border-top:3px dotted #5F5E5A;display:inline-block;"></span>Kawartha Lakes — ~4%/yr</span>
-      <span><span style="width:22px;height:0;border-top:2px solid #C9C9C9;display:inline-block;"></span>Other neighbours — no published schedule (illustrative, assumed ~4%/yr)</span>
+      <span><span style="width:22px;height:3px;background:#C8861A;display:inline-block;"></span>Ramara — ~13%/yr (Bylaw 2024.79)</span>
+      <span><span style="width:22px;height:0;border-top:3px dashed #14557B;display:inline-block;"></span>Severn — ~4.5%/yr (rate study)</span>
+      <span><span style="width:22px;height:0;border-top:3px dotted #586872;display:inline-block;"></span>Kawartha Lakes — ~4%/yr</span>
+      <span><span style="width:22px;height:0;border-top:2px solid #CFC8BA;display:inline-block;"></span>Other neighbours — no published schedule (illustrative, assumed ~4%/yr)</span>
     </div>
     <div class="chartwrap">
       <canvas id="projLine" role="img" aria-label="Projected wastewater rate per cubic metre, 2026 to 2033. Ramara rises from $5.00 to about $11.77; Severn from $3.63 to about $4.94; Kawartha Lakes from $1.89 to about $2.49. Other neighbours with no published schedule are shown illustratively at an assumed 4 percent a year.">Projected wastewater rate per m³ to 2033: Ramara $5.00 to about $11.77; Severn $3.63 to about $4.94; Kawartha Lakes $1.89 to about $2.49; other neighbours (illustrative) lower.</canvas>
@@ -218,18 +210,24 @@
 <script>
 (function(){
   if(!window.Chart) return;
-  var blue='#185FA5', amber='#BA7517', gray='#5F5E5A', faint='#C9C9C9';
+  // Palette-matched, dark-adaptive Chart.js theming
+  var __cs=getComputedStyle(document.documentElement), teal='#14557B', gold='#C8861A', gray='#586872', faint='#CFC8BA', grid=(__cs.getPropertyValue('--rule')||'#ECE6DA').trim(), axis=(__cs.getPropertyValue('--muted')||'#586872').trim();
+  Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
+  Chart.defaults.font.size = 13;
+  Chart.defaults.color = axis;
+  Chart.defaults.scale.grid.color = grid; Chart.defaults.scale.ticks.color = axis; Chart.defaults.scale.border.color = grid;
+
   new Chart(document.getElementById('changeBar'),{type:'bar',
     data:{labels:['Wastewater $/m³','Water $/m³'],
       datasets:[
-        {label:'2025',data:[4.35,3.21],backgroundColor:gray,borderRadius:4},
-        {label:'2026',data:[5.00,3.47],backgroundColor:amber,borderRadius:4}
+        {label:'2025',data:[4.35,3.21],backgroundColor:'#B9C4CC',borderRadius:4},
+        {label:'2026',data:[5.00,3.47],backgroundColor:gold,borderRadius:4}
       ]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+c.parsed.y.toFixed(2)+' / m³';}}}},
-      scales:{y:{ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}}}}});
+      scales:{x:{grid:{display:false}},y:{grid:{color:grid},ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}}}}});
   var cl=document.getElementById('changeLegend');
-  cl.innerHTML=[['2025',gray],['2026',amber]].map(function(p){return '<span><span style="width:13px;height:13px;border-radius:3px;background:'+p[1]+';display:inline-block;"></span>'+p[0]+'</span>';}).join('');
+  cl.innerHTML=[['2025','#B9C4CC'],['2026',gold]].map(function(p){return '<span><span style="width:13px;height:13px;border-radius:3px;background:'+p[1]+';display:inline-block;"></span>'+p[0]+'</span>';}).join('');
 
   var yrs=['2026','2027','2028','2029','2030','2031','2032','2033'];
   function assumed(label,base){var d=[],v=base;for(var i=0;i<8;i++){d.push(Number(v.toFixed(2)));v=v*1.04;}return {label:label,data:d,borderColor:faint,backgroundColor:faint,borderWidth:1.5,pointRadius:0,tension:0.2};}
@@ -240,15 +238,15 @@
       assumed('Springwater (illustrative ~4%/yr)',3.60),
       assumed('Innisfil (illustrative ~4%/yr)',1.85),
       {label:'Kawartha Lakes',data:[1.89,1.97,2.04,2.13,2.21,2.30,2.39,2.49],borderColor:gray,backgroundColor:gray,borderDash:[2,3],borderWidth:2,pointRadius:2,tension:0.2},
-      {label:'Severn',data:[3.63,3.79,3.96,4.14,4.33,4.52,4.73,4.94],borderColor:blue,backgroundColor:blue,borderDash:[6,4],borderWidth:2,pointRadius:2,tension:0.2},
-      {label:'Ramara',data:[5.00,5.65,6.38,7.21,8.15,9.21,10.41,11.77],borderColor:amber,backgroundColor:amber,borderWidth:3,pointRadius:2,tension:0.2}
+      {label:'Severn',data:[3.63,3.79,3.96,4.14,4.33,4.52,4.73,4.94],borderColor:teal,backgroundColor:teal,borderDash:[6,4],borderWidth:2,pointRadius:2,tension:0.2},
+      {label:'Ramara',data:[5.00,5.65,6.38,7.21,8.15,9.21,10.41,11.77],borderColor:gold,backgroundColor:gold,borderWidth:3,pointRadius:2,tension:0.2}
     ]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+c.parsed.y.toFixed(2)+' / m³';}}}},
-      scales:{y:{ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}}}}});
+      scales:{x:{grid:{color:grid}},y:{grid:{color:grid},ticks:{callback:function(v){return '$'+Number(v).toFixed(2);}}}}}});
 })();
 </script>
-<script src="../assets/app.js?v=31"></script>
+<script src="../assets/app.js?v=33"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

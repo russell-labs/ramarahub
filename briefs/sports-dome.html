@@ -17,18 +17,12 @@
 <meta name="twitter:title" content="The Ramara Sports Dome: fact check — Ramara Hub">
 <meta name="twitter:description" content="What has actually been decided about the Ramara sports dome (less than you think), what it might cost, and both sides of the debate. Every claim sourced.">
 <meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
-<link rel="stylesheet" href="../assets/style.css?v=32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=34">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<style>
-  .pullquote{border-left:4px solid #BA7517;padding:6px 0 6px 18px;margin:26px 0;}
-  .pullquote .q{font-family:Georgia,'Times New Roman',serif;font-size:1.28rem;line-height:1.5;color:#16242c;}
-  .pullquote .qs{font-size:.8rem;color:#5F5E5A;margin-top:8px;}
-  .chartcard{margin:22px 0 8px;}
-  .chartcard .ctitle{font-weight:600;font-size:1rem;margin:0 0 6px;color:#0E3D59;}
-  .chartwrap{position:relative;width:100%;height:260px;}
-  .ccap{font-size:.8rem;color:#5F5E5A;margin:8px 0 0;}
-</style>
 </head>
 <body data-base="../">
 
@@ -156,7 +150,8 @@
 <script>
 (function(){
   if(!window.Chart) return;
-  var blue='#185FA5', amber='#BA7517';
+  var __cs=getComputedStyle(document.documentElement),__axis=(__cs.getPropertyValue('--muted')||'#586872').trim(),__grid=(__cs.getPropertyValue('--rule')||'#ECE6DA').trim();Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif";Chart.defaults.font.size=13;Chart.defaults.color=__axis;Chart.defaults.scale.grid.color=__grid;Chart.defaults.scale.ticks.color=__axis;Chart.defaults.scale.border.color=__grid;
+  var blue='#14557B', amber='#C8861A';
   new Chart(document.getElementById('costBar'),{type:'bar',
     data:{labels:['Feasibility study','Largest dome option (2023)'],
       datasets:[{data:[50000,6300000],backgroundColor:[blue,amber],borderRadius:4}]},
@@ -165,7 +160,7 @@
       scales:{y:{ticks:{callback:function(v){return v>=1e6?'$'+(v/1e6)+'M':'$'+(v/1000)+'k';}}}}}});
 })();
 </script>
-<script src="../assets/app.js?v=31"></script>
+<script src="../assets/app.js?v=33"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
