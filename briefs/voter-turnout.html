@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voter turnout in Ramara: where we stand — Ramara Hub</title>
+<meta name="description" content="Ramara's 2018 and 2022 municipal voter turnout, how it compares with small Ontario municipalities, and exactly how the numbers were checked. Every claim sourced.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ramara Hub">
+<meta property="og:title" content="Voter turnout in Ramara: where we stand — Ramara Hub">
+<meta property="og:description" content="Ramara recorded 36.08% municipal turnout in 2022, ranking 188th of 329 small Ontario municipalities reporting ballots. See the sources, calculation and full list.">
+<meta property="og:url" content="https://ramarahub.ca/briefs/voter-turnout.html">
+<meta property="og:image" content="https://ramarahub.ca/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voter turnout in Ramara: where we stand — Ramara Hub">
+<meta name="twitter:description" content="Ramara's 2018 and 2022 municipal turnout, compared with small Ontario municipalities. Full sources and audit data included.">
+<meta name="twitter:image" content="https://ramarahub.ca/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&amp;display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=35">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+</head>
+<body data-base="../">
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Ramara Hub</a>
+    <span class="sub">A Ramara Civic Forum project</span>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰ Menu</button>
+  </div>
+</header>
+<nav class="site-nav" id="siteNav">
+  <div class="wrap">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../faq.html">FAQ</a>
+    <a href="../browse.html">Everyday answers</a>
+    <a href="index.html" class="active">Issue Briefs</a>
+    <a href="../take-action.html">Take Action</a>
+    <a href="../news.html">News</a>
+    <a href="../volunteer.html">Volunteer</a>
+    <a href="../changelog.html">What&#39;s new</a>
+    <a href="../money.html">Ramara&#39;s Money</a>
+    <a href="../council.html">Council &amp; Wards</a>
+    <a href="../comment-box.html">Comment box</a>
+    <a href="../asked.html">Asked the Township</a>
+    <a href="../great-things.html">Great things</a>
+    <a href="../documents.html">The Record</a>
+  </div>
+</nav>
+
+<main class="wrap">
+<article class="brief">
+  <span class="pill">Issue brief</span>
+  <h1>Voter turnout in Ramara: where we stand</h1>
+  <p class="updated">Last verified July 16, 2026 · Every claim links to its source · <a href="#sources">Jump to sources</a></p>
+
+  <div class="keybox">
+    <h2>The short version</h2>
+    <p>Ramara's municipality-wide voter turnout fell from <strong>38.97% in 2018</strong> to <strong>36.08% in 2022</strong>. Among Ontario local municipalities with fewer than 30,000 residents, Ramara ranked <strong>188th of 329</strong> that reported ballots in 2022: close to the middle, but 1.32 percentage points below the group median. In a stricter comparison limited to municipalities where the mayor or reeve was elected rather than acclaimed in both years, Ramara ranked <strong>119th of 161</strong>. <span class="src">[<a href="https://data.ontario.ca/dataset/municipal-election-results" target="_blank" rel="noopener">Ontario municipal election results</a>] [<a href="https://www.amo.on.ca/2018-ontario-municipal-election-voter-turnout-population" target="_blank" rel="noopener">AMO 2018 turnout</a>]</span></p>
+  </div>
+
+  <div class="grid-2" style="margin:1.4rem 0">
+    <div class="stat"><div class="n">36.08%</div><div class="l">Ramara's municipality-wide turnout in 2022</div></div>
+    <div class="stat"><div class="n">188 of 329</div><div class="l">2022 rank among small municipalities reporting ballots</div></div>
+    <div class="stat"><div class="n">119 of 161</div><div class="l">Rank where the head of council was contested in both elections</div></div>
+    <div class="stat"><div class="n">157</div><div class="l">Additional 2022 ballots that would have put Ramara just above the 2022 group median, at the same elector count</div></div>
+  </div>
+
+  <div class="flag"><strong>What this measures:</strong> Ontario's files report participation across the whole municipal election. They do not publish a separate turnout denominator for the mayor ballot. This brief therefore says <em>municipal turnout</em>, not "turnout for mayor."</div>
+
+  <h2>Ramara and the small-municipality average</h2>
+  <div class="chartcard">
+    <div class="ctitle">Municipality-wide voter turnout, 2018 and 2022</div>
+    <div class="chartwrap">
+      <canvas id="turnoutBar" role="img" aria-label="Voter turnout comparison. In 2018 Ramara was 38.97 percent and the small-municipality average was 42.36 percent. In 2022 Ramara was 36.08 percent and the small-municipality average was 37.17 percent.">2018: Ramara 38.97%, small-municipality average 42.36%. 2022: Ramara 36.08%, small-municipality average 37.17%.</canvas>
+    </div>
+    <p class="ccap">Unweighted average of municipalities with reported ballots in each year. The ranked group contained 326 municipalities in 2018 and 329 in 2022. Sources: AMO 2018 turnout workbook; Ontario 2022 municipal election data; 2021 Census population.</p>
+  </div>
+
+  <h2>Ramara's exact calculation</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Election</th><th>Eligible electors</th><th>Ballots cast</th><th>Turnout</th><th>Small-municipality rank</th></tr>
+    <tr><td>2018</td><td>11,146</td><td>4,344</td><td><strong>38.97%</strong></td><td>212 of 326</td></tr>
+    <tr><td>2022</td><td>11,869</td><td>4,282</td><td><strong>36.08%</strong></td><td>188 of 329</td></tr>
+  </table>
+  </div>
+  <p>For 2022, the calculation is <strong>4,282 ÷ 11,869 = 36.08%</strong>. The same number appears when Ontario's published voter and elector counts are divided. For 2018, this study uses AMO's published municipal figure: <strong>4,344 ÷ 11,146 = 38.97%</strong>. <span class="src">[<a href="https://data.ontario.ca/dataset/municipal-election-results" target="_blank" rel="noopener">Ontario results</a>] [<a href="https://www.amo.on.ca/2018-ontario-municipal-election-voter-turnout-population" target="_blank" rel="noopener">AMO 2018 workbook</a>] [<a href="https://www.ramara.ca/municipal-office/elections/" target="_blank" rel="noopener">Township election information</a>]</span></p>
+
+  <div class="pullquote">
+    <div class="q">Ramara was not at the bottom, and it was not near the top. In the broad 2022 comparison it sat slightly below the midpoint.</div>
+    <div class="qs">Broad rank: 188 of 329. Strict contested-head rank: 119 of 161.</div>
+  </div>
+
+  <h2>Who was closest to Ramara in 2022</h2>
+  <p>These are the four municipalities immediately above and below Ramara in the ranked list. Rates are shown to two decimals, but ranks use the unrounded calculation.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>2022 rank</th><th>Municipality</th><th>2022 turnout</th><th>Change since 2018</th><th>Head contested both years?</th></tr>
+    <tr><td>184</td><td>Town of Shelburne</td><td>36.24%</td><td>−1.78 pp</td><td>No</td></tr>
+    <tr><td>185</td><td>Township of Madoc</td><td>36.10%</td><td>−5.75 pp</td><td>Yes</td></tr>
+    <tr><td>186</td><td>Township of Mulmur</td><td>36.10%</td><td>−7.34 pp</td><td>No</td></tr>
+    <tr><td>187</td><td>Township of Morley</td><td>36.08%</td><td>Not comparable</td><td>No</td></tr>
+    <tr><td><strong>188</strong></td><td><strong>Township of Ramara</strong></td><td><strong>36.08%</strong></td><td><strong>−2.89 pp</strong></td><td><strong>Yes</strong></td></tr>
+    <tr><td>189</td><td>Township of The North Shore</td><td>36.02%</td><td>+1.60 pp</td><td>No</td></tr>
+    <tr><td>190</td><td>Township of Oro-Medonte</td><td>35.81%</td><td>−6.86 pp</td><td>Yes</td></tr>
+    <tr><td>191</td><td>Township of South Frontenac</td><td>35.65%</td><td>−2.62 pp</td><td>Yes</td></tr>
+    <tr><td>192</td><td>Town of Midland</td><td>35.58%</td><td>+0.07 pp</td><td>Yes</td></tr>
+  </table>
+  </div>
+
+  <h2>Turnout fell across most of the group</h2>
+  <p>Of the 314 small municipalities with comparable, non-zero participation in both elections, <strong>69.7% recorded lower turnout in 2022</strong>. Their unweighted average change was <strong>−4.93 percentage points</strong>. Ramara's decline was smaller at −2.89 points, which helps explain why its relative rank improved from 212th to 188th even though fewer eligible electors voted. This is descriptive evidence: the source files do not explain why turnout changed. <span class="src">[<a href="https://www.amo.on.ca/policy/municipal-governance-indigenous-relations/analysis-2022-municipal-post-election-data" target="_blank" rel="noopener">AMO 2022 election analysis</a>] [<a href="https://data.ontario.ca/dataset/municipal-election-results" target="_blank" rel="noopener">Ontario results</a>]</span></p>
+
+  <h2>How the comparison was built</h2>
+  <p>The starting universe is Ontario's 414 lower- and single-tier local municipalities in the 2022 results file. "Small" means a 2021 Census population below 30,000. That upper boundary is borrowed from Statistics Canada's small-population-centre category; it is a study definition, not an official municipal class. The resulting group contains 352 municipalities. All remain in the downloadable audit list, but rows with missing or zero ballots are not ranked. <span class="src">[<a href="https://data.ontario.ca/dataset/municipal-election-results" target="_blank" rel="noopener">Ontario results</a>] [<a href="https://www.amo.on.ca/number-members-council-2022-2026-municipal-election-year" target="_blank" rel="noopener">AMO / 2021 Census population</a>] [<a href="https://www12.statcan.gc.ca/census-recensement/2021/ref/dict/tab/index-eng.cfm?ID=t1_7" target="_blank" rel="noopener">Statistics Canada size groups</a>]</span></p>
+  <p>The strict comparison uses Ontario's successful-candidate files to keep only municipalities whose mayor or reeve is recorded as <strong>Elected</strong>, rather than <strong>Acclaimed</strong>, in both 2018 and 2022. It is still municipality-wide turnout, but it reduces one obvious comparability problem: residents may have had no head-of-council contest on their ballot.</p>
+
+  <div class="callout callout-gold">
+    <h3>The 2018 source conflict is disclosed, not hidden</h3>
+    <p>Ontario's older raw 2018 export and AMO's published 2018 workbook disagree for many municipalities: 174 elector counts and 58 voter counts differ. For Ramara, the raw Ontario row lists 10,881 electors and would imply 39.92%; AMO's published workbook uses 11,146 electors, 4,344 voters and 38.97%. This study uses AMO's published 2018 rate consistently, with one documented repair for Gananoque where AMO recorded zero voters despite an elected mayor. The workbook's Data Quality sheet shows the reconciliation.</p>
+  </div>
+
+  <h2>Check the work</h2>
+  <p>The complete list and calculation workbook are public. The workbook includes the broad ranking, strict contested-head ranking, all 414 local municipalities, source register and the 2018 reconciliation table.</p>
+  <p>
+    <a class="cta" href="../assets/downloads/ontario-small-municipality-voter-turnout-2018-2022.xlsx" download>Download the full workbook</a>
+    <a class="cta" href="../assets/downloads/ontario-small-municipality-turnout-2018-2022.csv" download>Download the 352-row CSV</a>
+  </p>
+  <p class="src">If you find an error or a source that changes the result, <a href="../about.html">tell Ramara Hub</a>. Corrections will be dated and described.</p>
+
+  <h2>What better participation would look like</h2>
+  <p>The 2022 small-municipality median was 37.40%. At Ramara's 2022 elector count, <strong>157 additional ballots</strong> would have moved turnout just above that line. That is an illustration using the 2022 denominator, not a forecast for 2026: the voters' list, contests and comparison group will change.</p>
+  <p>Turnout is not a score for any candidate. It is one measure of whether residents are participating in the decisions closest to home. For dates, eligibility and official voting information, use the <a href="https://www.ramara.ca/municipal-office/elections/" target="_blank" rel="noopener">Township of Ramara's election page</a>.</p>
+
+  <h2 id="sources">Sources</h2>
+  <p class="src">
+    <a href="https://data.ontario.ca/dataset/municipal-election-results" target="_blank" rel="noopener">Government of Ontario — municipal election results, including 2018 and 2022 municipal and successful-candidate files</a> ·
+    <a href="https://www.amo.on.ca/2018-ontario-municipal-election-voter-turnout-population" target="_blank" rel="noopener">Association of Municipalities of Ontario — 2018 voter turnout and population workbook</a> ·
+    <a href="https://www.amo.on.ca/number-members-council-2022-2026-municipal-election-year" target="_blank" rel="noopener">AMO / Statistics Canada — 2021 Census municipal population workbook</a> ·
+    <a href="https://www12.statcan.gc.ca/census-recensement/2021/ref/dict/tab/index-eng.cfm?ID=t1_7" target="_blank" rel="noopener">Statistics Canada — population centre size groups</a> ·
+    <a href="https://www.amo.on.ca/policy/municipal-governance-indigenous-relations/analysis-2022-municipal-post-election-data" target="_blank" rel="noopener">AMO — analysis of 2022 municipal post-election data</a> ·
+    <a href="https://www.ramara.ca/municipal-office/elections/" target="_blank" rel="noopener">Township of Ramara — official election information</a>
+  </p>
+
+  <aside aria-labelledby="read-next-title" style="margin:2rem 0 0">
+    <a class="brief-card" href="sports-dome.html">
+      <span class="tag">Read next</span>
+      <h3 id="read-next-title">The Sports Dome: what's actually been decided &rarr;</h3>
+      <p>The facts, published cost figures, arguments on both sides and what remains unknown.</p>
+    </a>
+  </aside>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <form id="footerSubscribe" class="footer-sub">
+      <label for="fsEmail"><strong>Get the free weekly update</strong> — what neighbours asked, what's new, and what's moving at the township.</label>
+      <div class="fs-row">
+        <input id="fsEmail" type="email" name="email" placeholder="Your email" required aria-label="Your email">
+        <button type="submit">Subscribe</button>
+      </div>
+    </form>
+    <p class="callout-phone">Township of Ramara: 705-484-5374 · Emergencies: 911</p>
+    <p class="disclaimer">Ramara Hub is an independent, free community resource — a Ramara Civic Forum project.
+    It is not the Township of Ramara's official website. Information verified July 16, 2026.</p>
+    <p><a href="../about.html">About</a> · <a href="../faq.html">FAQ</a> · <a href="../volunteer.html">Volunteer</a> · <a href="../news.html">Township news</a> · <a href="../changelog.html">What&#39;s new</a> · <a href="https://www.ramara.ca/" target="_blank" rel="noopener">Official township site: ramara.ca ↗</a></p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  if(!window.Chart) return;
+  var __cs=getComputedStyle(document.documentElement),__axis=(__cs.getPropertyValue('--muted')||'#586872').trim(),__grid=(__cs.getPropertyValue('--rule')||'#ECE6DA').trim();Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif";Chart.defaults.font.size=13;Chart.defaults.color=__axis;Chart.defaults.scale.grid.color=__grid;Chart.defaults.scale.ticks.color=__axis;Chart.defaults.scale.border.color=__grid;
+  var blue='#14557B', amber='#C8861A';
+  new Chart(document.getElementById('turnoutBar'),{type:'bar',
+    data:{labels:['2018','2022'],datasets:[
+      {label:'Ramara',data:[38.97,36.08],backgroundColor:amber,borderRadius:4},
+      {label:'Small-municipality average',data:[42.36,37.17],backgroundColor:blue,borderRadius:4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y.toFixed(2)+'%';}}}},
+      scales:{y:{beginAtZero:true,suggestedMax:50,ticks:{callback:function(v){return v+'%';}}}}}});
+})();
+</script>
+<script src="../assets/app.js?v=33"></script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
