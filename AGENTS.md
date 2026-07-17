@@ -26,7 +26,7 @@ Public site for ramarahub.ca. A neutral, independent civic resource for the Town
 - Resident replies are drafted for a human to send, never auto-sent.
 
 ## Publish
-- Build the HTML yourself; a human or Claude Code commits and pushes. Never run git from a sandbox.
+- Any authorized coding agent may commit and push site changes. Follow the review rules above, inspect the exact diff, and stage only the intended files.
 - Bump `?v=N` on any CSS/JS change.
 - Changelog is DB-driven (goes live without a push); pages need a push. Keep them consistent.
 
