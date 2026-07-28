@@ -96,15 +96,6 @@
     return html;
   }
 
-  /* ---------------- Backend (Supabase REST, insert-only) ---------------- */
-
-  var SB = {
-    url: "https://pchdckgdrigevxfjwgom.supabase.co",
-    key: "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD",
-    jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjaGRja2dkcmlnZXZ4Zmp3Z29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzI5NzYsImV4cCI6MjA5NjgwODk3Nn0.l4NEaRtHzI9C8d2XZV7ZDDhxBN3CuX84K6Wj-gA4AZc"
-  };
-  SB.ok = SB.url.indexOf("http") === 0;
-
   /* ---------------- LiveAvatar config (experimental HeyGen AI avatar) ----------------
      Single switch for the whole feature. Runs only through election day; pull anytime.
        • enabled:false  -> the section is removed cleanly from every page (no empty box).
@@ -121,73 +112,6 @@
     disclaimer: "This is an experimental AI avatar and may be removed at any time."
   };
 
-  // Ask the LLM answer engine (activates once the Gemini key is configured server-side).
-  function askLLM(q, picks) {
-    if (!SB.ok) return Promise.resolve(null);
-    var ctrl = new AbortController();
-    var timer = setTimeout(function () { ctrl.abort(); }, 9000);
-    return fetch(SB.url + "/functions/v1/hub-answer", {
-      method: "POST",
-      signal: ctrl.signal,
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + SB.jwt, "apikey": SB.jwt },
-      body: JSON.stringify({ q: q, picks: picks.map(function (p) { return { q: p.q, a: p.a, phone: p.phone || null }; }) })
-    }).then(function (r) {
-      clearTimeout(timer);
-      if (!r.ok) return null;
-      return r.json().then(function (d) { return d && d.answer ? d : null; });
-    }).catch(function () { clearTimeout(timer); return null; });
-  }
-
-  function sbInsert(table, row) {
-    if (!SB.ok) return Promise.resolve(false);
-    return fetch(SB.url + "/rest/v1/" + table, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SB.key,
-        "Authorization": "Bearer " + SB.key,
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify(row)
-    }).then(function (r) { return r.ok; }).catch(function () { return false; });
-  }
-
-  function logQuestion(q, verdict, topId, answer) {
-    sbInsert("questions", { q: q.slice(0, 500), verdict: verdict, top_entry: topId || null, answer: (answer || "").slice(0, 4000) });
-  }
-
-  // Tier 2: full-text search across the township record (899 ramara.ca pages, bylaws, reports).
-  // Tries all-words first; falls back to any-word so "how many pets can a resident have" still hits.
-  function searchDocuments(q) {
-    if (!SB.ok) return Promise.resolve([]);
-    var terms = meaningfulTerms(q).slice(0, 6);
-    if (!terms.length) return Promise.resolve([]);
-    function query(t) {
-      var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type,source_class" +
-        "&fts=wfts(english)." + encodeURIComponent(t) + "&limit=3";
-      return fetch(url, { headers: { "apikey": SB.key, "Authorization": "Bearer " + SB.key } })
-        .then(function (r) { return r.ok ? r.json() : []; })
-        .catch(function () { return []; });
-    }
-    return query(terms.join(" ")).then(function (docs) {
-      if (docs.length || terms.length < 2) return docs;
-      return query(terms.join(" OR "));
-    });
-  }
-
-  function docResultsHtml(docs) {
-    var labels = { bylaw: "Bylaw", news: "Township news", "staff-report": "Report/plan", other: "Township page", minutes: "Minutes", agenda: "Agenda", brief: "Hub brief" };
-    return '<p class="lead-line" style="margin-top:0.8rem">From the record (verify with the source):</p>' +
-      docs.map(function (d) {
-        // Independent records (court, journalism, resident, Hub brief) get a whose-voice pill;
-        // Township pages keep their document-type label.
-        var pill = (d.source_class && d.source_class !== "township")
-          ? voiceLabel(d.source_class) : (labels[d.doc_type] || "Document");
-        return '<p class="doc-hit"><span class="pill">' + escapeHtml(pill) + "</span> " +
-          '<a href="' + d.source_url + '" target="_blank" rel="noopener">' + escapeHtml(d.title) + " ↗</a></p>";
-      }).join("");
-  }
-
   /* ---------------- Chat ---------------- */
 
   function bubble(cls, html) {
@@ -195,54 +119,6 @@
     d.className = "msg " + cls;
     d.innerHTML = html;
     return d;
-  }
-
-  function followupFormHtml(q, context) {
-    return '<form class="followup" data-q="' + escapeHtml(q).replace(/"/g, "&quot;") + '">' +
-      '<p class="fu-line">' + context + "</p>" +
-      '<div class="fu-row"><input type="email" name="email" placeholder="Your email (optional)">' +
-      '<button type="submit">Send</button></div>' +
-      '<input type="text" name="note" placeholder="Anything to add? (optional)">' +
-      "</form>";
-  }
-
-  function feedbackBarHtml(q) {
-    return '<div class="fb-bar" data-q="' + escapeHtml(q).replace(/"/g, "&quot;") + '">' +
-      '<span>Did this answer it?</span>' +
-      '<button type="button" class="fb-yes" aria-label="Yes, helpful">👍</button>' +
-      '<button type="button" class="fb-no" aria-label="No, could be better">👎</button>' +
-      "</div>";
-  }
-
-  function initChatDelegation(chat) {
-    chat.addEventListener("click", function (ev) {
-      var yes = ev.target.closest(".fb-yes");
-      var no = ev.target.closest(".fb-no");
-      if (!yes && !no) return;
-      var bar = ev.target.closest(".fb-bar");
-      var q = bar.getAttribute("data-q");
-      if (yes) {
-        sbInsert("feedback", { q: q, helpful: true });
-        bar.innerHTML = "<span>Glad it helped. 🤝</span>";
-      } else {
-        sbInsert("feedback", { q: q, helpful: false });
-        bar.outerHTML = followupFormHtml(q,
-          "Thanks — your flag is already logged and goes on the research list. Leave your email if you'd like <strong>Russell Cole to reply directly</strong>, or skip it and just check <a href=\"changelog.html\">What's new</a> later, where fixes get posted.");
-      }
-    });
-    chat.addEventListener("submit", function (ev) {
-      var form = ev.target.closest(".followup");
-      if (!form) return;
-      ev.preventDefault();
-      var email = form.email.value.trim();
-      var note = form.note ? form.note.value.trim() : "";
-      var q = form.getAttribute("data-q");
-      sbInsert("feedback", { q: q, helpful: false, email: email, comment: note || null }).then(function (ok) {
-        form.outerHTML = ok || SB.ok
-          ? '<p class="fu-done">Got it — it\'s logged and on the research list. If you left your email, Russell will get back to you. Either way, watch <a href="changelog.html">What\'s new</a> to see the fix. 🤝</p>'
-          : '<p class="fu-done">Couldn\'t send right now — email <a href="mailto:russellcolevop@gmail.com?subject=' + encodeURIComponent("Ramara Hub question: " + q) + '">russellcolevop@gmail.com</a> instead.</p>';
-      });
-    });
   }
 
   function composeAnswer(kb, q) {
@@ -266,13 +142,8 @@
       var fb = "<p>I don't have a solid, sourced answer for that yet — and this site never guesses. " +
         "It only publishes what clears <a href=\"" + BASE + "about.html#standard\">our standard</a>: every claim tied to a credible source. When there isn't one, it says so rather than guess. " +
         "For something urgent, call the Township of Ramara at <strong>705-484-5374</strong> (Mon–Fri 9–4:30) or use the " +
-        '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>.</p>' +
-        followupFormHtml(q, "Or leave your email — <strong>Russell Cole will get back to you</strong> with the answer, and it gets added to the Hub so the next neighbour finds it instantly.");
-      // Even on a fallback verdict, hand the answer engine the 3 best-scoring KB
-      // entries. The server prompt treats them as "may or may not be relevant," so
-      // a near-miss KB entry can still seed a useful answer instead of a dead end.
-      return { html: fb, verdict: "fallback", topId: null, showFeedback: false,
-               picks: ranked.slice(0, 3).map(function (x) { return x.e; }) };
+        '<a href="https://v4.citywidesolutions.com/csr/ramara/" target="_blank" rel="noopener">Report a Concern portal ↗</a>.</p>';
+      return { html: fb, verdict: "fallback", topId: null };
     }
 
     // Keep only results in the same league as the top hit, max 3.
@@ -285,54 +156,21 @@
       : "<p class=\"lead-line\">I don't have an exact answer to that, but this is the closest sourced information I have:</p>";
 
     var html = lead + picks.map(function (x) { return renderEntry(x.e); }).join("");
-    return { html: html, verdict: confident ? "confident" : "related", topId: top.e.id, showFeedback: true,
-             picks: picks.map(function (x) { return x.e; }) };
-  }
-
-  // Short label for whose record a source is, so an answer's basis is visible at a glance.
-  function voiceLabel(cls) {
-    return { township: "Township", "hub-brief": "Hub brief", court: "Court record",
-      journalism: "Independent news", resident: "Resident", applicant: "Applicant",
-      provincial: "Provincial" }[cls] || "Source";
-  }
-
-  function llmHtml(d) {
-    var html = '<p class="lead-line">' + escapeHtml(d.answer).replace(/\n\n+/g, "</p><p>").replace(/\n/g, "<br>") + "</p>";
-    if (d.sources && d.sources.length) {
-      html += '<p class="after-line">Sources (and whose record each is) — verify with the document:</p>' +
-        d.sources.map(function (s) {
-          return '<p class="doc-hit"><span class="pill">' + escapeHtml(voiceLabel(s.source_class)) + "</span> " +
-            '<a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.title) + " ↗</a></p>";
-        }).join("");
-    }
-    return html;
+    return { html: html, verdict: confident ? "confident" : "related", topId: top.e.id };
   }
 
   function askQuestion(q, chat, input) {
     chat.appendChild(bubble("user", escapeHtml(q)));
     var think = bubble("hub thinking",
-      '<span class="community-pulse" aria-hidden="true">🤝</span> Checking the township record…');
+      '<span class="community-pulse" aria-hidden="true">🤝</span> Searching checked-in answers…');
     chat.appendChild(think);
     think.scrollIntoView({ behavior: "smooth", block: "nearest" });
     fetchKB(function (kb) {
       var ans = composeAnswer(kb, q);
-      // Try the LLM engine first; it gracefully returns null until the key is configured.
-      var llmP = askLLM(q, ans.picks || []);
-      var docsP = ans.verdict === "confident" ? Promise.resolve([]) : searchDocuments(q);
       var delay = new Promise(function (res) { setTimeout(res, 800 + Math.random() * 400); });
-      Promise.all([llmP, docsP, delay]).then(function (r) {
-        var llm = r[0], docs = r[1] || [];
+      delay.then(function () {
         think.remove();
-        var html;
-        if (llm) {
-          logQuestion(q, "llm", ans.topId, llm.answer);
-          html = llmHtml(llm) + feedbackBarHtml(q);
-        } else {
-          logQuestion(q, ans.verdict, ans.topId, ans.verdict === "fallback" ? "" : (ans.picks && ans.picks[0] ? ans.picks[0].a : ""));
-          html = ans.html + (docs.length ? docResultsHtml(docs) : "") +
-            (ans.showFeedback ? feedbackBarHtml(q) : "");
-        }
-        var reply = bubble("hub", html);
+        var reply = bubble("hub", ans.html);
         chat.appendChild(reply);
         reply.scrollIntoView({ behavior: "smooth", block: "nearest" });
         if (input) input.focus();
@@ -345,8 +183,6 @@
     if (!form) return;
     var input = document.getElementById("q");
     var chat = document.getElementById("chat");
-    initChatDelegation(chat);
-
     // "Clear answers" appears only once there's a conversation; empties the thread.
     var clearBtn = document.getElementById("clearChat");
     function syncClear() { if (clearBtn) clearBtn.hidden = !chat.children.length; }
@@ -381,71 +217,19 @@
      backend exposes a `popular_questions(cnt)` RPC — top asked questions returned
      display-ready (clean canonical text, NOT raw user input) — we swap in the live
      most-asked list. If the RPC is absent or empty, the curated chips stay. */
-  function initPopularQuestions() {
-    var holder = document.getElementById("askSuggest");
-    if (!holder || !SB.ok) return;
-    fetch(SB.url + "/rest/v1/rpc/popular_questions", {
-      method: "POST",
-      headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json" },
-      body: JSON.stringify({ cnt: 4 })
-    }).then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (rows) {
-        if (!rows || !rows.length) return;
-        var qs = rows.map(function (x) { return typeof x === "string" ? x : (x.q || x.question || ""); })
-                     .filter(Boolean).slice(0, 5);
-        if (!qs.length) return;
-        var clear = document.getElementById("clearChat");
-        Array.prototype.forEach.call(holder.querySelectorAll(".ask-chip"), function (c) { c.remove(); });
-        qs.forEach(function (q) {
-          var b = document.createElement("button");
-          b.type = "button";
-          b.className = "ask-chip";
-          b.setAttribute("data-ask", q);
-          b.textContent = q;
-          if (clear) holder.insertBefore(b, clear); else holder.appendChild(b);
-        });
-      })
-      .catch(function () { /* keep the curated chips */ });
-  }
+  function initPopularQuestions() { /* Curated chips are static in index.html. */ }
 
   /* ---------------- Mailing list signup ---------------- */
 
-  // Newsletter list lives in Buttondown (double opt-in + unsubscribe handling);
-  // a backup copy is written to our own DB so a subscriber is never lost.
-  var BUTTONDOWN_SUBSCRIBE = "https://buttondown.com/api/emails/embed-subscribe/russellcole143";
-  function bindSubscribe(form, source, withTopics) {
-    if (!form) return;
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var email = form.email.value.trim();
-      if (!email) return;
-      // Add to Buttondown — fire-and-forget, opaque response (no-cors), urlencoded like the native embed form.
-      try {
-        var body = new URLSearchParams();
-        body.append("email", email);
-        fetch(BUTTONDOWN_SUBSCRIBE, { method: "POST", mode: "no-cors", body: body });
-      } catch (e) {}
-      var topics = withTopics && form.topics ? form.topics.value.trim() : "";
-      function done(ok) {
-        form.outerHTML = ok || SB.ok
-          ? '<p class="fu-done">You\'re on the list. If a confirmation email arrives, click it to finish. No spam, unsubscribe anytime. 🤝</p>'
-          : '<p class="fu-done">Couldn\'t sign you up right now — email <a href="mailto:russellcolevop@gmail.com?subject=Ramara%20Hub%20updates">russellcolevop@gmail.com</a> and we\'ll add you.</p>';
-      }
-      // Backup to our DB; this confirmed write also drives the inline confirmation.
-      var row = { email: email, source: source };
-      if (topics) row.topics = topics;
-      sbInsert("subscribers", row).then(function (ok) {
-        // If the insert failed and we sent a topics field the DB may not have yet,
-        // retry without it so the email is never lost.
-        if (!ok && topics) sbInsert("subscribers", { email: email, source: source }).then(done);
-        else done(ok);
-      });
-    });
-  }
   function initSubscribe() {
-    bindSubscribe(document.getElementById("subscribeForm"), "home");
-    bindSubscribe(document.getElementById("footerSubscribe"), "footer");
-    bindSubscribe(document.getElementById("newsSubscribeForm"), "news", true);
+    ["subscribeForm", "footerSubscribe", "newsSubscribeForm"].forEach(function (id) {
+      var form = document.getElementById(id);
+      if (!form) return;
+      var note = document.createElement("p");
+      note.className = "fu-done";
+      note.textContent = "Email updates are unavailable while Ramara Hub is operating as a read-only reference site.";
+      form.parentNode.replaceChild(note, form);
+    });
   }
 
   /* ---------------- Topic tiles (in-place expand) ---------------- */
@@ -604,194 +388,30 @@
 
   /* ---------------- The Record (public document library) ---------------- */
 
-  var DOC_LABELS = { bylaw: "Bylaw", news: "Township news", "staff-report": "Report/plan", other: "Township page", minutes: "Minutes", agenda: "Agenda" };
-
   function initDocuments() {
     var holder = document.getElementById("docs");
     if (!holder) return;
-    var searchInput = document.getElementById("docSearch");
-    var filterSel = document.getElementById("docFilter");
-    var countEl = document.getElementById("docCount");
-    var moreBtn = document.getElementById("docMore");
-    var PAGE = 50;
-    var state = { mode: "browse", filter: "", offset: 0, total: null };
-
-    function setCount(t) { if (countEl) countEl.textContent = t || ""; }
-    function hideMore() { if (moreBtn) moreBtn.hidden = true; }
-    function showError() {
-      holder.innerHTML = '<p class="muted">The record is temporarily unavailable — try again shortly.</p>';
-      setCount(""); hideMore();
-    }
-
-    function docRow(d, withSnippet) {
-      var pill = '<span class="pill">' + (DOC_LABELS[d.doc_type] || "Document") + "</span>";
-      var date = '<span class="doc-date">' + (d.doc_date ? escapeHtml(dateHuman(d.doc_date)) : "date not recorded") + "</span>";
-      // Only allow http(s) sources; escape into the attribute (same allowlist pattern as great photos).
-      var href = /^https?:\/\//i.test(d.source_url || "") ? d.source_url : "#";
-      var html = '<div class="doc-row"><p class="doc-hit">' + pill +
-        '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(d.title || "Untitled") + " ↗</a> " + date + "</p>";
-      // snippet is ts_headline output: escape everything, then re-allow only the <b>/</b> highlight tags.
-      if (withSnippet && d.snippet) {
-        var snip = escapeHtml(d.snippet).replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>");
-        html += '<p class="doc-snippet">' + snip + "</p>";
-      }
-      return html + "</div>";
-    }
-
-    function renderBrowse(reset) {
-      if (reset) { holder.innerHTML = '<p class="muted">Loading the record…</p>'; hideMore(); }
-      var url = SB.url + "/rest/v1/documents?select=title,source_url,doc_type,doc_date" +
-        "&order=doc_date.desc.nullslast&limit=" + PAGE + "&offset=" + state.offset;
-      if (state.filter) url += "&doc_type=eq." + encodeURIComponent(state.filter);
-      fetch(url, { headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, Prefer: "count=exact" } })
-        .then(function (r) {
-          var cr = r.headers.get("Content-Range");
-          if (cr && cr.indexOf("/") >= 0) {
-            var tot = cr.split("/")[1];
-            if (tot && tot !== "*") state.total = parseInt(tot, 10);
-          }
-          if (!r.ok) return Promise.reject();
-          return r.json();
-        })
-        .then(function (docs) {
-          docs = docs || [];
-          if (reset) holder.innerHTML = "";
-          if (reset && !docs.length) { holder.innerHTML = '<p class="muted">No documents found for this filter.</p>'; setCount(""); hideMore(); return; }
-          holder.insertAdjacentHTML("beforeend", docs.map(function (d) { return docRow(d, false); }).join(""));
-          state.offset += docs.length;
-          setCount(state.total != null ? "Showing " + state.offset + " of " + state.total : "Showing " + state.offset);
-          if (moreBtn) moreBtn.hidden = !(state.total != null && state.offset < state.total);
-        })
-        .catch(showError);
-    }
-
-    function renderSearch(q) {
-      holder.innerHTML = '<p class="muted">Searching…</p>'; setCount(""); hideMore();
-      fetch(SB.url + "/rest/v1/rpc/search_docs", {
-        method: "POST",
-        headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json" },
-        body: JSON.stringify({ q: q, cnt: 25 })
-      })
-        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-        .then(function (docs) {
-          docs = docs || [];
-          if (!docs.length) {
-            holder.innerHTML = '<p class="muted">No matches for “' + escapeHtml(q) + '”. Try fewer or different words.</p>';
-            setCount(""); return;
-          }
-          // Render in the order the RPC returns (recency-ranked) — do not re-sort.
-          holder.innerHTML = docs.map(function (d) { return docRow(d, true); }).join("");
-          setCount("Showing " + docs.length + " best matches for “" + escapeHtml(q) + "”");
-        })
-        .catch(showError);
-    }
-
-    function refresh() {
-      var q = searchInput ? searchInput.value.trim() : "";
-      if (q) { state.mode = "search"; renderSearch(q); }
-      else { state.mode = "browse"; state.offset = 0; renderBrowse(true); }
-    }
-
-    if (filterSel) filterSel.addEventListener("change", function () {
-      state.filter = filterSel.value;
-      if (searchInput) searchInput.value = "";
-      state.mode = "browse"; state.offset = 0;
-      renderBrowse(true);
-    });
-    if (searchInput) {
-      var deb;
-      searchInput.addEventListener("input", function () { clearTimeout(deb); deb = setTimeout(refresh, 300); });
-      searchInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); clearTimeout(deb); refresh(); } });
-    }
-    if (moreBtn) moreBtn.addEventListener("click", function () { renderBrowse(false); });
-
-    renderBrowse(true);
+    var controls = document.querySelector(".doc-controls");
+    if (controls) controls.hidden = true;
+    var count = document.getElementById("docCount");
+    if (count) count.textContent = "";
+    var more = document.getElementById("docMore");
+    if (more) more.hidden = true;
+    holder.innerHTML = '<div class="callout callout-teal"><strong>The Hub\'s searchable document index is unavailable in read-only mode.</strong> Read current records directly on the <a href="https://www.ramara.ca/municipal-office/" target="_blank" rel="noopener">Township website ↗</a> and <a href="https://ramara.civicweb.net/portal/" target="_blank" rel="noopener">Meeting Portal ↗</a>.</div>';
   }
 
   /* ---------------- Latest from the Township (news feed) ---------------- */
 
-  // RPC latest_news(cnt) returns { title, source_url, doc_date, teaser }, newest first.
-  function fetchLatestNews(cnt) {
-    if (!SB.ok) return Promise.reject();
-    return fetch(SB.url + "/rest/v1/rpc/latest_news", {
-      method: "POST",
-      headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json" },
-      body: JSON.stringify({ cnt: cnt })
-    }).then(function (r) { return r.ok ? r.json() : Promise.reject(); });
-  }
-
-  // News uses its own .news-item card markup (NOT the shared .doc-row, which The Record
-  // and chat answers also render). The whole card links to the official ramara.ca source.
-  function newsRowHtml(item, withTeaser) {
-    var dateLabel = item.doc_date ? dateHuman(item.doc_date) : "Date not recorded";
-    // Only allow http(s) sources; escape the url into the attribute (same allowlist as the record).
-    var href = /^https?:\/\//i.test(item.source_url || "") ? item.source_url : "#";
-    var html = '<a class="news-item" href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' +
-      '<span class="news-date">' + escapeHtml(dateLabel) + "</span>" +
-      "<h3>" + escapeHtml(item.title || "Untitled") + "</h3>";
-    if (withTeaser && item.teaser) html += '<p class="news-teaser">' + escapeHtml(item.teaser) + "</p>";
-    if (withTeaser) html += '<p class="news-src">Read it on ramara.ca ↗</p>';
-    return html + "</a>";
-  }
-
-  function renderNewsInto(holder, cnt, withTeaser, errLink) {
-    fetchLatestNews(cnt)
-      .then(function (items) {
-        items = items || [];
-        if (!items.length) { holder.innerHTML = '<p class="news-empty">No township posts yet — check back soon.</p>'; return; }
-        holder.innerHTML = '<div class="news-feed' + (withTeaser ? "" : " teaser") + '">' +
-          items.map(function (it) { return newsRowHtml(it, withTeaser); }).join("") + "</div>";
-      })
-      .catch(function () {
-        holder.innerHTML = '<p class="news-error">Couldn\'t load township news right now — ' + errLink + "</p>";
-      });
-  }
-
   function initNews() {
     var full = document.getElementById("news");
-    if (full) renderNewsInto(full, 30, true,
-      'read it directly at <a href="https://www.ramara.ca/news/" target="_blank" rel="noopener">ramara.ca/news ↗</a>.');
+    if (full) full.innerHTML = '<div class="callout callout-teal"><strong>The live news feed is unavailable in read-only mode.</strong> Read current notices at <a href="https://www.ramara.ca/news/" target="_blank" rel="noopener">ramara.ca/news ↗</a>.</div>';
     var teaser = document.getElementById("newsTeaser");
-    if (teaser) renderNewsInto(teaser, 3, false,
-      'see <a href="news.html">all township news</a>.');
+    if (teaser) teaser.innerHTML = '<p class="muted">The live feed is unavailable in read-only mode. <a href="https://www.ramara.ca/news/" target="_blank" rel="noopener">Read current Township news ↗</a></p>';
   }
 
   /* ---------------- What's new (changelog, DB-driven) ---------------- */
 
-  // New entries live in the `changelog` table (newest first); the static rows below the
-  // #clLive mount in changelog.html are the historical archive. Going forward, the CS
-  // self-heal agent and manual updates insert rows here so fixes surface automatically.
-  function clRowHtml(e) {
-    var tagMap = { "New": "tag-new", "Update": "tag-update", "Correction": "tag-correction" };
-    var tagClass = tagMap[e.tag] || "tag-new";
-    var dateLabel = e.entry_date ? dateHuman(e.entry_date) : "";
-    var detail = escapeHtml(e.detail || "");
-    var url = e.link_url || "";
-    var okUrl = /^https?:\/\//i.test(url) || /^[A-Za-z0-9._\/-]+\.html(#[\w-]+)?$/.test(url);
-    if (okUrl && e.link_label) {
-      var ext = /^https?:\/\//i.test(url);
-      detail += ' <a href="' + escapeHtml(url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") +
-        ">" + escapeHtml(e.link_label) + " &rarr;</a>";
-    }
-    return '<details class="cl-row"><summary>' +
-      '<span class="cl-date">' + escapeHtml(dateLabel) + "</span>" +
-      '<span class="cl-title">' + escapeHtml(e.title || "") + "</span>" +
-      '<span class="cl-tag ' + tagClass + '">' + escapeHtml(e.tag || "New") + "</span>" +
-      '</summary><p class="cl-detail">' + detail + "</p></details>";
-  }
-
-  function initChangelog() {
-    var mount = document.getElementById("clLive");
-    if (!mount || !SB.ok) return;
-    fetch(SB.url + "/rest/v1/changelog?select=entry_date,title,detail,tag,link_url,link_label&published=eq.true&order=entry_date.desc,id.desc&limit=60", {
-      headers: { apikey: SB.key, Authorization: "Bearer " + SB.key }
-    }).then(function (r) { return r.ok ? r.json() : []; })
-      .then(function (rows) {
-        if (!rows || !rows.length) return;
-        mount.innerHTML = rows.map(clRowHtml).join("");
-      })
-      .catch(function () { /* leave the static archive as-is */ });
-  }
+  function initChangelog() { /* The checked-in historical archive is the complete view. */ }
 
   /* ---------------- LiveAvatar (experimental AI avatar) ---------------- */
 

@@ -102,23 +102,23 @@
     <details class="faq-item">
       <summary>Will this be kept up to date, or will it go stale?</summary>
       <div class="faq-body">
-        <p>Yes, and it's built to stay current with very little hand-holding. A lot of the upkeep runs automatically: the site pulls in new Township news each day, keeps its document archive fresh, drafts replies to questions residents leave (a person reviews them before any reply goes out), and flags gaps to be filled. That automation is the point. The Hub keeps working day to day without depending on someone manually tending it, so it won't quietly fall out of date.</p>
+        <p>The static pages remain available, but they do not update themselves. Each issue brief shows when it was last verified, and time-sensitive details should be confirmed with the Township. New facts require a reviewed site update.</p>
       </div>
     </details>
 
     <details class="faq-item">
       <summary>Can the person who runs this control the narrative?</summary>
       <div class="faq-body">
-        <p>Fair question, and the site is built specifically so the answer is no. The 900-plus documents behind it aren't hand-picked — they're pulled automatically from the Township's own website, and the deeper issue briefs draw on outside records too, court rulings and independent journalism. Every answer links straight back to its original source so you can check it yourself. If an answer ever doesn't match its source, that's a bug, and it gets fixed, usually the same day.</p>
+        <p>Any resource reflects choices about what to include. The safeguard here is that curated answers and issue briefs link back to their original sources so readers can check them. Deeper issue briefs also draw on court rulings and independent journalism, not only Township material.</p>
         <p>The rules are public: facts only, every claim sourced, both sides and the real numbers on contested issues, no grades, no endorsements, and when there's no sourced answer the site says so instead of guessing. We're also not hiding who runs it. The About page says plainly that Russell Cole built and maintains the site and ran for mayor in 2022.</p>
         <p>The honest part: any resource involves choices about what to include, and we won't pretend otherwise. The safeguard isn't a claim of perfect neutrality. It's that everything is sourced, everything is checkable, and anyone can flag something to be fixed or added. Holding the site to that standard is exactly how it stays honest.</p>
       </div>
     </details>
 
     <details class="faq-item" id="guardrails">
-      <summary>What guardrails keep the answer engine honest?</summary>
+      <summary>What guardrails keep search honest?</summary>
       <div class="faq-body">
-        <p>The answer engine is designed to answer from retrieved records, not from memory. It should link back to the sources it used, label whose record each source came from, avoid guessing, and make uncertainty visible when the record is incomplete or one-sided.</p>
+        <p>Search runs locally against curated answer cards, not a generative model. Answers link to their sources, avoid guessing, and name uncertainty where the checked-in record is incomplete or one-sided.</p>
         <p>Those guardrails do not make the Hub perfect. They make it checkable. Corrections and meaningful changes are logged on <a href="changelog.html">What's new</a>, and the site code is public on <a href="https://github.com/russell-labs/ramarahub" target="_blank" rel="noopener">GitHub&nbsp;↗</a> so people can inspect how the site changes.</p>
       </div>
     </details>
@@ -127,25 +127,25 @@
       <summary>Doesn't the Township control the source data? Couldn't that bias the answers?</summary>
       <div class="faq-body">
         <p>An honest yes-and-no. The everyday answers are built mostly from documents the Township itself publishes, because that's what's publicly available to collect. So where the public record is incomplete, the Hub inherits that gap — it can only point you to what exists.</p>
-        <p>Council minutes are summaries, not transcripts, and public meeting audio and video are not posted as searchable transcripts. The CivicWeb material is not fully in the Hub's searchable archive yet either. We've asked the Township Clerk for those records so they can be added if they are provided.</p>
+        <p>Council minutes are summaries, not transcripts, and public meeting audio and video are not posted as searchable transcripts. The former database-backed document index is unavailable in read-only mode.</p>
         <p>That's exactly why the deeper issue briefs go outside Township-controlled sources. They're built from court rulings and independent journalism, not the Township's own framing. The clearest example is the <a href="briefs/shore-walls.html">shore wall brief</a>: it lays out the Ontario Superior Court's finding that the Township acted in bad faith, and the later contempt finding against it — sourced to the court record and to OrilliaMatters and BarrieToday. A tool spun to favour council wouldn't surface that.</p>
-        <p>We also name what's missing instead of papering over it. The CivicWeb council-minutes archive isn't in the document set yet, and we've formally asked the Township for the full minutes record so it can be complete. Some council business is handled in closed (in-camera) sessions, which municipalities are allowed to do but which keeps it off the public record. Where the record is thin, withheld, or one-sided, the site says so rather than filling the gap with any one party's version — and it won't state as fact anything it can't source.</p>
+        <p>We also name what's missing instead of papering over it. Some council business is handled in closed (in-camera) sessions, which keeps it off the public record. Where the record is thin, withheld, or one-sided, the site says so rather than filling the gap with any one party's version.</p>
       </div>
     </details>
 
     <details class="faq-item">
       <summary>Do you track me? What about my privacy?</summary>
       <div class="faq-body">
-        <p>When you ask a question, the Hub records the <em>question</em> — never who asked it. No accounts, no ads, and no advertising trackers. Question counts tell us what to research next and what to raise with the township.</p>
+        <p>Search runs in your browser and is not sent or saved. There are no accounts, submissions, or advertising trackers.</p>
         <p>The site uses Cloudflare Web Analytics for aggregate visit counts. Cloudflare says Web Analytics does not use cookies, localStorage, or fingerprinting to collect usage metrics: <a href="https://www.cloudflare.com/web-analytics/" target="_blank" rel="noopener">Cloudflare Web Analytics&nbsp;↗</a>.</p>
-        <p>If you choose to leave your email — for a follow-up answer or the weekly update — it's used for exactly that and nothing else, and you can ask to be removed anytime.</p>
+        <p>The site does not collect email addresses while it is read-only.</p>
       </div>
     </details>
 
     <details class="faq-item">
-      <summary>Does my question actually get seen?</summary>
+      <summary>Is my search recorded?</summary>
       <div class="faq-body">
-        <p>Yes. Every question asked here is counted anonymously. The issues raised most often, with the biggest impact on residents, get researched into full <a href="briefs/index.html">issue briefs</a> and <strong>brought to the township</strong> through the Ramara Civic Forum — the resident group built to do exactly that. Asking a question here is a small act of making Ramara work better.</p>
+        <p>No. In read-only mode, search runs in your browser against the Hub's checked-in knowledge base. The site does not send or save your search.</p>
       </div>
     </details>
 
@@ -159,7 +159,7 @@
     <details class="faq-item">
       <summary>How do I get updates?</summary>
       <div class="faq-body">
-        <p>Sign up for the free weekly email — what neighbours asked, what's new on the Hub, and what's moving at the township. You can add the topics you care about and we'll flag what's relevant to you. Subscribe from the <a href="news.html">Township news page</a> or the footer of any page. No spam, unsubscribe anytime.</p>
+        <p>Email updates are unavailable while Ramara Hub is operating as a read-only reference site. For current Township notices, use the <a href="https://www.ramara.ca/news/" target="_blank" rel="noopener">official news page&nbsp;↗</a>.</p>
       </div>
     </details>
 
@@ -176,20 +176,14 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <form id="footerSubscribe" class="footer-sub">
-      <label for="fsEmail"><strong>Get the free weekly update</strong> — what neighbours asked, what's new, and what's moving at the township.</label>
-      <div class="fs-row">
-        <input id="fsEmail" type="email" name="email" placeholder="Your email" required aria-label="Your email">
-        <button type="submit">Subscribe</button>
-      </div>
-    </form>
+    <p class="fu-done">Email updates are unavailable while Ramara Hub is operating as a read-only reference site.</p>
     <p class="callout-phone">Township of Ramara: 705-484-5374 · Emergencies: 911</p>
     <p class="disclaimer">Ramara Hub is an independent, free community resource — a Ramara Civic Forum project.
     It is not the Township of Ramara's official website. Every item links to its official source on ramara.ca.</p>
     <p><a href="about.html">About</a> · <a href="faq.html">FAQ</a> · <a href="/volunteer.html">Volunteer</a> · <a href="news.html">Township news</a> · <a href="changelog.html">What&#39;s new</a> · <a href="https://www.ramara.ca/" target="_blank" rel="noopener">Official township site: ramara.ca ↗</a></p>
   </div>
 </footer>
-<script src="assets/app.js?v=33"></script>
+<script src="assets/app.js?v=36"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "08e9c3358c0b4ccda59d3b9abd1bc8fe"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

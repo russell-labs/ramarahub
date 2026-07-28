@@ -7,7 +7,9 @@ Live at https://ramarahub.ca
 
 Static site, no build step. The knowledge base lives in `data/kb.json`; the search bar and
 category browsing render from it client-side (`assets/app.js`). Issue briefs are hand-written
-HTML in `briefs/`. Every fact links to an official source.
+HTML in `briefs/`. Every fact links to an official source. The site is read-only and has no
+database dependency: searches stay in the browser, and submissions, live feeds, and the
+database-backed document index are unavailable.
 
 ## Editing content
 
@@ -24,6 +26,6 @@ GitHub Pages from `main` (repo: github.com/russell-labs/ramarahub), custom domai
 
 ## Roadmap
 
-The plain-language answer engine is live. Current priorities: expanding the public record,
-adding missing CivicWeb material when available, improving guardrails/caveats, and publishing
-more issue briefs, charts, and resident-facing explainers.
+The checked-in knowledge base, issue briefs, budget pages, council contacts, and source links
+remain useful without a backend. Any future live answer engine, document index, feed, or form
+requires a separately approved backend and data migration.

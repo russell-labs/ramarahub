@@ -70,17 +70,17 @@
       <ul style="margin:0">
         <li><strong>What:</strong> Ramara 2050, a four-week summer learning experience. Volunteer and unpaid.</li>
         <li><strong>Who:</strong> up to two Ramara residents, 18 or older. Living in Ramara is required.</li>
-        <li><strong>Interviews:</strong> late June 2026. Applications are open now.</li>
+        <li><strong>Status:</strong> applications are unavailable while Ramara Hub is read-only.</li>
         <li><strong>Program:</strong> starts the second week of August, runs four weeks.</li>
         <li><strong>Time:</strong> light and part-time, mostly remote with short check-ins.</li>
         <li><strong>Cost:</strong> free.</li>
       </ul>
-      <p style="margin:1.2rem 0 0"><a class="cta-btn" href="#apply">Skip to the application ↓</a></p>
+      <p style="margin:1.2rem 0 0"><a class="cta-btn" href="#apply">See application status ↓</a></p>
     </div>
   </section>
 
   <section>
-    <p class="lead">The decisions and tools that shape Ramara over the next 25 years won't come from one place, or one person. They'll come from residents who decided to learn how things work and build something useful. <strong>Ramara 2050</strong> is a small head start on exactly that. Ramara Hub (<a href="https://ramarahub.ca">ramarahub.ca</a>) is a free, independent community resource that answers residents' questions about the Township of Ramara with straight, sourced facts, built on modern AI. This summer, one or two local people get to learn how it works from the inside and build something real with it. It's volunteer and unpaid: the whole point is what you learn, create, and contribute, not chores.</p>
+    <p class="lead">This page preserves the description of the Ramara 2050 summer learning experience. Ramara Hub is a free, independent community resource with checked-in, sourced civic answers. Applications are not being collected from the read-only site.</p>
     <div class="callout callout-teal">You'll work directly with the Hub's founder, Russell Cole, who builds with frontier AI tools every day and is genuinely motivated to help the next generation use them well, and responsibly. This is mentorship, not busywork.</div>
   </section>
 
@@ -138,65 +138,9 @@
     </ul>
   </section>
 
-  <section>
-    <div class="callout callout-gold"><strong>Our promise: we reply to everyone.</strong> The moment you apply you'll get a confirmation, and however it turns out, you'll hear back from a real person. No application disappears.</div>
-  </section>
-
   <section id="apply">
-    <h2>Apply</h2>
-    <p>Fill this out, the last few questions matter more than a polished resume.</p>
-    <form id="appForm" class="civic-form card">
-      <label>Your name <span class="req">*</span></label>
-      <input type="text" id="name" required>
-
-      <label>Email <span class="req">*</span></label>
-      <input type="email" id="email" required>
-
-      <label>Phone (optional)</label>
-      <input type="tel" id="phone">
-
-      <div class="check">
-        <input type="checkbox" id="resident" required>
-        <label for="resident">I live in the Township of Ramara, and I'm 18 or older. <span class="req">*</span></label>
-      </div>
-
-      <label>Where are you at right now? <span class="req">*</span></label>
-      <select id="status" required>
-        <option value="">Select…</option>
-        <option>In college or university</option>
-        <option>Recently finished school</option>
-        <option>Working</option>
-        <option>Figuring out my next step</option>
-        <option>Other</option>
-      </select>
-
-      <label>If it helps, tell us your program/field or what you're up to right now</label>
-      <input type="text" id="context">
-
-      <label>Why are you interested in this? <span class="req">*</span></label>
-      <textarea id="why" required></textarea>
-
-      <label>Do you have an interest or passion for your community, public/civic service, or politics? Tell us about it. <span class="req">*</span></label>
-      <textarea id="passion" required></textarea>
-
-      <label>What do you hope to learn or build? <span class="req">*</span></label>
-      <textarea id="goals" required></textarea>
-
-      <label>Tell us about something you built, organized, or figured out on your own.</label>
-      <textarea id="project"></textarea>
-      <p class="hint">It does not have to be technical, or about AI. Anything you made happen.</p>
-
-      <label>Roughly what time could you give over the four weeks?</label>
-      <input type="text" id="availability">
-
-      <label>If you're selected for an interview (final week of June), when are you generally free to meet?</label>
-      <input type="text" id="interview_avail">
-
-      <label>Any questions for us?</label>
-      <textarea id="questions"></textarea>
-
-      <button type="submit">Submit application</button>
-    </form>
+    <h2>Applications unavailable</h2>
+    <div class="callout callout-gold"><strong>This application form is closed while Ramara Hub is read-only.</strong> The site is not collecting names, email addresses, phone numbers, or applications.</div>
   </section>
 
   <div class="page-foot">
@@ -205,42 +149,7 @@
   </div>
 </main>
 
-<script src="assets/app.js?v=33"></script>
-<script>
-  // LIVE: posts the application to Supabase. A DB trigger fires the hub-apply function, which
-  // instantly auto-replies to the applicant and emails the full application to Russell.
-  var SB_URL = "https://pchdckgdrigevxfjwgom.supabase.co";
-  var SB_KEY = "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD";
-  document.getElementById('appForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var g = function (id) { return (document.getElementById(id).value || '').trim(); };
-    var btn = this.querySelector('button');
-    btn.disabled = true; btn.textContent = 'Sending…';
-    var row = {
-      name: g('name'), email: g('email'), phone: g('phone'),
-      resident: document.getElementById('resident').checked,
-      status: g('status'), context: g('context'),
-      why: g('why'), passion: g('passion'), goals: g('goals'),
-      project: g('project'), availability: g('availability'),
-      interview_avail: g('interview_avail'), questions: g('questions')
-    };
-    fetch(SB_URL + "/rest/v1/internship_applications", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Prefer": "return=minimal" },
-      body: JSON.stringify(row)
-    }).then(function (r) {
-      if (r.ok) {
-        document.getElementById('appForm').outerHTML =
-          '<div class="callout callout-gold"><strong>Thank you — your application is in.</strong> Check your inbox for a confirmation. A real person will read it and get back to you. We reply to everyone.</div>';
-      } else {
-        btn.disabled = false; btn.textContent = 'Submit application';
-        alert("Something went wrong sending your application. Please email russellcolevop@gmail.com and we'll sort it out.");
-      }
-    }).catch(function () {
-      btn.disabled = false; btn.textContent = 'Submit application';
-      alert("Something went wrong sending your application. Please email russellcolevop@gmail.com and we'll sort it out.");
-    });
-  });
-</script>
+<script src="assets/app.js?v=36"></script>
+
 </body>
 </html>
