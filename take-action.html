@@ -134,38 +134,8 @@
   </section>
 
   <section>
-    <h2>Share an idea, or stay in the loop</h2>
-    <p class="muted">Seen something work in another community? Tell us — it might end up on this page. (We collect ideas and interests, not votes.)</p>
-    <form id="ideaForm" class="civic-form card">
-      <label>I'd like updates on:</label>
-      <div class="checks">
-        <label><input type="checkbox" value="Rates"> Rates and affordability</label>
-        <label><input type="checkbox" value="Infrastructure"> Infrastructure and projects</label>
-        <label><input type="checkbox" value="How to be heard"> How to be heard at the township</label>
-        <label><input type="checkbox" value="Volunteering"> Volunteering with the Hub</label>
-      </div>
-      <label for="idea">Seen something that works elsewhere, or have an idea?</label>
-      <textarea id="idea" placeholder="Share it here…"></textarea>
-      <label for="email">Email (optional — only if you'd like updates or a reply)</label>
-      <input type="email" id="email" placeholder="you@email.com">
-      <button type="submit">Send it in</button>
-    </form>
-  </section>
-
-  <section>
-    <h2>Was this page helpful?</h2>
-    <div class="card" id="fbCard">
-      <p class="muted" style="margin:0 0 0.5rem">A quick thumbs up or down helps us improve it.</p>
-      <div class="fb-btns">
-        <button type="button" id="fbUp" aria-pressed="false" aria-label="Yes, helpful">👍 Yes</button>
-        <button type="button" id="fbDown" aria-pressed="false" aria-label="No, not helpful">👎 No</button>
-      </div>
-      <div class="fb-comment" id="fbComment">
-        <label for="fbText">What was missing or unclear? <span style="font-weight:400;color:var(--muted)">(required for a thumbs-down)</span></label>
-        <textarea id="fbText" placeholder="Tell us what would make it better…"></textarea>
-        <button type="button" id="fbSend">Send feedback</button>
-      </div>
-    </div>
+    <h2>Read-only mode</h2>
+    <div class="callout callout-teal"><strong>Idea and feedback forms are unavailable.</strong> This page remains available as civic reference material, but the Hub is not collecting submissions or contact information.</div>
   </section>
 
   <div class="page-foot">
@@ -175,68 +145,7 @@
   </div>
 </main>
 
-<script src="assets/app.js?v=33"></script>
-<script>
-(function(){
-  var SB = {
-    url: "https://pchdckgdrigevxfjwgom.supabase.co",
-    key: "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD"
-  };
-  function sbInsert(table, row){
-    return fetch(SB.url + "/rest/v1/" + table, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SB.key,
-        "Authorization": "Bearer " + SB.key,
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify(row)
-    }).then(function(r){ return r.ok; }).catch(function(){ return false; });
-  }
+<script src="assets/app.js?v=36"></script>
 
-  // ---- Idea / interest form ----
-  var form = document.getElementById('ideaForm');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var topics = Array.prototype.slice.call(form.querySelectorAll('.checks input:checked'))
-      .map(function(c){ return c.value; }).join(', ');
-    var idea = (document.getElementById('idea').value || '').slice(0, 4000);
-    var email = (document.getElementById('email').value || '').slice(0, 300);
-    sbInsert('action_ideas', { topics: topics.slice(0,300), idea: idea, email: email });
-    form.outerHTML = '<div class="callout callout-teal"><strong>Thanks — it\'s in.</strong> If you left your email, we\'ll keep you posted. Good ideas from neighbours are how this page grows.</div>';
-  });
-
-  // ---- Thumbs feedback (thumbs-down requires a comment) ----
-  var up = document.getElementById('fbUp'),
-      down = document.getElementById('fbDown'),
-      commentWrap = document.getElementById('fbComment'),
-      fbText = document.getElementById('fbText'),
-      fbSend = document.getElementById('fbSend'),
-      card = document.getElementById('fbCard');
-
-  function thanks(){ card.innerHTML = '<div class="callout callout-teal"><strong>Thanks for the feedback.</strong> It helps us make this page more useful.</div>'; }
-
-  up.addEventListener('click', function(){
-    up.setAttribute('aria-pressed','true');
-    down.setAttribute('aria-pressed','false');
-    commentWrap.classList.remove('show');
-    sbInsert('action_ideas', { topics: 'feedback:up', idea: '', email: '' });
-    thanks();
-  });
-  down.addEventListener('click', function(){
-    down.setAttribute('aria-pressed','true');
-    up.setAttribute('aria-pressed','false');
-    commentWrap.classList.add('show');   // require a comment before sending
-    fbText.focus();
-  });
-  fbSend.addEventListener('click', function(){
-    var txt = (fbText.value || '').trim();
-    if(!txt){ fbText.focus(); fbText.style.borderColor = '#c0392b'; return; }
-    sbInsert('action_ideas', { topics: 'feedback:down', idea: txt.slice(0,4000), email: '' });
-    thanks();
-  });
-})();
-</script>
 </body>
 </html>

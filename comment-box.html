@@ -77,72 +77,19 @@
   </section>
 
   <section>
-    <form id="cbForm" class="civic-form card">
-      <label for="ward">Your ward <span class="req">*</span></label>
-      <select id="ward" required>
-        <option value="">Select your ward…</option>
-        <option>Ward 1</option>
-        <option>Ward 2</option>
-        <option>Ward 3</option>
-        <option>Ward 4</option>
-        <option>Ward 5</option>
-        <option>Not sure / outside these</option>
-      </select>
-      <p class="hint">Not sure which ward you're in? Check the <a href="https://www.ramara.ca/municipal-office/wards/" target="_blank" rel="noopener">Township's ward map</a>.</p>
-
-      <label for="comment">Your comment <span class="req">*</span></label>
-      <textarea id="comment" required placeholder="What's on your mind? A concern, an idea, a question about your ward…"></textarea>
-
-      <label for="name">Your name (optional)</label>
-      <input type="text" id="name">
-
-      <label for="email">Email (optional, but add it if you'd like a reply)</label>
-      <input type="email" id="email">
-      <p class="hint">Leaving your email lets us or your councillor follow up. Skip it if you'd rather not.</p>
-
-      <button type="submit">Drop it in the box</button>
-    </form>
+    <div class="callout callout-teal"><strong>The Comment Box is unavailable while Ramara Hub is read-only.</strong> No comment or contact information is collected on this site. You can contact your councillor through the <a href="council.html">Council &amp; Wards page</a>.</div>
   </section>
 
   <section class="callout callout-teal">
-    Comments are sorted by ward and shared with the councillor who represents it. This is a neutral community resource, not the Township's official site, and it doesn't support or oppose anyone. We read everything; we reply when you've left a way to reach you.
+    The public page remains here so old links explain the service status. No new comments are accepted or shared from this site.
   </section>
-
-  <p class="muted" style="font-style:italic;margin-top:1.4rem">A councillor reading this: we built the Comment Box to make hearing from your ward easier, not harder. If you'd like the comments from your ward, or want to help shape how this works, reach out at russellcolevop@gmail.com. The goal is to make your job a little easier.</p>
 
   <div class="page-foot">
     Ramara Hub is an independent, free community resource — a Ramara Civic Forum project. It is not the Township of Ramara's official website.
   </div>
 </main>
 
-<script src="assets/app.js?v=33"></script>
-<script>
-  // LIVE: posts the comment to Supabase (anon insert; not publicly readable).
-  var SB_URL = "https://pchdckgdrigevxfjwgom.supabase.co";
-  var SB_KEY = "sb_publishable_-4wN6ifFXmn10ZAwqwN_Nw_0TvL_usD";
-  document.getElementById('cbForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var g = function (id) { return (document.getElementById(id).value || '').trim(); };
-    var btn = this.querySelector('button');
-    btn.disabled = true; btn.textContent = 'Sending…';
-    var row = { ward: g('ward'), comment: g('comment'), name: g('name'), email: g('email') };
-    fetch(SB_URL + "/rest/v1/ward_comments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Prefer": "return=minimal" },
-      body: JSON.stringify(row)
-    }).then(function (r) {
-      if (r.ok) {
-        document.getElementById('cbForm').outerHTML =
-          '<div class="callout callout-teal"><strong>Thank you — your comment is in the box.</strong> It\'s sorted to your ward. If you left an email, you may hear back. Want to leave another? Just reload the page.</div>';
-      } else {
-        btn.disabled = false; btn.textContent = 'Drop it in the box';
-        alert("Something went wrong sending your comment. Please email russellcolevop@gmail.com and we'll sort it out.");
-      }
-    }).catch(function () {
-      btn.disabled = false; btn.textContent = 'Drop it in the box';
-      alert("Something went wrong sending your comment. Please email russellcolevop@gmail.com and we'll sort it out.");
-    });
-  });
-</script>
+<script src="assets/app.js?v=36"></script>
+
 </body>
 </html>

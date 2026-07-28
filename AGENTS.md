@@ -28,12 +28,16 @@ Public site for ramarahub.ca. A neutral, independent civic resource for the Town
 ## Publish
 - Any authorized coding agent may commit and push site changes. Follow the review rules above, inspect the exact diff, and stage only the intended files.
 - Bump `?v=N` on any CSS/JS change.
-- Changelog is DB-driven (goes live without a push); pages need a push. Keep them consistent.
+- Changelog is checked-in HTML. All public changes require a reviewed commit and push to `main`.
 
 ## Where content lives
 - KB: `data/kb.json` (renders client-side via `assets/app.js`).
 - Briefs: hand-written HTML in `briefs/` — update "Last verified" on edit.
 - Pages: top-level `.html`.
+
+## Read-only boundary
+- No database, account, login, submission, save, sync, moderation, or admin dependency belongs in the public site.
+- Reader search runs locally against `data/kb.json` and must never claim that a query was logged or submitted.
 
 ## Compliance
 - Verify current Ontario rules before publishing anything election-adjacent.
