@@ -37,3 +37,6 @@ Public site for ramarahub.ca. A neutral, independent civic resource for the Town
 
 ## Compliance
 - Verify current Ontario rules before publishing anything election-adjacent.
+
+## Operating standard
+Read /Users/russellcole/Developer/RussellLabs/ops/agent-operating-standard.md and /Users/russellcole/Developer/RussellLabs/ops/review-depth-policy.md, resolve the effective review level, and comply with the A-Grade Loop (plan -> goal -> execute -> risk-sized hard verify -> pass or recycle) before any build work.
