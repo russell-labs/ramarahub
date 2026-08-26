@@ -1289,6 +1289,46 @@
         }
       ],
       "keywords": "leaf yard waste yardwaste leaf bags paper bags june july no pickup collection resume schedule grass clippings garden brush zone 2 lagoon city when curbside biweekly simcoe county"
+    },
+    {
+      "id": "ww-why-higher",
+      "cat": "wastewater",
+      "q": "Why is my water bill higher in Ramara?",
+      "a": "There are two separate reasons a Ramara water/wastewater bill can look high. First, rates: by provincial law these systems must be funded fully by the people who use them through user rates, not by property taxes. The Township lists the cost drivers as aging infrastructure, day-to-day operating costs, and tightening provincial safety and environmental standards, and notes that a rural municipality with a small number of connected users has a higher cost per household because fewer users share the fixed costs. Current rates are set by bylaw through 2033 (water Bylaw 2024.79, wastewater Bylaw 2025.76). Second, a single bill higher than usual: your bill is a fixed quarterly charge plus a variable charge for every cubic metre that passes through your meter, so a spike usually points to a leak (a running toilet, dripping faucet, or irrigation are common causes). The property owner is responsible for all water recorded by the meter, even from a leak. The Township runs a free Water Usage Customer Portal where you can monitor consumption and set alerts to catch leaks early. For a question about your specific account or meter reads, call the Township Utility Coordinator at 705-484-5374 ext. 221.",
+      "phone": "705-484-5374 ext. 221 (Township Utility Coordinator — account-specific bill questions)",
+      "links": [
+        {
+          "label": "Township — Utility Billing and Rates (incl. billing FAQ)",
+          "url": "https://www.ramara.ca/living-here/water/utility-billing-and-rates/"
+        },
+        {
+          "label": "Township — Water Usage Customer Portal",
+          "url": "https://www.ramara.ca/living-here/water/utility-billing-and-rates/water-usage-customer-portal/"
+        }
+      ],
+      "keywords": "water bill higher high expensive went up why increase rate leak usage consumption cubic metre meter portal fixed charge quarterly rural cost per household user rates"
+    },
+    {
+      "id": "pk-weed-harvester-schedule",
+      "cat": "parks",
+      "q": "When do Lagoon City's aquatic weed harvesters start each year, and is the 2026 season delayed?",
+      "a": "Lagoon City's canal weed harvesting is run by the Township of Ramara. Because of fish spawning, the Township's Canal Maintenance page states that no weed cutting may take place before July 15; after that the harvesters follow pre-determined routes through the canals, and routes can change without notice due to weed growth, weather, or other factors. For 2026 specifically, the Township's June 12, 2026 Canal Maintenance Update said it had received confirmation that federal Department of Fisheries and Oceans (DFO) approvals are now required for aquatic weed skimming and harvesting going forward, and that staff were working with DFO to complete the approval process. In that update the Township said it anticipates beginning mechanical aquatic weed management 'in the coming weeks once approvals are in place' and did not give a confirmed 2026 start date, so the start could be later than usual. A related Township waste-hauler quotation (File LC-05-26) lists an estimated harvesting window of roughly July 16 to October 1, 2026, but notes the season is weather-dependent. Posted harvesting hours are Monday to Thursday 7 a.m. to 4 p.m. and Friday until noon. Because the timing is approval-dependent this year, confirm the current status with the Township before relying on a date.",
+      "phone": "705-484-5374 (Township of Ramara)",
+      "links": [
+        {
+          "label": "Township of Ramara - Canal Maintenance (harvesting rules and FAQ)",
+          "url": "https://www.ramara.ca/municipal-office/boards-committees-and-commissions/lagoon-city-parks-and-waterways-commission/canal-maintenance/"
+        },
+        {
+          "label": "Township of Ramara - Lagoon City Canal Maintenance Update, June 12, 2026",
+          "url": "https://www.ramara.ca/news/posts/lagoon-city-canal-maintenance-update-june-12-2026/"
+        },
+        {
+          "label": "Township of Ramara - Weed Hauler RFQ LC-05-26 (estimated season dates, PDF)",
+          "url": "https://www.ramara.ca/media/z0tfub50/weed-hauler-rfq-lc-05-26.pdf"
+        }
+      ],
+      "keywords": "lagoon city weed harvester harvesting aquatic weeds canal maintenance start date 2026 delay season july dfo fisheries oceans approval scoop dogg harvey schedule cutting waterways commission navigation boating"
     }
   ]
 }
