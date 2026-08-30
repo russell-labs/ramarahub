@@ -6,3 +6,6 @@ assets/Russ headshot nuetral background.jpg.JPG
 outputs/
 .thumbnail
 .fuse_hidden*
+
+# Owner-local Git worktrees
+.worktrees/
