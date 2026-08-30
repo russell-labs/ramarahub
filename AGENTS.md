@@ -40,3 +40,19 @@ Public site for ramarahub.ca. A neutral, independent civic resource for the Town
 
 ## Operating standard
 Read /Users/russellcole/Developer/RussellLabs/ops/agent-operating-standard.md and /Users/russellcole/Developer/RussellLabs/ops/review-depth-policy.md, resolve the effective review level, and comply with the A-Grade Loop (plan -> goal -> execute -> risk-sized hard verify -> pass or recycle) before any build work.
+
+
+## Handoff
+
+Before this session ends, write or refresh this venture's `HANDOFF.md`:
+
+- Procedure: `~/Developer/RussellLabs/ops/agent-operating-standard.md`, rule 6. It wins over any other handoff instruction in this tree.
+- Method: `~/Developer/RussellLabs/russell-labs-skills/skills/handoff/SKILL.md`. If your tool has slash commands, `/handoff` runs the same file.
+
+One current photograph, not a work log. Around 120 lines. It opens with three status lines, refreshed every time it is touched:
+
+    push-state: <branch> ahead A / behind B / dirty N
+    visible-at: <URL, install target, or none-yet>
+    needs-russell: <short list, or none>
+
+An uncommitted or unpushed handoff is not done. Session detail and gate output go in dated files under `_reports/`, referenced by path, never inlined.
