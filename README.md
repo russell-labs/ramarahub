@@ -9,6 +9,10 @@ Static site, no build step. The knowledge base lives in `data/kb.json`; the sear
 category browsing render from it client-side (`assets/app.js`). Issue briefs are hand-written
 HTML in `briefs/`. Every fact links to an official source.
 
+The public newsletter front door is `https://ramarahub.ca/subscribe/`. It keeps public
+copy on the trusted Ramara Hub domain, then hands the resident to the existing beehiiv
+publication through an explicit signup button. The site does not collect email on that page.
+
 ## Editing content
 
 - **Add/edit an answer:** edit `data/kb.json` (fields: id, cat, q, a, phone, links, keywords). Commit and push.
