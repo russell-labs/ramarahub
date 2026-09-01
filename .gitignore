@@ -9,3 +9,4 @@ outputs/
 
 # Owner-local Git worktrees
 .worktrees/
+_to_delete/
