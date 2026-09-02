@@ -56,3 +56,14 @@ One current photograph, not a work log. Around 120 lines. It opens with three st
     needs-russell: <short list, or none>
 
 An uncommitted or unpushed handoff is not done. Session detail and gate output go in dated files under `_reports/`, referenced by path, never inlined.
+
+## Blockers Codex can clear from the Mac
+
+If this session hits anything the sandbox cannot do but Codex on this Mac can
+(a secret to stream from one dashboard into another, an OAuth or 2FA screen, a
+form that will not submit, a CLI that needs the Mac login, a deploy, a DNS
+record, a native app, a file the sandbox cannot delete), produce a pasteable
+Codex prompt as part of the answer. Do not wait to be asked. The prompt tells
+Codex to use Russell's real Chrome profile, never its own browser, and to
+stream secrets without echoing them. Full rule and required prompt shape:
+`/Users/russellcole/Developer/AGENTS.md` section 10.
