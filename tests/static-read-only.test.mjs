@@ -4,7 +4,7 @@ import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
 const textExtensions = new Set([".html", ".js", ".py", ".md"]);
-const ignoredDirs = new Set([".git", "Outputs", "__pycache__"]);
+const ignoredDirs = new Set([".git", ".worktrees", "_reports", "Outputs", "__pycache__"]);
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -36,17 +36,17 @@ for (const forbidden of [
 const htmlFiles = textFiles.filter((file) => file.endsWith(".html"));
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
-  if (file.endsWith("index.html") && path.dirname(file) === root) {
-    assert.match(html, /<form id="askForm"/);
-    continue;
-  }
   assert.doesNotMatch(html, /<form\b/);
 }
+
+const home = fs.readFileSync(path.join(root, "index.html"), "utf8");
+assert.doesNotMatch(home, /id="askForm"|id="q"|data-ask=|class="askbar"/);
+assert.match(home, /Browse everyday answers/);
 
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   if (html.includes("assets/app.js?v=")) {
-    assert.match(html, /assets\/app\.js\?v=36/);
+    assert.match(html, /assets\/app\.js\?v=37/);
   }
 }
 

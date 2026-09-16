@@ -5,11 +5,10 @@ Live at https://ramarahub.ca
 
 ## How it works
 
-Static site, no build step. The knowledge base lives in `data/kb.json`; the search bar and
-category browsing render from it client-side (`assets/app.js`). Issue briefs are hand-written
-HTML in `briefs/`. Every fact links to an official source. The site is read-only and has no
-database dependency: searches stay in the browser, and submissions, live feeds, and the
-database-backed document index are unavailable.
+Static site, no build step. The knowledge base lives in `data/kb.json`; topic browsing renders
+from it client-side (`assets/app.js`). Issue briefs are hand-written HTML in `briefs/`. Every
+fact links to an official source. The site is read-only and has no database dependency: the
+question engine, submissions, live feeds, and database-backed document index are unavailable.
 
 The public newsletter front door is `https://ramarahub.ca/subscribe/`. It keeps public
 copy on the trusted Ramara Hub domain, then hands the resident to the existing beehiiv

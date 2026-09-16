@@ -37,7 +37,7 @@ Public site for ramarahub.ca. A neutral, independent civic resource for the Town
 
 ## Read-only boundary
 - No database, account, login, submission, save, sync, moderation, or admin dependency belongs in the public site.
-- Reader search runs locally against `data/kb.json` and must never claim that a query was logged or submitted.
+- Topic browsing renders locally from `data/kb.json`; the public site has no question or query submission box.
 
 ## Compliance
 - Verify current Ontario rules before publishing anything election-adjacent.

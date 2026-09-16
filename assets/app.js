@@ -1,4 +1,4 @@
-/* Ramara Hub — chat-style ask, category browsing, back-to-top. No build step, no tracking. */
+/* Ramara Hub — static category browsing and navigation. No build step. */
 (function () {
   "use strict";
 
@@ -528,8 +528,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    initChat();
-    initPopularQuestions();
     initTiles();
     initAsks();
     initGreat();
