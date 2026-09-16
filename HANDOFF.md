@@ -26,11 +26,24 @@ needs-russell: none
 
 ## Boundaries
 
+- **Release approval**: Russell's September 15, 2026 request to put this form on
+  `ramarahub.ca` clears only the reviewed candidate-question form payload for public release.
 - No beehiiv account, publication, subscriber, form endpoint, plan, or automation was
   changed.
 - No site claim was added beyond the free, sourced weekly-roundup workflow Russell
   specified.
 - Ramara Hub remains factual, neutral, non-campaign, and sourced from public records.
+
+## Candidate-question retention task
+
+- The 2026 candidate-question form stores rows in `action_ideas` tagged exactly
+  `topics=meet-candidates-2026`.
+- Optional contact details are promised for deletion after question follow-up and no later
+  than October 31, 2026.
+- On or before that date, identify only rows with that exact topic tag, report the count,
+  obtain Russell's in-the-moment production-data deletion approval, delete those tagged
+  rows, and verify the count is zero. Do not alter other `action_ideas` rows.
+- Do not export, publish, or share contact details with candidates.
 
 ## Verification
 
