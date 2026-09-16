@@ -80,4 +80,3 @@ is available.
 
 **Decision:** No Russell decision needed now. The October 31 production deletion remains a
 future in-the-moment approval gate.
-
