@@ -1,7 +1,7 @@
 # Candidate question form release evidence
 
 Date: 2026-09-15
-State: ready for commit and GitHub Pages deployment
+State: live and verified
 
 ## Outcome
 
@@ -24,8 +24,17 @@ State: ready for commit and GitHub Pages deployment
 - The 500-character question, 100-character name, and 30-character phone limits keep worst-case escaped JSON under the existing 4,000-character intake boundary without truncating structured records.
 - Supabase CORS preflight for the existing `action_ideas` endpoint returned HTTP 200 and allowed the required headers/method.
 - Inline JavaScript passed `node --check`; `git diff --check` passed.
-- Independent Deep review initially found two Important and two Minor issues. All four were remediated; final re-review is recorded below when complete.
+- Independent Deep review initially found source, privacy, spam, and structured-data issues.
+  All were remediated. A fresh final review and targeted boundary recheck passed with
+  0 Critical and 0 Important findings.
 
 ## Publication proof
 
-Pending commit, push, GitHub Pages completion, and live HTTP/browser readback.
+- Release commit `fb90d92` reached `origin/main` and GitHub Pages reported `built`.
+- `https://ramarahub.ca/candidate-questions/` returned HTTP 200 and showed the expected live
+  form, optional fields, privacy notice, source, and metadata.
+- The live homepage displayed its candidate-question link with destination
+  `candidate-questions/`.
+- Facebook Sharing Debugger fetched the canonical URL and rendered the expected title,
+  description, canonical URL, and `https://ramarahub.ca/assets/og-image.png` preview.
+- Facebook's only warning was a missing optional `fb:app_id`; the share preview itself rendered.
