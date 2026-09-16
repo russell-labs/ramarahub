@@ -1,6 +1,6 @@
-push-state: `main` ahead 0 / behind 0 / dirty 0 after static-cutover closeout
+push-state: `main` ahead 0 / behind 0 / dirty 0 after this handoff commit
 visible-at: https://ramarahub.ca (static read-only site live; query UI removed)
-needs-russell: none
+needs-russell: run `RussellLabs/scripts/Retire RamaraHub Supabase.command` when at the Mac
 
 # Handoff: Ramara Hub public site
 
@@ -31,17 +31,21 @@ needs-russell: none
 ## Backend retirement
 
 - The public RamaraHub site no longer needs its hosted database after the static cutover publishes.
-- The separate Meet the Candidates page still writes to the shared `action_ideas` table with topic `meet-candidates-2026-standalone`.
-- Keep that backend active through the September 29 event and question follow-up.
-- Then take a fresh final dump, verify it locally and on LifeVault, and use a guarded human-only deletion.
-- Current archives are complete and restore-tested at 1,204 public rows. Optional contact details must be deleted after follow-up and no later than October 31, 2026.
+- Project `ramarahub` (`pchdckgdrigevxfjwgom`) still exists pending the guarded human-only retirement action.
+- A fresh full backup is complete and restore-tested at 1,204 public rows across 11 tables, with 0 Auth and 0 Storage rows.
+- Four Edge Functions are preserved in the archive: `comment-notify`, `hub-answer`, `hub-apply`, and `hub-notify`.
+- Local and LifeVault archive hashes match.
+- Run `/Users/russellcole/Developer/RussellLabs/scripts/Retire RamaraHub Supabase.command`; it refuses unless the exact project, live row counts, and both archive copies still match.
 
 ## Candidate-event separation
 
 - Ramara Hub no longer promotes or hosts the 2026 Meet the Candidates intake.
-- The former `/candidate-questions/` URL is a minimal no-index redirect to the independent event page.
-- Event questions and optional contact data remain outside Ramara Hub's editorial surface.
+- The independent candidate-form repository was never published and its GitHub Pages URL returns 404.
+- The former `/candidate-questions/` URL now shows a no-index closed notice and does not redirect or accept submissions.
+- GitHub Pages deployment `35157677180` completed successfully at commit `7f592b9`.
 
 ## Continuation
 
-Leave the shared backend active until the event intake has closed. Then take and verify a fresh final backup before the approved human-only retirement.
+The public site and retired candidate intake no longer depend on Supabase. Run
+the guarded retirement script when at the Mac. Do not alter any other Supabase
+project.
