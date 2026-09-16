@@ -1,12 +1,12 @@
-push-state: `main` ahead 4 / behind 0 / dirty 0; publication hold blocks push
-visible-at: https://ramarahub.ca (live query UI remains until the hold is released)
-needs-russell: release the RamaraHub publication hold so the static cutover can push
+push-state: `main` ahead 0 / behind 0 / dirty 0 after static-cutover closeout
+visible-at: https://ramarahub.ca (static read-only site live; query UI removed)
+needs-russell: none
 
 # Handoff: Ramara Hub public site
 
 ## Current state
 
-- **State**: static read-only civic-information site, verified locally and not yet published
+- **State**: live static read-only civic-information site
 - **Owner**: Russell
 - **Verified**: 2026-09-16
 - **Repository**: `/Users/russellcole/Developer/ramarahub`
@@ -19,13 +19,14 @@ needs-russell: release the RamaraHub publication hold so the static cutover can 
 - All deployed forms and hosted-database references are removed.
 - Existing information remains browsable as static pages.
 - Local verification passed across 38 text files and 26 pages. Browser QA found zero forms, zero query bars, zero hosted-database references, zero console warnings/errors, and no horizontal overflow at 1280px.
-- Commits: `65410e5`, `a505407`, `ad21b3d`.
+- Cutover commits: `65410e5`, `a505407`, `ad21b3d`, `420e342`.
 - Release evidence: `_reports/2026-09-16-static-cutover.md`.
 
-## Publication gate
+## Publication
 
-- A normal `git push origin main` was attempted and refused by the managed `.git/PUBLISH_HOLD` guard.
-- Do not remove or bypass the hold. The live site still has the old query bar until publication is explicitly released.
+- Russell explicitly released the managed publication hold on 2026-09-16.
+- GitHub Pages workflow `35131734509` built and deployed `420e342` successfully.
+- Reader-facing verification reopened `https://ramarahub.ca`: the page contains the static browse experience and no question/query input.
 
 ## Backend retirement
 
@@ -43,4 +44,4 @@ needs-russell: release the RamaraHub publication hold so the static cutover can 
 
 ## Continuation
 
-Release the publication hold, push `main`, verify the live query bar is gone, and leave the shared backend active until the event intake has closed and a fresh backup passes.
+Leave the shared backend active until the event intake has closed. Then take and verify a fresh final backup before the approved human-only retirement.

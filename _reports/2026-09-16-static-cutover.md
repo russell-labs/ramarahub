@@ -2,7 +2,7 @@
 
 Date: 2026-09-16
 
-Status: **LOCAL-VERIFIED / NOT-PUSHED**
+Status: **DEPLOYED AND VERIFIED**
 
 ## Scope
 
@@ -21,11 +21,15 @@ Status: **LOCAL-VERIFIED / NOT-PUSHED**
 
 ## Publication result
 
-`git push origin main` was attempted and refused by the managed publication hold:
+Russell explicitly released the managed publication hold on 2026-09-16. `main` was pushed at `420e3423e001ae11a817cb00b383bde2354662c3`.
 
-> Refusing this push: publication is held for this repository.
+- GitHub Pages workflow: `35131734509`
+- Build: passed in 23 seconds
+- Deploy: passed in 46 seconds
+- Live URL: `https://ramarahub.ca/`
+- Reader-facing verification: page title and content loaded; the homepage shows the static browse experience and no question/query input.
 
-The guard was not removed or bypassed. `https://ramarahub.ca` therefore still shows the previous live version until Russell explicitly releases the hold.
+The release changed only the public RamaraHub site. The separate candidate-event intake remains available and its backend dependency is unchanged.
 
 ## Database dependency
 
