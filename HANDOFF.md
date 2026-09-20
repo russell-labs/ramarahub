@@ -1,6 +1,6 @@
-push-state: `main` ahead 0 / behind 0 / dirty 0 after this handoff commit
+push-state: `main` ahead 0 / behind 0 / dirty 0 after retirement closeout push
 visible-at: https://ramarahub.ca (static read-only site live; query UI removed)
-needs-russell: run `RussellLabs/scripts/Retire RamaraHub Supabase.command` when at the Mac
+needs-russell: none for backend retirement
 
 # Handoff: Ramara Hub public site
 
@@ -8,7 +8,7 @@ needs-russell: run `RussellLabs/scripts/Retire RamaraHub Supabase.command` when 
 
 - **State**: live static read-only civic-information site
 - **Owner**: Russell
-- **Verified**: 2026-09-16
+- **Verified**: 2026-09-20
 - **Repository**: `/Users/russellcole/Developer/ramarahub`
 - **Branch**: `main`
 - **Deployment**: GitHub Pages from `main` to `ramarahub.ca`
@@ -31,11 +31,16 @@ needs-russell: run `RussellLabs/scripts/Retire RamaraHub Supabase.command` when 
 ## Backend retirement
 
 - The public RamaraHub site no longer needs its hosted database after the static cutover publishes.
-- Project `ramarahub` (`pchdckgdrigevxfjwgom`) still exists pending the guarded human-only retirement action.
+- Project `ramarahub` (`pchdckgdrigevxfjwgom`) was retired on 2026-09-20 with the guarded operator.
 - A fresh full backup is complete and restore-tested at 1,204 public rows across 11 tables, with 0 Auth and 0 Storage rows.
 - Four Edge Functions are preserved in the archive: `comment-notify`, `hub-answer`, `hub-apply`, and `hub-notify`.
 - Local and LifeVault archive hashes match.
-- Run `/Users/russellcole/Developer/RussellLabs/scripts/Retire RamaraHub Supabase.command`; it refuses unless the exact project, live row counts, and both archive copies still match.
+- The pre-delete live count still matched 1,204 public rows across 11 tables.
+- Local archive: `/Users/russellcole/Developer/RussellLabs/_backups/supabase/ramarahub-2026-09-16/`.
+- Durable mirror: `LIFEVAULT01/RussellLabs/supabase-archives/2026-09-16/ramarahub-2026-09-16/`.
+- The post-delete inventory no longer contains the project. The spent operator is
+  `/Users/russellcole/Developer/RussellLabs/scripts/_done/Retire RamaraHub Supabase.command`.
+- Closeout evidence: `/Users/russellcole/Developer/RussellLabs/_reports/2026-09-20-supabase-retirements.md`.
 
 ## Candidate-event separation
 
@@ -46,6 +51,6 @@ needs-russell: run `RussellLabs/scripts/Retire RamaraHub Supabase.command` when 
 
 ## Continuation
 
-The public site and retired candidate intake no longer depend on Supabase. Run
-the guarded retirement script when at the Mac. Do not alter any other Supabase
-project.
+The public site and retired candidate intake no longer depend on Supabase. No
+backend retirement action remains. Preserve both archive copies and do not
+alter any other Supabase project.
